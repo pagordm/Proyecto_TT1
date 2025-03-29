@@ -1,0 +1,47 @@
+\doxysection{matrix.\+h}
+\hypertarget{matrix_8h_source}{}\label{matrix_8h_source}\index{E:/Códigos fuente/Proyecto\_TTI/include/matrix.h@{E:/Códigos fuente/Proyecto\_TTI/include/matrix.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_MATRIX\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_MATRIX\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <cstdio>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <cstdlib>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }Matrix\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{int}\ n\_row,\ n\_column;}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{double}\ **data;}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{comment}{//\ Parameterized\ constructor}}
+\DoxyCodeLine{00017\ \ \ \ \ Matrix(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ n\_row,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ n\_column);}
+\DoxyCodeLine{00018\ \ \ \ \ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{comment}{//\ Member\ operators}}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{double}\&\ operator\ ()\ (\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ row,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ column);}
+\DoxyCodeLine{00021\ \ \ \ \ Matrix\&\ operator\ +\ (Matrix\ \&m);}
+\DoxyCodeLine{00022\ \ \ \ \ Matrix\&\ operator\ -\/\ (Matrix\ \&m);}
+\DoxyCodeLine{00023\ \ \ \ \ Matrix\&\ operator\ *\ (Matrix\ \&m);}
+\DoxyCodeLine{00024\ \ \ \ \ Matrix\&\ operator\ /\ (Matrix\ \&m);}
+\DoxyCodeLine{00025\ \ \ \ \ Matrix\&\ operator\ =\ (Matrix\ \&m);}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ Matrix\&\ inv();}
+\DoxyCodeLine{00028\ \ \ \ \ Matrix\&\ transpose();}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{comment}{//\ Non-\/member\ operators}}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{friend}\ ostream\&\ operator\ <<\ (ostream\ \&o,\ Matrix\ \&m);}
+\DoxyCodeLine{00031\ \};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{comment}{//\ Operator\ overloading}}
+\DoxyCodeLine{00034\ ostream\&\ operator\ <<\ (ostream\ \&o,\ \mbox{\hyperlink{class_matrix}{Matrix}}\ \&m);}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{comment}{//\ Methods}}
+\DoxyCodeLine{00037\ \mbox{\hyperlink{class_matrix}{Matrix}}\&\ zeros(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ n\_row,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ n\_column);}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \mbox{\hyperlink{class_matrix}{Matrix}}\&\ eye(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ n\_row,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ n\_column);}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
