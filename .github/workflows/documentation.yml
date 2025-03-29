@@ -17,13 +17,13 @@ jobs:
         with:
           working-directory: './docs'
 
-      - name: Debug: Git Status Before Commit
+      - name: Debug - Git Status Before Commit
         run: |
           cd ./docs/html
           git init
           git status
           git ls-files
-          
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
