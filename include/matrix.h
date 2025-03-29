@@ -7,7 +7,11 @@
 #include <iostream>
 
 using namespace std;
-
+/**
+ * @brief Matrix base class. The class defines a matrix of constant shape (rows and columns). Most operations will require 
+ * similarily-shaped matrices and will error if the conditions are not met.
+ * 
+ */
 class Matrix {
 public:
     int n_row, n_column;

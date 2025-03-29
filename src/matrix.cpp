@@ -1,5 +1,10 @@
 #include "..\include\matrix.h"
-
+/**
+ * @brief Construct a new Matrix:: Matrix object
+ * 
+ * @param n_row The number of rows of the matrix
+ * @param n_column The number of columns of the matrix
+ */
 Matrix::Matrix(const int n_row, const int n_column) {
     if (n_row <= 0 || n_column <= 0) {
 		cout << "Matrix create: error in n_row/n_column\n";
@@ -19,7 +24,13 @@ Matrix::Matrix(const int n_row, const int n_column) {
 		this->data[i] = (double *) malloc(n_column*sizeof(double));
 	}
 }
-
+/**
+ * @brief Accesses a element of the matrix.
+ * 
+ * @param row Row of the element
+ * @param column Column of the element
+ * @return double& A reference to the element in the row and columns
+ */
 double& Matrix::operator () (const int row, const int column) {
 	if (row <= 0 || row > this->n_row || column <= 0 || column > this->n_column) {
 		cout << "Matrix get: error in row/column\n";
