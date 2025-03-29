@@ -29,3 +29,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/html
           force_orphan: true
+      
+      - name: Debug File Output
+        run: ls -R -a ./docs/html
+        working-directory: ./docs
