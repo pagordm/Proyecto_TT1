@@ -57,7 +57,12 @@ Matrix& Matrix::operator = (Matrix &m) {
 	}
 	return *this;
 }
-
+/**
+ * @brief Add two matrices element-wise, i.e., add all values element-by-element. Both matrices must have the same shape.
+ * 
+ * @param m Second matrix to sum
+ * @return Matrix& Result of matrix summation.
+ */
 Matrix& Matrix::operator + (Matrix &m) {
 	if (this->n_row != m.n_row || this->n_column != m.n_column) {
 		cout << "Matrix sum: error in n_row/n_column\n";
@@ -74,7 +79,12 @@ Matrix& Matrix::operator + (Matrix &m) {
 	
 	return *m_aux;
 }
-
+/**
+ * @brief Subtracts the second matrix from the first matrix
+ * 
+ * @param m Matrix to subtract from this
+ * @return Matrix& Resulting matrix
+ */
 Matrix& Matrix::operator - (Matrix &m) {
 	if (this->n_row != m.n_row || this->n_column != m.n_column) {
 		cout << "Matrix sub: error in n_row/n_column\n";
@@ -91,7 +101,13 @@ Matrix& Matrix::operator - (Matrix &m) {
 	
 	return *m_aux;
 }
-
+/**
+ * @brief Prints matrix to ostream.
+ * 
+ * @param o ostram to print matrix to
+ * @param m Matrix to print
+ * @return ostream&
+ */
 ostream& operator << (ostream &o, Matrix &m) {
 	for (int i = 1; i <= m.n_row; i++) {
         for (int j = 1; j <= m.n_column; j++)
@@ -101,7 +117,12 @@ ostream& operator << (ostream &o, Matrix &m) {
 	
     return o;
 }
-
+/**
+ * @brief Multiplies two matrices. If matrix1.n_column!=matrix2.n_row, the method will error.
+ * 
+ * @param m Matrix to multiply with this
+ * @return Matrix& Resulting matrix
+ */
 Matrix& Matrix::operator * (Matrix &m) {
 	if (this->n_column != m.n_row) {
 		cout << "Matrix mul: error in n_column/n_row\n";
@@ -122,7 +143,12 @@ Matrix& Matrix::operator * (Matrix &m) {
 	
 	return *m_aux;
 }
-
+/**
+ * @brief Multiplies this by the inverse of matrix m. Equivalent to this*m.inv()
+ * 
+ * @param m Matrix to invert and multiply with this.
+ * @return Matrix& Resulting matrix
+ */
 Matrix& Matrix::operator / (Matrix &m) {
 	if (this->n_column != m.n_row) {
 		cout << "Matrix div: error in n_column/n_row\n";
@@ -133,7 +159,11 @@ Matrix& Matrix::operator / (Matrix &m) {
 	
 	return (*this) * (*m_aux);
 }
-
+/**
+ * @brief Calculates the inverse of this matrix
+ * 
+ * @return Matrix& Reference to the inverted matrix
+ */
 Matrix& Matrix::inv() {
 	if (this->n_row != this->n_column) {
 		cout << "Matrix inv: error in n_row/n_column\n";
@@ -169,7 +199,11 @@ Matrix& Matrix::inv() {
 	
 	return *m_aux;
 }
-
+/**
+ * @brief Calculates the transposed matrix of this
+ * 
+ * @return Matrix& A reference to the transposed matrix
+ */
 Matrix& Matrix::transpose() {
 	Matrix *m_aux = new Matrix(this->n_column, this->n_row);
 	
@@ -181,7 +215,13 @@ Matrix& Matrix::transpose() {
 	
 	return *m_aux;
 }
-
+/**
+ * @brief Generates a matrix with all zeros.
+ * 
+ * @param n_row Rows of the matrix
+ * @param n_column Columns of the matrix
+ * @return Matrix& A reference to the matrix
+ */
 Matrix& zeros(const int n_row, const int n_column) {
 	Matrix *m_aux = new Matrix(n_row, n_column);
 	
@@ -193,7 +233,13 @@ Matrix& zeros(const int n_row, const int n_column) {
 	
 	return (*m_aux);
 }
-
+/**
+ * @brief Generates a matrix with all ones.
+ * 
+ * @param n_row Rows of the matrix
+ * @param n_column Columns of the matrix
+ * @return Matrix& A reference to the matrix
+ */
 Matrix& eye(const int n_row, const int n_column) {
 	Matrix *m_aux = new Matrix(n_row, n_column);
 	
@@ -208,7 +254,12 @@ Matrix& eye(const int n_row, const int n_column) {
 	
 	return (*m_aux);
 }
-
+/**
+ * @brief Divides a matrix element-wise by a double
+ * 
+ * @param n Double to divide the matrix by.
+ * @return Matrix& Reference to the resulting matrix.
+ */
 Matrix& Matrix::operator / (const double n) {
 	
 	if (n==0) {
