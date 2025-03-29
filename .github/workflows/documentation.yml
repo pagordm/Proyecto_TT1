@@ -20,6 +20,10 @@ jobs:
       - name: Debug - File permissions
         run: ls -lRa ./docs/html
 
+      - name: Debug File Output
+        run: ls -R ./docs/html
+        working-directory: ./docs
+
       - name: Debug - Git Status Before Commit
         run: |
           cd ./docs/html
