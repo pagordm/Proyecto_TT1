@@ -24,6 +24,8 @@ public:
 	Matrix& operator / (Matrix &m);
 	Matrix& operator = (Matrix &m);
 
+	Matrix& operator / (const double n);
+
 	Matrix& inv();
 	Matrix& transpose();
 	// Non-member operators

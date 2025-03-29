@@ -30,9 +30,14 @@ double& Matrix::operator () (const int row, const int column) {
 }
 
 Matrix& Matrix::operator = (Matrix &m) {
-	for(int i = 0; i < this->n_row; i++)
-		for (int j = 0; j < this->n_col; j++)
-			this->data[i][j]=m.data[i][j];
+	Matrix *aux = new Matrix(this->n_row, this->n_column);
+	
+	for(int i = 0; i < aux->n_row; i++) {
+		for (int j = 0; j < aux->n_column; j++) {
+			aux->data[i][j]=m.data[i][j];
+		}
+	}
+	return *aux;
 }
 
 Matrix& Matrix::operator + (Matrix &m) {
@@ -184,4 +189,20 @@ Matrix& eye(const int n_row, const int n_column) {
 	}
 	
 	return (*m_aux);
+}
+
+Matrix& Matrix::operator / (const double n) {
+	if (n==0) {
+		cout << "Double inv: error in n\n";
+		exit(EXIT_FAILURE);
+	}
+	Matrix *m_aux = new Matrix(this->n_row, this->n_column);
+
+	for(int i = 1; i <= this->n_row; i++) {
+		for(int j = 1; j <= this->n_column; j++) {
+			(*m_aux)(i,j) = (*this)(i,j)/n;
+		}
+	}
+	return *m_aux;
+
 }

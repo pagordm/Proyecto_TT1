@@ -156,6 +156,21 @@ int m_div_01() {
 	return 0;
 }
 
+int m_div_02() {
+	int f = 2;
+	int c = 2;
+	Matrix A(f,c);
+	A(1,1) = 2; A(1,2) = 4;
+	A(2,1) = 4; A(2,2) = 6;
+	Matrix B(f, c);
+	B(1,1) = 1; B(1,2) = 2;
+	B(2,1) = 2; B(2,2) = 3;
+	Matrix C = A/2.0;
+
+	_assert(m_equals(B, C, 1e-10));
+	return 0;
+}
+
 int all_tests()
 {
     _verify(m_sum_01);
@@ -165,6 +180,7 @@ int all_tests()
 	_verify(m_eye_01);
 	_verify(m_mul_01);
 	_verify(m_div_01);
+	_verify(m_div_02);
 
     return 0;
 }
