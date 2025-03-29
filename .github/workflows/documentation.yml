@@ -17,6 +17,9 @@ jobs:
         with:
           working-directory: './docs'
 
+      - name: Debug - File permissions
+        run: ls -lRa ./docs/html
+
       - name: Debug - Git Status Before Commit
         run: |
           cd ./docs/html
