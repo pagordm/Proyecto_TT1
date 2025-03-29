@@ -16,9 +16,9 @@ jobs:
         uses: mattnotmitt/doxygen-action@edge
         with:
           working-directory: './docs'
-          
+
       - name: Debug File Output
-        run: ls -R ./docs/html
+        run: ls -R -a ./docs/html
         working-directory: ./docs
           
       - name: Deploy to GitHub Pages
