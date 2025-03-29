@@ -28,16 +28,23 @@ double& Matrix::operator () (const int row, const int column) {
 	
 	return this->data[row - 1][column - 1];
 }
-
+/**
+ * @brief Assignment operator. Copies all values of matrix m into this. Requires both matrices to have the same shape.
+ * 
+ * @param m The matrix to copy data from
+ * @return Matrix& A reference to this, to be used in chaining assignments.
+ */
 Matrix& Matrix::operator = (Matrix &m) {
-	Matrix *aux = new Matrix(this->n_row, this->n_column);
-	
-	for(int i = 0; i < aux->n_row; i++) {
-		for (int j = 0; j < aux->n_column; j++) {
-			aux->data[i][j]=m.data[i][j];
+	if (this->n_row != m.n_row || this->n_column != m.n_column) {
+		cout << "Matrix assignment: error in n_row/n_column\n";
+        exit(EXIT_FAILURE);
+	}
+	for(int i = 0; i < this->n_row; i++) {
+		for (int j = 0; j < this->n_column; j++) {
+			this->data[i][j]=m.data[i][j];
 		}
 	}
-	return *aux;
+	return *this;
 }
 
 Matrix& Matrix::operator + (Matrix &m) {
@@ -192,6 +199,7 @@ Matrix& eye(const int n_row, const int n_column) {
 }
 
 Matrix& Matrix::operator / (const double n) {
+	
 	if (n==0) {
 		cout << "Double inv: error in n\n";
 		exit(EXIT_FAILURE);
