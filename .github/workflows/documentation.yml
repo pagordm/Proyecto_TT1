@@ -16,10 +16,14 @@ jobs:
         uses: mattnotmitt/doxygen-action@edge
         with:
           working-directory: './docs'
-          
-      - name: Fix Permissions
-        run: chmod -R 755 ./docs/html
 
+      - name: Debug: Git Status Before Commit
+        run: |
+          cd ./docs/html
+          git init
+          git status
+          git ls-files
+          
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
