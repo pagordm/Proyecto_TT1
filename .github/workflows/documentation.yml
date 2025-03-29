@@ -17,6 +17,10 @@ jobs:
         with:
           working-directory: './docs'
           
+      - name: Debug File Output
+        run: ls -R ./docs/html
+        working-directory: ./docs
+          
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
