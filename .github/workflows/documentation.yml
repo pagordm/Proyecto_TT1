@@ -16,11 +16,10 @@ jobs:
         uses: mattnotmitt/doxygen-action@edge
         with:
           working-directory: './docs'
-
-      - name: Debug File Output
-        run: ls -R -a ./docs/html
-        working-directory: ./docs
           
+      - name: Fix Permissions
+        run: chmod -R 755 ./docs/html
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
@@ -29,7 +28,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/html
           force_orphan: true
-      
-      - name: Debug File Output
-        run: ls -R -a ./docs/html
-        working-directory: ./docs
