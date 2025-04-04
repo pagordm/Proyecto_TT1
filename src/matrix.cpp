@@ -274,6 +274,23 @@ Matrix& zeros(const int n_row, const int n_column) {
 	
 	return (*m_aux);
 }
+
+/**
+ * @brief Generates a vector with all zeros.
+ * 
+ * @param n number of elements of the vector
+ * @return Matrix& A reference to the vector
+ */
+Matrix& zeros(const int n) {
+	Matrix *m_aux = new Matrix(n);
+	
+	for(int i = 1; i <= n; i++) {
+		(*m_aux)(i) = 0;
+	}
+	
+	return (*m_aux);
+}
+
 /**
  * @brief Generates a matrix with all ones.
  * 

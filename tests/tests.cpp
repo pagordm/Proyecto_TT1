@@ -240,6 +240,22 @@ int m_sub_02() {
 	_assert(m_equals(A-1.0, C, 1e-10));
 	return 0;
 }
+
+int m_zeros_02() {
+    int f = 1;
+    int c = 4;
+	
+	Matrix A(f, c);
+	A(1,1) = 0; A(1,2) = 0; A(1,3) = 0; A(1,4) = 0;
+	
+	Matrix B = zeros(4);
+    
+    _assert(m_equals(A, B, 1e-10));
+    
+    return 0;
+}
+
+
 int all_tests()
 {
     _verify(m_sum_01);
@@ -255,6 +271,7 @@ int all_tests()
 	_verify(m_mul_02);
 	_verify(m_add_02);
 	_verify(m_sub_02);
+	_verify(m_zeros_02);
 
     return 0;
 }
