@@ -266,6 +266,13 @@ int m_dot_01() {
 	return 0;
 }
 
+int m_norm_01() {
+	Matrix v1(2);
+	v1(1)=3; v1(2)=4;
+	_assert(fabs(norm(v1)-5.0)<1e-10);
+	return 0;
+}
+
 int all_tests()
 {
     _verify(m_sum_01);
@@ -283,6 +290,7 @@ int all_tests()
 	_verify(m_sub_02);
 	_verify(m_zeros_02);
 	_verify(m_dot_01);
+	_verify(m_norm_01);
 
     return 0;
 }

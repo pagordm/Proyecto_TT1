@@ -406,3 +406,16 @@ double dot(Matrix &m1, Matrix &m2) {
 
 	return sum;
 }
+/**
+ * @brief Calculates the norm of a vector
+ * 
+ * @param m1 vector to calculate the norm of
+ * @return double the norm
+ */
+double norm(Matrix &m1) {
+	double sum = 0.0;
+	for(int i = 1; i <=m1.n_column; i++) {
+		sum+=m1(i)*m1(i);
+	}
+	return sqrt(sum);
+}

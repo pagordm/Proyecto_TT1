@@ -55,6 +55,8 @@ Matrix& eye(const int n_row, const int n_column);
 
 double dot(Matrix &m1, Matrix &m2);
 
+double norm(Matrix &m1);
+
 Matrix& inv(Matrix &m);
 
 #endif
