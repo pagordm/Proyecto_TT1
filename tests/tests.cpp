@@ -213,6 +213,20 @@ int m_mul_02() {
 	return 0;
 }
 
+int m_add_02() {
+	int f = 2;
+	int c = 2;
+	Matrix A(f,c);
+	A(1,1) = 2; A(1,2) = 3;
+	A(2,1) = 3; A(2,2) = 4;
+	Matrix C(f, c);
+	C(1,1) = 1; C(1,2) = 2;
+	C(2,1) = 2; C(2,2) = 3;
+
+	_assert(m_equals(C+1.0, A, 1e-10));
+	return 0;
+}
+
 int all_tests()
 {
     _verify(m_sum_01);
@@ -226,6 +240,7 @@ int all_tests()
 	_verify(m_eq_01);
 	_verify(m_eq_02);
 	_verify(m_mul_02);
+	_verify(m_add_02);
 
     return 0;
 }
