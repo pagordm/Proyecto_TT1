@@ -35,8 +35,10 @@ public:
 	Matrix& operator + (const double n);
 	Matrix& operator - (const double n);
 
-	Matrix& inv();
+	
 	Matrix& transpose();
+
+	
 	// Non-member operators
 	friend ostream& operator << (ostream &o, Matrix &m);
 };
@@ -50,5 +52,9 @@ Matrix& zeros(const int n_row, const int n_column);
 Matrix& zeros(const int n);
 
 Matrix& eye(const int n_row, const int n_column);
+
+double dot(Matrix &m1, Matrix &m2);
+
+Matrix& inv(Matrix &m);
 
 #endif

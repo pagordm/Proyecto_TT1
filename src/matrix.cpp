@@ -196,7 +196,7 @@ Matrix& Matrix::operator / (Matrix &m) {
 		exit(EXIT_FAILURE);
 	}
 	
-	Matrix *m_aux = &m.inv();
+	Matrix *m_aux = &inv(m);
 	
 	return (*this) * (*m_aux);
 }
@@ -205,33 +205,33 @@ Matrix& Matrix::operator / (Matrix &m) {
  * 
  * @return Matrix& Reference to the inverted matrix
  */
-Matrix& Matrix::inv() {
-	if (this->n_row != this->n_column) {
+Matrix& inv(Matrix &m) {
+	if (m.n_row != m.n_column) {
 		cout << "Matrix inv: error in n_row/n_column\n";
 		exit(EXIT_FAILURE);
 	}
 	
-	Matrix *m_aux = &eye(this->n_row, this->n_column);
-	
-	for(int i = 1; i <= this->n_row; i++) {
-		double pivot = (*this)(i,i);
+	Matrix *m_aux = &eye(m.n_row, m.n_column);
+	Matrix m_copy = m;
+	for(int i = 1; i <= m_copy.n_row; i++) {
+		double pivot = m_copy(i,i);
 
 		if (pivot==0) {
 			cout << "Matrix inv: singular matrix not invertible\n";
 			exit(EXIT_FAILURE);
 		}
 		
-		for(int j = 1; j <= this->n_column; j++) {
-			(*this)(i,j) /= pivot;
+		for(int j = 1; j <= m_copy.n_column; j++) {
+			m_copy(i,j) /= pivot;
 			(*m_aux)(i,j) /= pivot;
 		}
 		
-		for(int k = 1; k <= this->n_row; k++) {
+		for(int k = 1; k <= m_copy.n_row; k++) {
 			if (k != i) {
-				double factor = (*this)(k,i);
+				double factor = m_copy(k,i);
 				
-				for(int j = 1; j <= this->n_column; j++) {
-					(*this)(k,j) -= factor * (*this)(i,j);
+				for(int j = 1; j <= m_copy.n_column; j++) {
+					m_copy(k,j) -= factor * m_copy(i,j);
 					(*m_aux)(k,j) -= factor * (*m_aux)(i,j);
 				}
 			}
@@ -386,4 +386,23 @@ Matrix& Matrix::operator - (const double n) {
 	}
 	return *m_aux;
 
+}
+/**
+ * @brief Calculates the dot product between two vectors
+ * 
+ * @param m1 first vector of the dot product
+ * @param m2 second vector of the dot product
+ * @return double reference to the dot product
+ */
+double dot(Matrix &m1, Matrix &m2) {
+	if (m1.n_row!=1 || m2.n_row!=1 || m1.n_column!=m2.n_column) {
+		cout << "Vector dot: error in arguments" << endl;
+		exit(EXIT_FAILURE);
+	}
+	double sum = 0;
+	for(int i = 1; i <=m1.n_column; i++) {
+		sum+=m1(i)*m2(i);
+	}
+
+	return sum;
 }

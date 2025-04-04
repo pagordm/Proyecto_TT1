@@ -100,7 +100,7 @@ int m_inv_01() {
 	Matrix B(f, c); //Matriz inversa de A
 	B(1,1) = -3; B(1,2) = 2;
 	B(2,1) = 2; B(2,2) = -1;
-	_assert(m_equals(A.inv(), B, 1e-10));
+	_assert(m_equals(inv(A), B, 1e-10));
 	return 0;
 }
 
@@ -255,6 +255,16 @@ int m_zeros_02() {
     return 0;
 }
 
+int m_dot_01() {
+	Matrix v1(3);
+	v1(1)=1; v1(2)=2; v1(3)=3;
+	Matrix v2(3);
+	v2(1)=1; v2(2)=2; v2(3)=3;
+
+	_assert(fabs(dot(v1, v2)-14.0)<1e-10);
+
+	return 0;
+}
 
 int all_tests()
 {
@@ -272,6 +282,7 @@ int all_tests()
 	_verify(m_add_02);
 	_verify(m_sub_02);
 	_verify(m_zeros_02);
+	_verify(m_dot_01);
 
     return 0;
 }
