@@ -12,6 +12,9 @@ int main() {
 	
     Matrix M3 = M1 - M2;
 
+    Matrix V(3);
+    V(2)=5;
+    cout << "V\n" << V << "\n";
     cout << "M1\n" << M1 << "\n";
     cout << "M2\n" << M2 << "\n";
     cout << "M3\n" << M3 << "\n";

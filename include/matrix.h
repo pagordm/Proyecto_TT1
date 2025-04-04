@@ -19,9 +19,11 @@ public:
 
     // Parameterized constructor
     Matrix(const int n_row, const int n_column);
+	Matrix(const int v_size);
 	
 	// Member operators
 	double& operator () (const int row, const int column);
+	double& operator () (const int n);
 	Matrix& operator + (Matrix &m);
 	Matrix& operator - (Matrix &m);
 	Matrix& operator * (Matrix &m);

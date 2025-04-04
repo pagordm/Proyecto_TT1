@@ -24,6 +24,30 @@ Matrix::Matrix(const int n_row, const int n_column) {
 		this->data[i] = (double *) malloc(n_column*sizeof(double));
 	}
 }
+
+/**
+ * @brief Construct a new Matrix:: vector object
+ * 
+ * @param v_size the size of the vector
+ */
+Matrix::Matrix(const int v_size) {
+    if (v_size<=0) {
+		cout << "Vector create: error in v_size\n";
+        exit(EXIT_FAILURE);
+	}
+	
+	this->n_row = 1;
+	this->n_column = v_size;
+	this->data = (double **) malloc(sizeof(double *));
+	
+    if (this->data == NULL) {
+		cout << "Matrix create: error in data\n";
+        exit(EXIT_FAILURE);
+	}
+	
+	this->data[0] = (double *) calloc(v_size, sizeof(double));
+}
+
 /**
  * @brief Accesses a element of the matrix.
  * 
@@ -39,6 +63,23 @@ double& Matrix::operator () (const int row, const int column) {
 	
 	return this->data[row - 1][column - 1];
 }
+
+/**
+ * @brief Accesses a element of the vector.
+ * 
+ * @param row Row of the element
+ * @param column Column of the element
+ * @return double& A reference to the element in the row and columns
+ */
+double& Matrix::operator () (const int n) {
+	if (n<=0 || n>this->n_row*this->n_column) {
+		cout << "Matrix get: error in row/column\n";
+        exit(EXIT_FAILURE);
+	}
+	
+	return this->data[(n - 1)/this->n_column][(n - 1)%this->n_column];
+}
+
 /**
  * @brief Assignment operator. Copies all values of matrix m into this. Requires both matrices to have the same shape.
  * 
