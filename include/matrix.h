@@ -31,6 +31,7 @@ public:
 	Matrix& operator / (const double n);
 	Matrix& operator * (const double n);
 	Matrix& operator + (const double n);
+	Matrix& operator - (const double n);
 
 	Matrix& inv();
 	Matrix& transpose();
