@@ -276,3 +276,21 @@ Matrix& Matrix::operator / (const double n) {
 	return *m_aux;
 
 }
+
+/**
+ * @brief Multiplies a matrix element-wise by a double
+ * 
+ * @param n Double to multiply the matrix by.
+ * @return Matrix& Reference to the resulting matrix.
+ */
+Matrix& Matrix::operator * (const double n) {
+	Matrix *m_aux = new Matrix(this->n_row, this->n_column);
+
+	for(int i = 1; i <= this->n_row; i++) {
+		for(int j = 1; j <= this->n_column; j++) {
+			(*m_aux)(i,j) = (*this)(i,j)*n;
+		}
+	}
+	return *m_aux;
+
+}
