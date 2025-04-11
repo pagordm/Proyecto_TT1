@@ -336,6 +336,41 @@ int m_extract_column_01() {
 	_assert(m_equals(column, column_expected, 1e-10));
 	return 0;
 }
+
+int m_assign_row_01() {
+	Matrix A(3,3);
+	A(1,1)=1; A(1,2)=2; A(1,3)=3;
+	A(2,1)=4; A(2,2)=5; A(2,3)=6;
+	A(3,1)=7; A(3,2)=8; A(3,3)=9;
+	Matrix row(3);
+	row(1)=10; row(2)=11; row(3)=12;
+	A.assign_row(2, row);
+	Matrix A_expected(3,3);
+	A_expected(1,1)=1; A_expected(1,2)=2; A_expected(1,3)=3;
+	A_expected(2,1)=10; A_expected(2,2)=11; A_expected(2,3)=12;
+	A_expected(3,1)=7; A_expected(3,2)=8; A_expected(3,3)=9;
+
+	_assert(m_equals(A, A_expected, 1e-10));
+	return 0;
+}
+
+int m_assign_column_01() {
+	Matrix A(3,3);
+	A(1,1)=1; A(1,2)=2; A(1,3)=3;
+	A(2,1)=4; A(2,2)=5; A(2,3)=6;
+	A(3,1)=7; A(3,2)=8; A(3,3)=9;
+	Matrix column(3);
+	column(1)=10; column(2)=11; column(3)=12;
+	A.assign_column(2, column);
+	Matrix A_expected(3,3);
+	A_expected(1,1)=1; A_expected(1,2)=10; A_expected(1,3)=3;
+	A_expected(2,1)=4; A_expected(2,2)=11; A_expected(2,3)=6;
+	A_expected(3,1)=7; A_expected(3,2)=12; A_expected(3,3)=9;
+
+	_assert(m_equals(A, A_expected, 1e-10));
+	return 0;
+}
+
 int all_tests()
 {
     _verify(m_sum_01);
@@ -359,7 +394,8 @@ int all_tests()
 	_verify(m_extract_row_01);
 	_verify(m_union_vector_01);
 	_verify(m_extract_column_01);
-	
+	_verify(m_assign_row_01);
+	_verify(m_assign_column_01);
     return 0;
 }
 

@@ -532,3 +532,44 @@ Matrix& union_vector(Matrix &m1, Matrix &m2) {
     return *result;
 }
 
+/**
+ * @brief Assigns a row to a matrix
+ * 
+ * @param n the row to assign
+ * @param m the matrix to assign
+ * @return Matrix& reference to the matrix
+ */
+Matrix& Matrix::assign_row(const int n, Matrix &m) {
+	if (n < 1 || n > this->n_row || m.n_row != 1 || m.n_column != this->n_column) {
+		cout << "Assign row: error in arguments" << endl;
+		exit(EXIT_FAILURE);
+	}
+	
+	for (int i = 0; i < this->n_column; i++) {
+		(*this)(n, i+1) = m(i+1);
+	}
+
+	return *this;
+}
+
+/**
+ * @brief Assigns a column to a matrix
+ * 
+ * @param n the column to assign
+ * @param m the matrix to assign (must be a vector)
+ * @return Matrix& reference to the matrix
+ */
+Matrix& Matrix::assign_column(const int n, Matrix &m) {
+	if (n < 1 || n > this->n_column || m.n_row != 1 || m.n_column != this->n_row) {
+		cout << "Assign column: error in arguments" << endl;
+		exit(EXIT_FAILURE);
+	}
+	
+	for (int i = 0; i < this->n_column; i++) {
+		(*this)(i+1, n) = m(i+1);
+	}
+
+	return *this;
+}
+
+

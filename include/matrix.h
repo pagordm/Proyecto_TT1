@@ -40,6 +40,8 @@ public:
 	Matrix& extract_vector(const int start, const int end);
 	Matrix& extract_row(const int n);
 	Matrix& extract_column(const int n);
+	Matrix& assign_row(const int n, Matrix &m);
+	Matrix& assign_column(const int n, Matrix &m);
 
 	
 	// Non-member operators
