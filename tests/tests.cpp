@@ -312,6 +312,30 @@ int m_extract_row_01() {
 	return 0;
 }
 
+int m_union_vector_01() {
+	Matrix v1(1,3);
+	v1(1,1)=1; v1(1,2)=2; v1(1,3)=3;
+	Matrix v2(1,3);
+	v2(1,1)=4; v2(1,2)=5; v2(1,3)=6;
+	Matrix v3(1,6);
+	v3(1,1)=1; v3(1,2)=2; v3(1,3)=3; v3(1,4)=4; v3(1,5)=5; v3(1,6)=6;
+
+	_assert(m_equals(union_vector(v1, v2), v3, 1e-10));
+	return 0;
+}
+
+int m_extract_column_01() {
+	Matrix A(3,3);
+	A(1,1)=1; A(1,2)=2; A(1,3)=3;
+	A(2,1)=4; A(2,2)=5; A(2,3)=6;
+	A(3,1)=7; A(3,2)=8; A(3,3)=9;
+	Matrix column = A.extract_column(2);
+	Matrix column_expected(3);
+	column_expected(1)=2; column_expected(2)=5; column_expected(3)=8;
+
+	_assert(m_equals(column, column_expected, 1e-10));
+	return 0;
+}
 int all_tests()
 {
     _verify(m_sum_01);
@@ -333,7 +357,9 @@ int all_tests()
 	_verify(m_cross_01);
 	_verify(m_extract_vector_01);
 	_verify(m_extract_row_01);
-
+	_verify(m_union_vector_01);
+	_verify(m_extract_column_01);
+	
     return 0;
 }
 

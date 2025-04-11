@@ -39,6 +39,7 @@ public:
 	Matrix& transpose();
 	Matrix& extract_vector(const int start, const int end);
 	Matrix& extract_row(const int n);
+	Matrix& extract_column(const int n);
 
 	
 	// Non-member operators
@@ -52,6 +53,8 @@ ostream& operator << (ostream &o, Matrix &m);
 Matrix& zeros(const int n_row, const int n_column);
 
 Matrix& zeros(const int n);
+
+Matrix& union_vector(Matrix &m1, Matrix &m2);
 
 Matrix& eye(const int n_row, const int n_column);
 

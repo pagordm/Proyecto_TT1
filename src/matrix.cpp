@@ -486,3 +486,49 @@ Matrix& Matrix::extract_row(const int n) {
     return *result;
 }
 
+/**
+ * @brief Extracts a column from a matrix
+ * 
+ * @param n the column to extract
+ * @return Matrix& reference to the extracted column as a vector
+ */
+Matrix& Matrix::extract_column(const int n) {
+    if (n < 1 || n > this->n_column) {
+        cout << "Extract column: error in arguments" << endl;
+        exit(EXIT_FAILURE);
+    }
+	Matrix *result = new Matrix(this->n_row);
+
+	for (int i = 0; i < this->n_row; i++) {
+		(*result)(i+1) = (*this)(i+1, n);
+	}
+
+	return *result;
+}
+
+/**
+ * @brief Concatenates two vectors into a single vector
+ * 
+ * @param m1 first vector to concatenate
+ * @param m2 second vector to concatenate
+ * @return Matrix& reference to the concatenated vector
+ */
+Matrix& union_vector(Matrix &m1, Matrix &m2) {
+    if (m1.n_row != 1 || m2.n_row != 1 || m1.n_column != m2.n_column) {
+        cout << "Union vector: error in arguments" << endl;
+        exit(EXIT_FAILURE);
+    }
+
+    Matrix *result = new Matrix(m1.n_column + m2.n_column);
+
+    for (int i = 0; i < m1.n_column; i++) {
+        (*result)(i+1) = m1(i+1);
+	}
+
+    for (int i = 0; i < m2.n_column; i++) {
+        (*result)(i+m1.n_column+1) = m2(i+1);
+    }
+
+    return *result;
+}
+
