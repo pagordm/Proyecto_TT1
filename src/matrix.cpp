@@ -450,13 +450,13 @@ Matrix& cross(Matrix &m1, Matrix &m2) {
  * @return Matrix& reference to the extracted vector
  */
 Matrix& Matrix::extract_vector(const int start, const int end) {
-    if (n_column != 1 || start < 1 || end > n_row || start > end) {
+    if (this->n_row != 1 || start < 1 || end > this->n_column || start > end) {
         cout << "Extract vector: error in arguments" << endl;
         exit(EXIT_FAILURE);
     }
 
     int new_size = end - start + 1;
-    Matrix *result = new Matrix(new_size, 1);
+    Matrix *result = new Matrix(new_size);
 
     for (int i = 0; i < new_size; i++) {
         (*result)(i+1) = (*this)(start+i);
@@ -472,7 +472,7 @@ Matrix& Matrix::extract_vector(const int start, const int end) {
  * @return Matrix& reference to the extracted row as a vector
  */
 Matrix& Matrix::extract_row(const int n) {
-    if (n < 1 || n > n_row) {
+    if (n < 1 || n > this->n_row) {
         cout << "Extract row: error in arguments" << endl;
         exit(EXIT_FAILURE);
     }
