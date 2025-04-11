@@ -273,6 +273,33 @@ int m_norm_01() {
 	return 0;
 }
 
+int m_cross_01() {
+	Matrix v1(3,1);
+	v1(1)=1; v1(2)=0; v1(3)=0;
+	Matrix v2(3,1);
+	v2(1)=0; v2(2)=1; v2(3)=0;
+	
+	Matrix C(3,1);
+	C(1)=0; C(2)=0; C(3)=1;
+	
+	Matrix R = cross(v1,v2);
+	
+	_assert(m_equals(C, R, 1e-10));
+	return 0;
+}
+
+int m_extract_vector_01() {
+	Matrix v(3);
+	v(1)=1; v(2)=2; v(3)=3;
+	Matrix subv = v.extract_vector(2,3);
+	Matrix subv_expected(2);
+	subv_expected(1)=2; subv_expected(2)=3;
+
+	_assert(m_equals(subv, subv_expected, 1e-10));
+	return 0;
+}
+
+
 int all_tests()
 {
     _verify(m_sum_01);
@@ -291,6 +318,8 @@ int all_tests()
 	_verify(m_zeros_02);
 	_verify(m_dot_01);
 	_verify(m_norm_01);
+	_verify(m_cross_01);
+	_verify(m_extract_vector_01);
 
     return 0;
 }

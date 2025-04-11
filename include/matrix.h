@@ -37,6 +37,7 @@ public:
 
 	
 	Matrix& transpose();
+	Matrix& extract_vector(int start, int end);
 
 	
 	// Non-member operators
@@ -56,6 +57,8 @@ Matrix& eye(const int n_row, const int n_column);
 double dot(Matrix &m1, Matrix &m2);
 
 double norm(Matrix &m1);
+
+Matrix& cross(Matrix &m1, Matrix &m2);
 
 Matrix& inv(Matrix &m);
 

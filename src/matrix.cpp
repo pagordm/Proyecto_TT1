@@ -419,3 +419,48 @@ double norm(Matrix &m1) {
 	}
 	return sqrt(sum);
 }
+
+/**
+ * @brief Calculates the cross product between two vectors
+ * 
+ * @param m1 first vector of the cross product
+ * @param m2 second vector of the cross product
+ * @return Matrix& reference to the cross product matrix
+ */
+Matrix& cross(Matrix &m1, Matrix &m2) {
+	if (m1.n_row!=3 || m2.n_row!=3 || m1.n_column!=1 || m2.n_column!=1) {
+		cout << "Vector cross: error in arguments" << endl;
+		exit(EXIT_FAILURE);
+	}
+	Matrix *m_aux = new Matrix(3);
+
+	(*m_aux)(1) = m1(2)*m2(3) - m1(3)*m2(2);
+	(*m_aux)(2) = m1(3)*m2(1) - m1(1)*m2(3);
+	(*m_aux)(3) = m1(1)*m2(2) - m1(2)*m2(1);
+	
+	return *m_aux;
+	
+}
+
+/**
+ * @brief Extracts a subvector from a vector between specified indices
+ * 
+ * @param start starting index of extraction (inclusive)
+ * @param end ending index of extraction (inclusive) 
+ * @return Matrix& reference to the extracted vector
+ */
+Matrix& Matrix::extract_vector(int start, int end) {
+    if (n_column != 1 || start < 1 || end > n_row || start > end) {
+        cout << "Extract vector: error in arguments" << endl;
+        exit(EXIT_FAILURE);
+    }
+
+    int new_size = end - start + 1;
+    Matrix *result = new Matrix(new_size, 1);
+
+    for (int i = 0; i < new_size; i++) {
+        (*result)(i+1) = (*this)(start+i);
+    }
+
+    return *result;
+}
