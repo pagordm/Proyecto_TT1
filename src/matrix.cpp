@@ -428,7 +428,7 @@ double norm(Matrix &m1) {
  * @return Matrix& reference to the cross product matrix
  */
 Matrix& cross(Matrix &m1, Matrix &m2) {
-	if (m1.n_row!=3 || m2.n_row!=3 || m1.n_column!=1 || m2.n_column!=1) {
+	if (m1.n_column!=3 || m2.n_column!=3 || m1.n_row!=1 || m2.n_row!=1) {
 		cout << "Vector cross: error in arguments" << endl;
 		exit(EXIT_FAILURE);
 	}
@@ -449,7 +449,7 @@ Matrix& cross(Matrix &m1, Matrix &m2) {
  * @param end ending index of extraction (inclusive) 
  * @return Matrix& reference to the extracted vector
  */
-Matrix& Matrix::extract_vector(int start, int end) {
+Matrix& Matrix::extract_vector(const int start, const int end) {
     if (n_column != 1 || start < 1 || end > n_row || start > end) {
         cout << "Extract vector: error in arguments" << endl;
         exit(EXIT_FAILURE);
@@ -464,3 +464,25 @@ Matrix& Matrix::extract_vector(int start, int end) {
 
     return *result;
 }
+
+/**
+ * @brief Extracts a row from a matrix
+ * 
+ * @param n the row to extract
+ * @return Matrix& reference to the extracted row as a vector
+ */
+Matrix& Matrix::extract_row(const int n) {
+    if (n < 1 || n > n_row) {
+        cout << "Extract row: error in arguments" << endl;
+        exit(EXIT_FAILURE);
+    }
+
+    Matrix *result = new Matrix(n_column);
+    
+    for (int j = 0; j < n_column; j++) {
+        (*result)(j+1) = (*this)(n, j+1);
+    }
+
+    return *result;
+}
+

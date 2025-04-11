@@ -274,16 +274,15 @@ int m_norm_01() {
 }
 
 int m_cross_01() {
-	Matrix v1(3,1);
+	Matrix v1(3);
 	v1(1)=1; v1(2)=0; v1(3)=0;
-	Matrix v2(3,1);
+	Matrix v2(3);
 	v2(1)=0; v2(2)=1; v2(3)=0;
 	
-	Matrix C(3,1);
+	Matrix C(3);
 	C(1)=0; C(2)=0; C(3)=1;
 	
 	Matrix R = cross(v1,v2);
-	
 	_assert(m_equals(C, R, 1e-10));
 	return 0;
 }
@@ -299,6 +298,19 @@ int m_extract_vector_01() {
 	return 0;
 }
 
+int m_extract_row_01() {
+	Matrix A(3,3);
+	A(1,1)=1; A(1,2)=2; A(1,3)=3;
+	A(2,1)=4; A(2,2)=5; A(2,3)=6;
+	A(3,1)=7; A(3,2)=8; A(3,3)=9;
+	
+	Matrix row = A.extract_row(2);
+	Matrix row_expected(3);
+	row_expected(1)=4; row_expected(2)=5; row_expected(3)=6;
+
+	_assert(m_equals(row, row_expected, 1e-10));
+	return 0;
+}
 
 int all_tests()
 {
@@ -320,6 +332,7 @@ int all_tests()
 	_verify(m_norm_01);
 	_verify(m_cross_01);
 	_verify(m_extract_vector_01);
+	_verify(m_extract_row_01);
 
     return 0;
 }

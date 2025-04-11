@@ -37,7 +37,8 @@ public:
 
 	
 	Matrix& transpose();
-	Matrix& extract_vector(int start, int end);
+	Matrix& extract_vector(const int start, const int end);
+	Matrix& extract_row(const int n);
 
 	
 	// Non-member operators
