@@ -3,6 +3,7 @@
 #include "..\include\R_x.hpp"
 #include "..\include\R_y.hpp"
 #include "..\include\R_z.hpp"
+#include "..\include\position.hpp"
 #include <cstdio>
 #include <cmath>
 
@@ -408,6 +409,15 @@ int R_z_01() {
 	return 0;
 }
 
+int position_01() {
+	Matrix p = position(0, 0, 0);
+	Matrix expected(3);
+	expected(1)=6378136.3; expected(2)=0; expected(3)=0;
+
+	_assert(m_equals(p, expected, 1e-10));
+	return 0;
+}
+
 int all_tests()
 {
     _verify(m_sum_01);
@@ -436,6 +446,7 @@ int all_tests()
 	_verify(R_x_01);
 	_verify(R_y_01);
 	_verify(R_z_01);
+	_verify(position_01);
 
     return 0;
 }
