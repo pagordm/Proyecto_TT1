@@ -1,4 +1,6 @@
+#define _USE_MATH_DEFINES
 #include "..\include\matrix.h"
+#include "..\include\R_x.hpp"
 #include <cstdio>
 #include <cmath>
 
@@ -371,6 +373,17 @@ int m_assign_column_01() {
 	return 0;
 }
 
+int R_x_01() {
+	Matrix R = R_x(M_PI/2);
+	Matrix expected(3,3);
+	expected(1,1)=1; expected(1,2)=0; expected(1,3)=0;
+	expected(2,1)=0; expected(2,2)=0; expected(2,3)=1;
+	expected(3,1)=0; expected(3,2)=-1; expected(3,3)=0;
+
+	_assert(m_equals(R, expected, 1e-10));
+	return 0;
+}
+
 int all_tests()
 {
     _verify(m_sum_01);
@@ -396,6 +409,8 @@ int all_tests()
 	_verify(m_extract_column_01);
 	_verify(m_assign_row_01);
 	_verify(m_assign_column_01);
+	_verify(R_x_01);
+
     return 0;
 }
 

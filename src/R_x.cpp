@@ -1,6 +1,11 @@
 #include "..\include\R_x.hpp"
 #include <cmath>
-
+/**
+ * @brief Generate a rotation matrix for a given angle around the x-axis
+ * 
+ * @param angle The angle of rotation in radians
+ * @return Matrix& The rotation matrix
+ */
 Matrix& R_x(double angle) {
 	double C = cos(angle);
 	double S = sin(angle);
