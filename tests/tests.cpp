@@ -4,6 +4,7 @@
 #include "..\include\R_y.hpp"
 #include "..\include\R_z.hpp"
 #include "..\include\position.hpp"
+#include "..\include\accelpointmass.hpp"
 #include <cstdio>
 #include <cmath>
 
@@ -418,6 +419,19 @@ int position_01() {
 	return 0;
 }
 
+int accelpointmass_01() {
+	Matrix r(3);
+	r(1)=1; r(2)=2; r(3)=3;
+	Matrix s(3);
+	s(1)=4; s(2)=5; s(3)=6;
+	Matrix a = accelpointmass(r, s, 1);
+	Matrix expected(3);
+	expected(1)=0.015463313357364; expected(2)=0.013983305870875; expected(3)=0.012503298384387; //results from MATLAB
+
+	_assert(m_equals(a, expected, 1e-10));
+	return 0;
+}
+
 int all_tests()
 {
     _verify(m_sum_01);
@@ -447,6 +461,7 @@ int all_tests()
 	_verify(R_y_01);
 	_verify(R_z_01);
 	_verify(position_01);
+	_verify(accelpointmass_01);
 
     return 0;
 }
