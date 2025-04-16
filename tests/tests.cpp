@@ -5,6 +5,8 @@
 #include "..\include\R_z.hpp"
 #include "..\include\position.hpp"
 #include "..\include\accelpointmass.hpp"
+#include "..\include\cheb3d.hpp"
+#include "..\include\sign_.hpp"
 #include <cstdio>
 #include <cmath>
 
@@ -432,6 +434,32 @@ int accelpointmass_01() {
 	return 0;
 }
 
+int cheb3d_01() {
+	Matrix Cx(2);
+	Cx(1)=1; Cx(2)=2;
+	Matrix Cy(2);
+	Cy(1)=2; Cy(2)=3;
+	Matrix Cz(2);
+	Cz(1)=3; Cz(2)=4;
+	
+	Matrix result = cheb3d(1, 2, 0, 2, Cx, Cy, Cz);
+	Matrix expected(3);
+	expected(1)=1; expected(2)=2; expected(3)=3;
+
+	_assert(m_equals(result, expected, 1e-10));
+	return 0;
+}
+
+int sign_01() {
+	double a = -5.0;
+	double b = -10.0;
+	double result = sign_(a, b);
+	double expected = -5.0;
+
+	_assert(fabs(result - expected) < 1e-10);
+	return 0;
+}
+
 int all_tests()
 {
     _verify(m_sum_01);
@@ -462,6 +490,8 @@ int all_tests()
 	_verify(R_z_01);
 	_verify(position_01);
 	_verify(accelpointmass_01);
+	_verify(cheb3d_01);
+	_verify(sign_01);
 
     return 0;
 }
