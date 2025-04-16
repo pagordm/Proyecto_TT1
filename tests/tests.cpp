@@ -7,6 +7,11 @@
 #include "..\include\accelpointmass.hpp"
 #include "..\include\cheb3d.hpp"
 #include "..\include\sign_.hpp"
+#include "..\include\eccanom.hpp"
+#include "..\include\frac.hpp"
+#include "..\include\meanobliquity.hpp"
+#include "..\include\mjday.hpp"
+#include "..\include\mjday_tdb.hpp"
 #include <cstdio>
 #include <cmath>
 
@@ -460,6 +465,57 @@ int sign_01() {
 	return 0;
 }
 
+int eccanom_01() {
+	double M = 0.5;
+	double e = 0.0;
+	double result = EccAnom(M, e);
+	double expected = 0.5;
+
+	_assert(fabs(result - expected) < 1e-10);
+	return 0;
+}
+
+int frac_01() {
+	double x = 1.5;
+	double result = frac(x);
+	double expected = 0.5;
+
+	_assert(fabs(result - expected) < 1e-10);
+	return 0;
+}
+
+int meanobliquity_01() {
+	double Mjd_TT = 54321.0;
+	double result = MeanObliquity(Mjd_TT);
+	double expected = 0.409075551101389; //results from MATLAB
+
+	_assert(fabs(result - expected) < 1e-10);
+	return 0;
+}
+
+int mjday_01() {
+	int year = 2025;
+	int month = 1;
+	int day = 1;
+	int hour = 1;
+	int minute = 0;
+	double second = 0;
+	double result = Mjday(year, month, day, hour, minute, second);
+	double expected = 6.067604166666651e04; //results from MATLAB
+
+	_assert(fabs(result - expected) < 1e-10);
+	return 0;
+}
+
+int mjday_tdb_01() {
+	double Mjd_TT = 6.067604166666651e04;
+	double result = Mjday_TDB(Mjd_TT);
+	double expected = 6.067604166666546e04; //results from MATLAB
+
+	_assert(fabs(result - expected) < 1e-10);
+	return 0;
+}
+
 int all_tests()
 {
     _verify(m_sum_01);
@@ -492,6 +548,11 @@ int all_tests()
 	_verify(accelpointmass_01);
 	_verify(cheb3d_01);
 	_verify(sign_01);
+	_verify(eccanom_01);
+	_verify(frac_01);
+	_verify(meanobliquity_01);
+	_verify(mjday_01);
+	_verify(mjday_tdb_01);
 
     return 0;
 }
