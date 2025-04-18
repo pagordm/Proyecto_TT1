@@ -12,6 +12,13 @@
 #include "..\include\meanobliquity.hpp"
 #include "..\include\mjday.hpp"
 #include "..\include\mjday_tdb.hpp"
+#include "..\include\timediff.hpp"
+#include "..\include\nutangles.hpp"
+#include "..\include\timeupdate.hpp"
+#include "..\include\azelpa.hpp"
+#include "..\include\iers.hpp"
+#include "..\include\legendre.hpp"
+#include <tuple>
 #include <cstdio>
 #include <cmath>
 
@@ -516,6 +523,77 @@ int mjday_tdb_01() {
 	return 0;
 }
 
+int timediff_01() {
+	double Mjd_TT = 6.067604166666651e04;
+	double Mjd_UTC = 7.0e04;
+	std::tuple<double, double, double, double, double> result = timediff(Mjd_TT, Mjd_UTC);
+	std::tuple<double, double, double, double, double> expected = std::make_tuple(-9.323958333333489e+03, -69981, -9.304958333333489e+03, 7.003218399999999e+04, 69981);
+	_assert(fabs(std::get<0>(result) - std::get<0>(expected)) < 1e-10);
+	_assert(fabs(std::get<1>(result) - std::get<1>(expected)) < 1e-10);
+	_assert(fabs(std::get<2>(result) - std::get<2>(expected)) < 1e-10);
+	_assert(fabs(std::get<3>(result) - std::get<3>(expected)) < 1e-10);
+	_assert(fabs(std::get<4>(result) - std::get<4>(expected)) < 1e-10);
+	return 0;
+}
+
+int azelpa_01() {
+	Matrix r(3);
+	r(1)=1; r(2)=2; r(3)=3;
+	double expected = 0.463647609000806; //results from MATLAB
+	double expected2 = 0.930274014115472;
+	std::tuple<double, double, Matrix, Matrix> result = AzElPa(r);
+
+	_assert(fabs(std::get<0>(result) - expected) < 1e-10);
+	_assert(fabs(std::get<1>(result) - expected2) < 1e-10);
+	return 0;
+}
+
+int iers_01() {
+	Matrix s = eye(15, 15);
+	std::tuple<double, double, double, double, double, double, double, double, double> result = iers(s, 0.0);
+	
+
+	_assert(fabs(std::get<0>(result) - 0.0) < 1e-10);
+	_assert(fabs(std::get<1>(result) - 0.0) < 1e-10);
+	_assert(fabs(std::get<2>(result) - 0.0) < 1e-10);
+
+	return 0;
+}
+
+int legendre_01() {
+	std::tuple<Matrix, Matrix> result = legendre(1, 2, 1.0);
+	Matrix P = std::get<0>(result);
+	Matrix dP = std::get<1>(result);
+	Matrix expected(2,3);
+	expected(1,1) = 1.0;    expected(1,2) = 0.0;       expected(1,3) = 0.0;
+	expected(2,1) = 1.457470498782296; expected(2,2) = 0.935831045210238;    expected(2,3) = 0.0;
+	_assert(m_equals(P, expected, 1e-10));
+	return 0;
+}
+
+int nutangles_01() {
+	double Mjd_TT = 6.067604166666651e04;
+	double expected = 9.723503682287755e-07;
+	double expected2 = 4.120518762261807e-05;
+	std::tuple<double, double> result = NutAngles(Mjd_TT);
+
+	_assert(fabs(std::get<0>(result) - expected) < 1e-10);
+	_assert(fabs(std::get<1>(result) - expected2) < 1e-10);
+	return 0;
+}
+
+int timeupdate_01() {
+	Matrix r=eye(3,3);
+	Matrix v(3);
+	v(1)=1; v(2)=2; v(3)=3;
+	Matrix result = TimeUpdate(r, v, 1.0);
+	Matrix expected(1);
+	expected(1)=15;
+
+	_assert(m_equals(result, expected.transpose(), 1e-10));
+	return 0;
+}
+
 int all_tests()
 {
     _verify(m_sum_01);
@@ -553,6 +631,12 @@ int all_tests()
 	_verify(meanobliquity_01);
 	_verify(mjday_01);
 	_verify(mjday_tdb_01);
+	_verify(timediff_01);
+	_verify(azelpa_01);
+	_verify(iers_01);
+	_verify(legendre_01);
+	_verify(nutangles_01);
+	_verify(timeupdate_01);
 
     return 0;
 }

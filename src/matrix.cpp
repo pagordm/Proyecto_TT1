@@ -57,7 +57,7 @@ Matrix::Matrix(const int v_size) {
  */
 double& Matrix::operator () (const int row, const int column) {
 	if (row <= 0 || row > this->n_row || column <= 0 || column > this->n_column) {
-		cout << "Matrix get: error in row/column\n";
+		cout << "Matrix get: error in row/column: " << row << "," << column << endl;
         exit(EXIT_FAILURE);
 	}
 	
@@ -73,7 +73,7 @@ double& Matrix::operator () (const int row, const int column) {
  */
 double& Matrix::operator () (const int n) {
 	if (n<=0 || n>this->n_row*this->n_column) {
-		cout << "Matrix get: error in row/column\n";
+		cout << "Matrix get: error in row/column: " << n << endl;
         exit(EXIT_FAILURE);
 	}
 	
@@ -87,15 +87,24 @@ double& Matrix::operator () (const int n) {
  * @return Matrix& A reference to this, to be used in chaining assignments.
  */
 Matrix& Matrix::operator = (Matrix &m) {
-	if (this->n_row != m.n_row || this->n_column != m.n_column) {
-		cout << "Matrix assignment: error in n_row/n_column\n";
+	//Recreate the matrix with the same shape as m
+	this->n_row = m.n_row;
+	this->n_column = m.n_column;
+
+	this->data = (double **) malloc(m.n_row*sizeof(double *));
+	
+    if (this->data == NULL) {
+		cout << "Matrix assignment: error in data\n";
         exit(EXIT_FAILURE);
 	}
-	for(int i = 0; i < this->n_row; i++) {
+	
+	for(int i = 0; i < m.n_row; i++) {
+		this->data[i] = (double *) malloc(m.n_column*sizeof(double));
 		for (int j = 0; j < this->n_column; j++) {
 			this->data[i][j]=m.data[i][j];
 		}
 	}
+	
 	return *this;
 }
 /**
@@ -166,7 +175,7 @@ ostream& operator << (ostream &o, Matrix &m) {
  */
 Matrix& Matrix::operator * (Matrix &m) {
 	if (this->n_column != m.n_row) {
-		cout << "Matrix mul: error in n_column/n_row\n";
+		cout << "Matrix mul: error in n_column/n_row" << this->n_column << " " << m.n_row << endl;
 		exit(EXIT_FAILURE);
 	}
 	
