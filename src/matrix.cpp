@@ -1,4 +1,15 @@
 #include "..\include\matrix.h"
+
+/**
+ * @brief Construct a new Matrix:: Matrix object
+ * 
+ */
+Matrix::Matrix() {
+	this->n_column=0;
+	this->n_row=0;
+	this->data=nullptr;
+}
+
 /**
  * @brief Construct a new Matrix:: Matrix object
  * 

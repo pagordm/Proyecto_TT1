@@ -18,9 +18,11 @@
 #include "..\include\azelpa.hpp"
 #include "..\include\iers.hpp"
 #include "..\include\legendre.hpp"
+#include "..\include\global.hpp"
 #include <tuple>
 #include <cstdio>
 #include <cmath>
+
 
 int tests_run = 0;
 
@@ -550,12 +552,12 @@ int azelpa_01() {
 
 int iers_01() {
 	Matrix s = eye(15, 15);
-	std::tuple<double, double, double, double, double, double, double, double, double> result = iers(s, 0.0);
+	std::tuple<double, double, double, double, double, double, double, double, double> result = iers(eopdata, 37670);
 	
 
-	_assert(fabs(std::get<0>(result) - 0.0) < 1e-10);
-	_assert(fabs(std::get<1>(result) - 0.0) < 1e-10);
-	_assert(fabs(std::get<2>(result) - 0.0) < 1e-10);
+	_assert(fabs(std::get<0>(result) - (-1.338037278494208e-07)) < 1e-10);
+	_assert(fabs(std::get<1>(result) - 1.058353113998928e-06) < 1e-10);
+	_assert(fabs(std::get<2>(result) - 0.030535300000000) < 1e-10);
 
 	return 0;
 }
@@ -596,6 +598,7 @@ int timeupdate_01() {
 
 int all_tests()
 {
+	eop19620101(10); // c = 21413
     _verify(m_sum_01);
     _verify(m_sub_01);
     _verify(m_zeros_01);
