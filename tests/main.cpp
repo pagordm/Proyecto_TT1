@@ -1,5 +1,6 @@
 #include "..\include\matrix.h"
 #include "..\include\global.hpp"
+#include "..\include\legendre.hpp"
 #include <iostream>
 
 using namespace std;
@@ -7,6 +8,14 @@ using namespace std;
 int main() {
     eop19620101(4); // c = 21413
     cout << eopdata << endl;
+
+    std::tuple<Matrix, Matrix> result = legendre(2, 2, 1.0);
+	Matrix P = std::get<0>(result);
+	Matrix dP = std::get<1>(result);
+
+    cout << "P\n" << P << endl;
+    cout << "dP\n" << dP << endl;
+
     Matrix M1(3, 2);
 	M1(1,1) = 5;
 	
