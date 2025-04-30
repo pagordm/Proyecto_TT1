@@ -8,10 +8,13 @@
  * @param fi [rad]
  * @return std::tuple<Matrix, Matrix> 
  */
-std::tuple<Matrix, Matrix> legendre(int n, int m, double fi) {
+std::tuple<Matrix&, Matrix&> Legendre(int n, int m, double fi) {
     
-    Matrix pnm = zeros(n+1,m+1);
-    Matrix dpnm = zeros(n+1,m+1);
+    Matrix *P = new Matrix(n+1, m+1);
+    Matrix *dP = new Matrix(n+1, m+1);
+
+    Matrix pnm = *P;
+    Matrix dpnm = *dP;
 
     pnm(1,1)=1;
     dpnm(1,1)=0;
@@ -59,7 +62,6 @@ std::tuple<Matrix, Matrix> legendre(int n, int m, double fi) {
             break;
         
     }
-
-    return std::make_tuple(pnm, dpnm);
+    return std::tie(*P, *dP);
 
 }

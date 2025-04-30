@@ -7,9 +7,10 @@ using namespace std;
 
 int main() {
     eop19620101(4); // c = 21413
-    cout << eopdata << endl;
-
-    std::tuple<Matrix, Matrix> result = legendre(2, 2, 1.0);
+    GGM03S();
+    cout << "Cnm: \n" << Cnm << endl;
+    cout << "Snm: \n" << Snm << endl;
+    std::tuple<Matrix, Matrix> result = Legendre(2, 2, 1.0);
 	Matrix P = std::get<0>(result);
 	Matrix dP = std::get<1>(result);
 

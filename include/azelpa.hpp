@@ -7,6 +7,6 @@
 #include "matrix.h"
 #include <cmath>
 
-std::tuple<double, double, Matrix, Matrix> AzElPa(Matrix& s);
+std::tuple<double, double, Matrix&, Matrix&> AzElPa(Matrix& s);
 
 #endif

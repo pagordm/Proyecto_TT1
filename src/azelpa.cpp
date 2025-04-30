@@ -10,7 +10,7 @@
  *         - Matrix dAds: Partials of azimuth w.r.t. s
  *         - Matrix dEds: Partials of elevation w.r.t. s
  */
-std::tuple<double, double, Matrix, Matrix> AzElPa(Matrix& s) {
+std::tuple<double, double, Matrix&, Matrix&> AzElPa(Matrix& s) {
     double pi2 = Constants::pi2;
 
     double rho = sqrt(s(1)*s(1)+s(2)*s(2));
@@ -35,6 +35,6 @@ std::tuple<double, double, Matrix, Matrix> AzElPa(Matrix& s) {
     dEds(3) = rho;
     dEds = dEds / dot(s,s);
 
-    return std::make_tuple(Az, El, dAds, dEds);
+    return std::tie(Az, El, dAds, dEds);
     
 }

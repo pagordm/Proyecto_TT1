@@ -19,6 +19,7 @@
 #include "..\include\iers.hpp"
 #include "..\include\legendre.hpp"
 #include "..\include\global.hpp"
+#include "..\include\accelharmonic.hpp"
 #include <tuple>
 #include <cstdio>
 #include <cmath>
@@ -563,9 +564,7 @@ int iers_01() {
 }
 
 int legendre_01() {
-	std::tuple<Matrix, Matrix> result = legendre(1, 2, 1.0);
-	Matrix P = std::get<0>(result);
-	Matrix dP = std::get<1>(result);
+	auto [P, dP] = Legendre(1, 2, 1.0);
 	Matrix expected(2,3);
 	expected(1,1) = 1.0;    expected(1,2) = 0.0;       expected(1,3) = 0.0;
 	expected(2,1) = 1.457470498782296; expected(2,2) = 0.935831045210238;    expected(2,3) = 0.0;
@@ -596,9 +595,25 @@ int timeupdate_01() {
 	return 0;
 }
 
+int harmonic_01() {
+	double a = -4.783104375562398e+09;
+	Matrix r(3,3);
+	r(1,1)=1; r(1,2)=2; r(1,3)=3;
+	r(2,1)=4; r(2,2)=5; r(2,3)=6;
+	r(3,1)=7; r(3,2)=8; r(3,3)=9;
+	Matrix E(3);
+	E(1)=10; E(2)=10; E(3)=10;
+	Matrix expected(3);
+	expected(1)=-3.851815228199548e+10; expected(2)=-4.592548925930230e+10; expected(3)=-5.333282623660913e+10;
+	Matrix result = AccelHarmonic(E.transpose(),r, 1, 10);
+	_assert(m_equals(expected.transpose(), result, 1e-10));
+	return 0;
+}
+
 int all_tests()
 {
 	eop19620101(10); // c = 21413
+	GGM03S();
     _verify(m_sum_01);
     _verify(m_sub_01);
     _verify(m_zeros_01);
@@ -640,6 +655,7 @@ int all_tests()
 	_verify(legendre_01);
 	_verify(nutangles_01);
 	_verify(timeupdate_01);
+	_verify(harmonic_01);
 
     return 0;
 }
