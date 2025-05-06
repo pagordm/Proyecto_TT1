@@ -23,6 +23,7 @@
 #include "..\include\eqnequinox.hpp"
 #include "..\include\LTC.hpp"
 #include "..\include\JPL_Eph_DE430.hpp"
+#include "..\include\nutmatrix.hpp"
 #include <tuple>
 #include <cstdio>
 #include <cmath>
@@ -655,6 +656,19 @@ int ltc_01() {
 
 }
 
+int nutmatrix_01() {
+
+	double Mjd_TT = 54321.0;
+	Matrix r(3,3);
+	r(1,1)=0.999999999333437; r(1,2)=-0.000033499358637; r(1,3)=-0.000014523062858;
+	r(2,1)=0.000033498769882; r(2,2)=0.999999998617265; r(2,3)=-0.000040537679027;
+	r(3,1)=0.000014524420824; r(3,2)=0.000040537192496; r(3,3)=0.999999999072889;
+	Matrix result = NutMatrix(Mjd_TT);
+
+	_assert(m_equals(result, r, 1e-9));
+	return 0;
+}
+
 int all_tests()
 {
 	eop19620101(10); // c = 21413
@@ -705,6 +719,7 @@ int all_tests()
 	_verify(harmonic_01);
 	_verify(jpl_01);
 	_verify(eqnequinox_01);
+	_verify(nutmatrix_01);
 
     return 0;
 }
