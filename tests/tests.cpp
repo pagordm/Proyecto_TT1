@@ -21,6 +21,8 @@
 #include "..\include\global.hpp"
 #include "..\include\accelharmonic.hpp"
 #include "..\include\eqnequinox.hpp"
+#include "..\include\LTC.hpp"
+#include "..\include\JPL_Eph_DE430.hpp"
 #include <tuple>
 #include <cstdio>
 #include <cmath>
@@ -622,10 +624,43 @@ int eqnequinox_01() {
 	return 0;
 }
 
+int jpl_01() {
+	Matrix a(3);
+	a(1)=8.381066621167137e+10; a(2)=-6.530025356227299e+10; a(3)=-2.340059142315123e+10;
+	Matrix b(3);
+	b(1)=-1.525487109073703e+10; b(2)=-1.101196198394985e+11; b(3)=-4.101455778214513e+10;
+	Matrix c(3);
+	c(1)=-9.244637046666153e+10; c(2)=1.064127619878867e+11; c(3)=4.613787655122181e+10;
+
+	auto [ar, br, cr, d, e, f, g, h, i, j, k] = JPL_Eph_DE430(49746.1);
+
+	_assert(m_equals(a.transpose(), ar, 1e-4));
+	_assert(m_equals(b.transpose(), br, 1e-4));
+	_assert(m_equals(c.transpose(), cr, 1e-4));
+
+	return 0;
+}
+
+int ltc_01() {
+
+	Matrix r(3,3);
+	r(1,1)=0.157745694143248; r(1,2)=-0.987479769908865; r(1,3)=0;
+	r(2,1)=-0.975661240821901; r(2,2)=-0.155857734378009; r(2,3)=0.154251449887584;
+	r(3,1)=-0.152320186243100; r(3,2)=-0.024332502035119; r(3,3)=-0.988031624092862;
+
+	Matrix result = LTC(3.3, 30.0);
+
+	_assert(m_equals(r, result, 1e-10));
+	return 0;
+
+}
+
 int all_tests()
 {
 	eop19620101(10); // c = 21413
 	GGM03S();
+	DE430Coeff();
+
     _verify(m_sum_01);
     _verify(m_sub_01);
     _verify(m_zeros_01);
@@ -668,6 +703,7 @@ int all_tests()
 	_verify(nutangles_01);
 	_verify(timeupdate_01);
 	_verify(harmonic_01);
+	_verify(jpl_01);
 	_verify(eqnequinox_01);
 
     return 0;

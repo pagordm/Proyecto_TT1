@@ -20,6 +20,26 @@ void eop19620101(int c) {
     fclose(fid);
 }
 
+Matrix PC;
+
+void DE430Coeff() {
+    PC = zeros(2285, 1020);
+	FILE *fid = fopen("../data/DE430Coeff.txt","r");
+
+	if(fid== NULL) {
+		printf("Fail open DE430Coeff.txt file\n");
+		exit(EXIT_FAILURE);
+	}
+	double aux;
+	for (int n = 1; n <= 2285; n++) {
+		for(int m=1;m<=1020;m++){
+				fscanf(fid, "%lf ",&(PC(n, m)));
+			}
+		}
+	fclose(fid);
+}
+
+
 Matrix Cnm;
 Matrix Snm;
 

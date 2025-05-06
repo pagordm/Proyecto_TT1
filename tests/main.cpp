@@ -1,6 +1,7 @@
 #include "..\include\matrix.h"
 #include "..\include\global.hpp"
 #include "..\include\legendre.hpp"
+#include "..\include\JPL_Eph_DE430.hpp"
 #include <iostream>
 
 using namespace std;
@@ -8,14 +9,12 @@ using namespace std;
 int main() {
     eop19620101(4); // c = 21413
     GGM03S();
-    cout << "Cnm: \n" << Cnm << endl;
-    cout << "Snm: \n" << Snm << endl;
-    std::tuple<Matrix, Matrix> result = Legendre(2, 2, 1.0);
-	Matrix P = std::get<0>(result);
-	Matrix dP = std::get<1>(result);
+    DE430Coeff();
 
-    cout << "P\n" << P << endl;
-    cout << "dP\n" << dP << endl;
+    auto [a,b,c,d,e,f,g,h,i,j,k] = JPL_Eph_DE430(49746.1);
+
+    cout << "a:" << a << endl;
+    cout << "b:" << b << endl;
 
     Matrix M1(3, 2);
 	M1(1,1) = 5;

@@ -36,6 +36,8 @@ public:
 	Matrix& operator + (const double n);
 	Matrix& operator - (const double n);
 
+	Matrix& operator-();
+
 	
 	Matrix& transpose();
 	Matrix& extract_vector(const int start, const int end);

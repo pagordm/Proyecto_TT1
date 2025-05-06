@@ -68,7 +68,8 @@ Matrix::Matrix(const int v_size) {
  */
 double& Matrix::operator () (const int row, const int column) {
 	if (row <= 0 || row > this->n_row || column <= 0 || column > this->n_column) {
-		cout << "Matrix get: error in row/column: " << row << "," << column << endl;
+		cout << "Matrix get: error in row/column: " << row << "," << column;
+		cout << "; matrix size: (" << n_row << ", " << n_column << ")" << endl;
         exit(EXIT_FAILURE);
 	}
 	
@@ -220,6 +221,16 @@ Matrix& Matrix::operator / (Matrix &m) {
 	
 	return (*this) * (*m_aux);
 }
+
+/**
+ * @brief Applies the negative operator to the matrix
+ * 
+ * @return Matrix& The matrix multiplied element-wise by -1.
+ */
+Matrix& Matrix::operator-() {
+	return (*this)*(-1.0);
+}
+
 /**
  * @brief Calculates the inverse of this matrix
  * 
@@ -471,8 +482,9 @@ Matrix& cross(Matrix &m1, Matrix &m2) {
  */
 Matrix& Matrix::extract_vector(const int start, const int end) {
     if (this->n_row != 1 || start < 1 || end > this->n_column || start > end) {
-        cout << "Extract vector: error in arguments" << endl;
-        exit(EXIT_FAILURE);
+        cout << "Extract vector: error in arguments, " << start << ", " << end;
+		cout << "; matrix size: (" << n_row << ", " << n_column << ")" << endl;
+		exit(EXIT_FAILURE);
     }
 
     int new_size = end - start + 1;
@@ -534,7 +546,7 @@ Matrix& Matrix::extract_column(const int n) {
  * @return Matrix& reference to the concatenated vector
  */
 Matrix& union_vector(Matrix &m1, Matrix &m2) {
-    if (m1.n_row != 1 || m2.n_row != 1 || m1.n_column != m2.n_column) {
+    if (m1.n_row != 1 || m2.n_row != 1) {
         cout << "Union vector: error in arguments" << endl;
         exit(EXIT_FAILURE);
     }
