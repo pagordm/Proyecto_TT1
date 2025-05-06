@@ -20,6 +20,7 @@
 #include "..\include\legendre.hpp"
 #include "..\include\global.hpp"
 #include "..\include\accelharmonic.hpp"
+#include "..\include\eqnequinox.hpp"
 #include <tuple>
 #include <cstdio>
 #include <cmath>
@@ -609,6 +610,17 @@ int harmonic_01() {
 	_assert(m_equals(expected.transpose(), result, 1e-10));
 	return 0;
 }
+int eqnequinox_01() {
+
+	double expected = 2.923587975442177e-05; //From matlab
+	double result = EqnEquinox(10.0);
+
+	//cout << result << ", expected=" << expected <<endl;
+
+	_assert(fabs(expected-result) < 1e-9);
+
+	return 0;
+}
 
 int all_tests()
 {
@@ -656,6 +668,7 @@ int all_tests()
 	_verify(nutangles_01);
 	_verify(timeupdate_01);
 	_verify(harmonic_01);
+	_verify(eqnequinox_01);
 
     return 0;
 }
