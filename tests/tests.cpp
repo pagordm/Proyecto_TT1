@@ -30,6 +30,7 @@
 #include "..\include\gast.hpp"
 #include "..\include\measupdate.hpp"
 #include "..\include\g_accelharmonic.hpp"
+#include "..\include\GHAMatrix.hpp"
 #include <tuple>
 #include <cstdio>
 #include <cmath>
@@ -788,6 +789,19 @@ int g_accelharmonic_01() {
 
 }
 
+int ghamatrix_01() {
+	Matrix expected(3,3);
+	expected(1,1)=0.412804512414729; expected(1,2)=0.910819649837463; expected(1,3)=0;
+	expected(2,1)=-0.910819649837463; expected(2,2)=0.412804512414729; expected(2,3)=0;
+	expected(3,1)=0; expected(3,2)=0; expected(3,3)=1.0;
+
+	Matrix result = GHAMatrix(10.0);
+
+	_assert(m_equals(expected, result, 1e-9));
+
+	return 0;
+}
+
 int all_tests()
 {
 	eop19620101(10); // c = 21413
@@ -845,7 +859,8 @@ int all_tests()
 	_verify(gast_01);
 	_verify(measupdate_01);
 	_verify(g_accelharmonic_01);
-	
+	_verify(ghamatrix_01);
+
     return 0;
 }
 
