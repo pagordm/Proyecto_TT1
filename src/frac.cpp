@@ -6,7 +6,7 @@
  * @param x The number to get the fractional part of
  * @return double The fractional part of the number
  */
-double frac(double x) {
+double Frac(double x) {
     return x - std::floor(x);
 }
 

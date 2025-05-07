@@ -26,6 +26,7 @@
 #include "..\include\nutmatrix.hpp"
 #include "..\include\PoleMatrix.hpp"
 #include "..\include\PrecMatrix.hpp"
+#include "..\include\gmst.hpp"
 #include <tuple>
 #include <cstdio>
 #include <cmath>
@@ -493,7 +494,7 @@ int eccanom_01() {
 
 int frac_01() {
 	double x = 1.5;
-	double result = frac(x);
+	double result = Frac(x);
 	double expected = 0.5;
 
 	_assert(fabs(result - expected) < 1e-10);
@@ -695,6 +696,14 @@ int precmat_01() {
 	return 0;
 }
 
+int gmst_01() {
+	double expected = 1.145236060990417;
+	double result = gmst(10.0);
+
+	_assert(fabs(expected-result) < 1e-10);
+	return 0;
+}
+
 int all_tests()
 {
 	eop19620101(10); // c = 21413
@@ -748,6 +757,7 @@ int all_tests()
 	_verify(nutmatrix_01);
 	_verify(polemat_01);
 	_verify(precmat_01);
+	_verify(gmst_01);
 
     return 0;
 }

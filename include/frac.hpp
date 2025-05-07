@@ -3,7 +3,7 @@
 
 #include <cmath>
 
-double frac(double x);
+double Frac(double x);
 
 #endif
 
