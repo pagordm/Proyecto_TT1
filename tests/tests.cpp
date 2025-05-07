@@ -29,6 +29,7 @@
 #include "..\include\gmst.hpp"
 #include "..\include\gast.hpp"
 #include "..\include\measupdate.hpp"
+#include "..\include\g_accelharmonic.hpp"
 #include <tuple>
 #include <cstdio>
 #include <cmath>
@@ -764,6 +765,29 @@ int measupdate_01() {
 	return 0;
 }
 
+int g_accelharmonic_01() {
+	Matrix r(3,1);
+	r(1,1)=7101800.90695315;
+	r(2,1)=1293997.58115302;
+	r(3,1)=10114.014948955;
+	Matrix U(3,3);
+	U(1,1)=-0.984320311904791; U(1,2)=0.17638970840918; U(1,3)=-0.000440838949610109;
+	U(2,1)=-0.176389673507182; U(2,2)=-0.984320409906027; U(2,3)=-0.000117142904888635;
+	U(3,1)=-0.000454589578418276; U(3,2)=-3.75467022865179e-05; U(3,3)=0.999999895969275;
+	int n_max = 20;
+	int m_max = 20;
+	Matrix expected(3,3);
+	expected(1,1)=2.02233500257165e-06; expected(1,2)=5.61803303433805e-07; expected(1,3)=4.39856240319614e-09;
+	expected(2,1)=5.61803301435404e-07; expected(2,2)=-9.58631634517815e-07; expected(2,3)=8.05634892131479e-10;
+	expected(3,1)=4.39855909334375e-09; expected(3,2)=8.0563404905587e-10; expected(3,3)=-1.06370336962723e-06;
+
+	Matrix result = G_AccelHarmonic(r, U, n_max, m_max);
+
+	_assert(m_equals(expected, result, 1e-7));
+	return 0;
+
+}
+
 int all_tests()
 {
 	eop19620101(10); // c = 21413
@@ -820,7 +844,8 @@ int all_tests()
 	_verify(gmst_01);
 	_verify(gast_01);
 	_verify(measupdate_01);
-
+	_verify(g_accelharmonic_01);
+	
     return 0;
 }
 

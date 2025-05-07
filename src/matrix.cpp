@@ -592,7 +592,7 @@ Matrix& Matrix::assign_row(const int n, Matrix &m) {
  */
 Matrix& Matrix::assign_column(const int n, Matrix &m) {
 	if (n < 1 || n > this->n_column || m.n_row != 1 || m.n_column != this->n_row) {
-		cout << "Assign column: error in arguments" << endl;
+		cout << "Assign column: error in arguments: n=" <<n << ";m.n_cols=" << m.n_column << endl;
 		exit(EXIT_FAILURE);
 	}
 	
