@@ -27,6 +27,8 @@
 #include "..\include\PoleMatrix.hpp"
 #include "..\include\PrecMatrix.hpp"
 #include "..\include\gmst.hpp"
+#include "..\include\gast.hpp"
+#include "..\include\measupdate.hpp"
 #include <tuple>
 #include <cstdio>
 #include <cmath>
@@ -142,7 +144,7 @@ int m_eye_01() {
 	A(2,1) = 0; A(2,2) = 1; A(2,3) = 0;
 	A(3,1) = 0; A(3,2) = 0; A(3,3) = 1;
 
-	Matrix B = eye(f, c);
+	Matrix B = eye(f);
 	_assert(m_equals(A, B, 1e-10));
 
 	return 0;
@@ -181,7 +183,7 @@ int m_div_01() {
 	Matrix B(f, c);
 	B(1,1) = 1; B(1,2) = 2;
 	B(2,1) = 2; B(2,2) = 3;
-	Matrix C = eye(f, c);
+	Matrix C = eye(f);
 	_assert(m_equals(A / B, C, 1e-10));
 	return 0;
 }
@@ -559,7 +561,7 @@ int azelpa_01() {
 }
 
 int iers_01() {
-	Matrix s = eye(15, 15);
+	Matrix s = eye(15);
 	std::tuple<double, double, double, double, double, double, double, double, double> result = iers(eopdata, 37670);
 	
 
@@ -591,7 +593,7 @@ int nutangles_01() {
 }
 
 int timeupdate_01() {
-	Matrix r=eye(3,3);
+	Matrix r=eye(3);
 	Matrix v(3);
 	v(1)=1; v(2)=2; v(3)=3;
 	Matrix result = TimeUpdate(r, v, 1.0);
@@ -704,6 +706,64 @@ int gmst_01() {
 	return 0;
 }
 
+int gast_01() {
+	double expected=1.145265296870172;
+
+	double result = gast(10.0);
+	//cout << fabs(expected-result) << endl;
+	_assert(fabs(expected-result) < 1e-9);
+	return 0;
+}
+
+int measupdate_01() {
+	Matrix Y(6,1);
+	Y(1,1)=7101576.98989518;
+	Y(2,1)=1295199.87126989;
+	Y(3,1)=12739.282331058;
+	Y(4,1)=576.004647735755;
+	Y(5,1)=-3084.62203921229;
+	Y(6,1)=-6736.0259467681;
+	double obs = 3.196905628244;
+	double Azim = 3.19766548246716;
+	double sigma_az = 0.00039095375244673;
+	Matrix dAdY(6);
+	dAdY(1)=6.8011430799027e-08; dAdY(2)=-3.73341445315677e-07; dAdY(3)=1.98045516802789e-08; dAdY(4)=0; dAdY(5)=0; dAdY(6)=0;
+	Matrix P(6,6);
+	P(1,1)=16662.1344187737; P(1,2)=-5939.90058143741;P(1,3)=8994.78627408343; P(1,4)=50.9584525113159;   P(1,5)=-14.0175161399365;  P(1,6)=23.634816671666;
+	P(2,1)=-5939.90058143741;P(2,2)=25083.2687156787; P(2,3)=-1608.29906724942;P(2,4)=-5.16755530262711;  P(2,5)=61.0478532927088;   P(2,6)=-27.7748186275101;
+	P(3,1)=8994.78627408342; P(3,2)=-1608.29906724941;P(3,3)=6462.95085906703; P(3,4)=28.1143150411363;   P(3,5)=-4.40165366994466;  P(3,6)=16.752629123315;
+	P(4,1)=50.9584525113159; P(4,2)=-5.16755530262713;P(4,3)=28.1143150411364; P(4,4)=0.185799761897259;  P(4,5)=-0.0201977467654655;P(4,6)=0.0703233725080075;
+	P(5,1)=-14.0175161399365;P(5,2)=61.0478532927088; P(5,3)=-4.4016536699447; P(5,4)=-0.0201977467654654;P(5,5)=0.156251627321938;  P(5,6)=-0.0770413411227855;
+	P(6,1)=23.6348166716659; P(6,2)=-27.77481862751;  P(6,3)=16.752629123315;  P(6,4)=0.0703233725080072; P(6,5)=-0.0770413411227851;P(6,6)=0.086754864868731;
+
+	Matrix expectedP(6,6);
+	expectedP(1,1)=16582.6959715575;	expectedP(1,2)=-5719.28825199721;	expectedP(1,3)=8964.61806949935;	expectedP(1,4)=50.8244747796258;	expectedP(1,5)=-13.4810430619866;	expectedP(1,6)=23.3577425895417;	
+	expectedP(2,1)=-5719.28825199721;	expectedP(2,2)=24470.5956133384;	expectedP(2,3)=-1524.51749646659;	expectedP(2,4)=-4.79547930520971;	expectedP(2,5)=59.5579881259538;	expectedP(2,6)=-27.0053428783355;	
+	expectedP(3,1)=8964.61806949935;	expectedP(3,2)=-1524.51749646657;	expectedP(3,3)=6451.49393109675;	expectedP(3,4)=28.0634345448404;	expectedP(3,5)=-4.1979181975556;	expectedP(3,6)=16.6474051683235;	
+	expectedP(4,1)=50.8244747796259;	expectedP(4,2)=-4.79547930520973;	expectedP(4,3)=28.0634345448405;	expectedP(4,4)=0.185573800373364;	expectedP(4,5)=-0.0192929525680047;	expectedP(4,6)=0.0698560703598162;	
+	expectedP(5,1)=-13.4810430619866;	expectedP(5,2)=59.5579881259538;	expectedP(5,3)=-4.19791819755564;	expectedP(5,4)=-0.0192929525680046;	expectedP(5,5)=0.15262865414647;	expectedP(5,6)=-0.0751701717977754;	
+	expectedP(6,1)=23.3577425895416;	expectedP(6,2)=-27.0053428783354;	expectedP(6,3)=16.6474051683235;	expectedP(6,4)=0.0698560703598159;	expectedP(6,5)=-0.075170171797775;	expectedP(6,6)=0.0857884556591442;	
+	Matrix expectedY(6,1);
+	expectedY(1,1)=7101559.88526246;	
+	expectedY(2,1)=1295247.37336744;	
+	expectedY(3,1)=12732.7865336534;	
+	expectedY(4,1)=575.975799741193;	
+	expectedY(5,1)=-3084.50652619203;	
+	expectedY(6,1)=-6736.08560617204;	
+	Matrix K(6,1);
+	K(1,1)=22510.4134439327;
+	K(2,1)=-62514.7509871813;
+	K(3,1)=8548.74159612631;
+	K(4,1)=37.9651697422456;
+	K(5,1)=-152.019975331698;
+	K(6,1)=78.5142756660613;
+	auto [newK, newY, newP] = MeasUpdate(Y, obs, Azim, sigma_az, dAdY, P, 6.0);
+	_assert(m_equals(K, newK, 1e-7));
+	_assert(m_equals(expectedY, newY, 1e-7));
+	_assert(m_equals(expectedP, newP, 1e-7));
+	return 0;
+}
+
 int all_tests()
 {
 	eop19620101(10); // c = 21413
@@ -758,6 +818,8 @@ int all_tests()
 	_verify(polemat_01);
 	_verify(precmat_01);
 	_verify(gmst_01);
+	_verify(gast_01);
+	_verify(measupdate_01);
 
     return 0;
 }

@@ -242,7 +242,7 @@ Matrix& inv(Matrix &m) {
 		exit(EXIT_FAILURE);
 	}
 	
-	Matrix *m_aux = &eye(m.n_row, m.n_column);
+	Matrix *m_aux = &eye(m.n_row);
 	Matrix m_copy = m;
 	for(int i = 1; i <= m_copy.n_row; i++) {
 		double pivot = m_copy(i,i);
@@ -326,16 +326,15 @@ Matrix& zeros(const int n) {
  * @brief Generates a matrix with all ones.
  * 
  * @param n_row Rows of the matrix
- * @param n_column Columns of the matrix
  * @return Matrix& A reference to the matrix
  */
-Matrix& eye(const int n_row, const int n_column) {
-	Matrix *m_aux = new Matrix(n_row, n_column);
+Matrix& eye(const int n_row) {
+	Matrix *m_aux = new Matrix(n_row, n_row);
 	
 	for(int i = 1; i <= n_row; i++) {
-		for(int j = 1; j <= n_column; j++) {
+		for(int j = 1; j <= n_row; j++) {
 			if (i == j)
-				(*m_aux)(i,j) = 1;
+				(*m_aux)(i,i) = 1;
 			else
 				(*m_aux)(i,j) = 0;
 		}

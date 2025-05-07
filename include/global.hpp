@@ -4,6 +4,11 @@
 #include "matrix.h"
 #include <cmath>
 
+typedef struct {
+    double Mjd_UTC, Mjd_TT;
+    int n, m, sun, moon, planets;
+} Param;
+
 extern Matrix eopdata;
 
 extern Matrix Cnm;

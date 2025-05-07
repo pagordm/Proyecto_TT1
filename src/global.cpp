@@ -2,6 +2,7 @@
 #include "..\include\matrix.h"
 
 Matrix eopdata;
+Param AuxParam;
 
 void eop19620101(int c) {
     eopdata = zeros(13, c);
