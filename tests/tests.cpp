@@ -25,6 +25,7 @@
 #include "..\include\JPL_Eph_DE430.hpp"
 #include "..\include\nutmatrix.hpp"
 #include "..\include\PoleMatrix.hpp"
+#include "..\include\PrecMatrix.hpp"
 #include <tuple>
 #include <cstdio>
 #include <cmath>
@@ -683,6 +684,17 @@ int polemat_01() {
 	return 0;
 }
 
+int precmat_01() {
+	Matrix r(3,3);
+	r(1,1)=0.783082323064378; r(1,2)=0.571469950029840; r(1,3)=0.245365383697434;
+	r(2,1)=-0.571567748001079; r(2,2)=0.816815000669506; r(2,3)=-0.078253205213914;
+	r(3,1)=-0.245137481322363; r(3,2)=-0.078964238071218; r(3,3)=0.966267180626953;
+	Matrix result = PrecMatrix(1e6, 50);
+	
+	_assert(m_equals(r, result, 1e-10));
+	return 0;
+}
+
 int all_tests()
 {
 	eop19620101(10); // c = 21413
@@ -735,6 +747,7 @@ int all_tests()
 	_verify(eqnequinox_01);
 	_verify(nutmatrix_01);
 	_verify(polemat_01);
+	_verify(precmat_01);
 
     return 0;
 }
