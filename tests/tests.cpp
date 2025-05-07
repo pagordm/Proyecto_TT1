@@ -24,6 +24,7 @@
 #include "..\include\LTC.hpp"
 #include "..\include\JPL_Eph_DE430.hpp"
 #include "..\include\nutmatrix.hpp"
+#include "..\include\PoleMatrix.hpp"
 #include <tuple>
 #include <cstdio>
 #include <cmath>
@@ -669,6 +670,19 @@ int nutmatrix_01() {
 	return 0;
 }
 
+int polemat_01() {
+
+	Matrix r(3,3);
+	r(1,1)=-0.839071529076452; r(1,2)=0.295958969093304; r(1,3)=0.456472625363814;
+	r(2,1)=0; r(2,2)=-0.839071529076452; r(2,3)=0.544021110889370;
+	r(3,1)=0.544021110889370; r(3,2)=0.456472625363814; r(3,3)=0.704041030906696;
+
+	Matrix result = PoleMatrix(10.0, 10.0);
+
+	_assert(m_equals(r, result, 1e-10));
+	return 0;
+}
+
 int all_tests()
 {
 	eop19620101(10); // c = 21413
@@ -720,6 +734,7 @@ int all_tests()
 	_verify(jpl_01);
 	_verify(eqnequinox_01);
 	_verify(nutmatrix_01);
+	_verify(polemat_01);
 
     return 0;
 }
