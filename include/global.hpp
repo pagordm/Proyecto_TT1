@@ -15,11 +15,14 @@ extern Matrix Cnm;
 extern Matrix Snm;
 
 extern Matrix PC;
+extern Param AuxParam;
 
 void eop19620101(int c);
 
 void GGM03S();
 
 void DE430Coeff();
+
+void auxparam();
 
 #endif

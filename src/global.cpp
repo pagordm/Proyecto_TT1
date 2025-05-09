@@ -4,6 +4,16 @@
 Matrix eopdata;
 Param AuxParam;
 
+void auxparam() {
+    AuxParam.Mjd_UTC = 49746.1163541665;
+    AuxParam.n      = 20;
+    AuxParam.m      = 20;
+    AuxParam.sun     = 1;
+    AuxParam.moon    = 1;
+    AuxParam.planets = 1;
+    AuxParam.Mjd_TT  = 49746.1170623147;
+}
+
 void eop19620101(int c) {
     eopdata = zeros(13, c);
 

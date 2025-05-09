@@ -525,7 +525,7 @@ Matrix& Matrix::extract_row(const int n) {
  */
 Matrix& Matrix::extract_column(const int n) {
     if (n < 1 || n > this->n_column) {
-        cout << "Extract column: error in arguments" << endl;
+        cout << "Extract column: error in arguments: "<< n << "; n_col: "<< this->n_column << endl;
         exit(EXIT_FAILURE);
     }
 	Matrix *result = new Matrix(this->n_row);

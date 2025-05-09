@@ -7,7 +7,7 @@
  * @param interp Interpolation method ('l' for linear, 'n' for nearest)
  * @return std::tuple<double, double, double, double, double, double, double, double, double> 
  */
-std::tuple<double, double, double, double, double, double, double, double, double> iers(Matrix& eop, double Mjd_UTC, char interp) {
+std::tuple<double, double, double, double, double, double, double, double, double> IERS(Matrix& eop, double Mjd_UTC, char interp) {
     
 
     //return values
@@ -66,7 +66,6 @@ std::tuple<double, double, double, double, double, double, double, double, doubl
                 break;
             }
         }
-
         Matrix neweop = eop.extract_column(i);
         // Setting of IERS Earth rotation parameters
         // (UT1-UTC [s], TAI-UTC [s], x ["], y ["])
@@ -90,6 +89,6 @@ std::tuple<double, double, double, double, double, double, double, double, doubl
  * @param Mjd_UTC Modified Julian Date in UTC
  * @return std::tuple<double, double, double, double, double, double, double, double, double> 
  */
-std::tuple<double, double, double, double, double, double, double, double, double> iers(Matrix& eop, double Mjd_UTC) {
-    return iers(eop, Mjd_UTC, 'n');
+std::tuple<double, double, double, double, double, double, double, double, double> IERS(Matrix& eop, double Mjd_UTC) {
+    return IERS(eop, Mjd_UTC, 'n');
 }

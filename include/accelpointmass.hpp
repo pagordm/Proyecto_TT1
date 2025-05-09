@@ -3,6 +3,6 @@
 
 #include "..\include\matrix.h"
 
-Matrix& accelpointmass(Matrix& r, Matrix& s, double GM);
+Matrix& AccelPointMass(Matrix& r, Matrix& s, double GM);
 
 #endif

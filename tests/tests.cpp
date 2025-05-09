@@ -31,6 +31,7 @@
 #include "..\include\measupdate.hpp"
 #include "..\include\g_accelharmonic.hpp"
 #include "..\include\GHAMatrix.hpp"
+#include "..\include\accel.hpp"
 #include <tuple>
 #include <cstdio>
 #include <cmath>
@@ -452,7 +453,7 @@ int accelpointmass_01() {
 	r(1)=1; r(2)=2; r(3)=3;
 	Matrix s(3);
 	s(1)=4; s(2)=5; s(3)=6;
-	Matrix a = accelpointmass(r, s, 1);
+	Matrix a = AccelPointMass(r, s, 1);
 	Matrix expected(3);
 	expected(1)=0.015463313357364; expected(2)=0.013983305870875; expected(3)=0.012503298384387; //results from MATLAB
 
@@ -564,7 +565,7 @@ int azelpa_01() {
 
 int iers_01() {
 	Matrix s = eye(15);
-	std::tuple<double, double, double, double, double, double, double, double, double> result = iers(eopdata, 37670);
+	std::tuple<double, double, double, double, double, double, double, double, double> result = IERS(eopdata, 37670);
 	
 
 	_assert(fabs(std::get<0>(result) - (-1.338037278494208e-07)) < 1e-10);
@@ -802,10 +803,33 @@ int ghamatrix_01() {
 	return 0;
 }
 
+int accel_01() {
+	double x = -543.476874884521;
+	Matrix Y(6, 1);
+	Y(1,1)=5720694.2260585;
+	Y(2,1)=2687728.41425142;
+	Y(3,1)=3483000.08675422;
+	Y(4,1)=4371.83136151615;
+	Y(5,1)=-1905.47309296258;
+	Y(6,1)=-5698.58341612187;
+	Matrix expected(6,1);
+	expected(1,1)=4371.83136151615;
+	expected(2,1)=-1905.47309296258;
+	expected(3,1)=-5698.58341612187;
+	expected(4,1)=-6.0654420426171;
+	expected(5,1)=-2.84977703178268;
+	expected(6,1)=-3.70232534578346;
+	Matrix result = Accel(x, Y);
+
+	_assert(m_equals(result, expected, 1e-3));
+	return 0;	
+}
+
 int all_tests()
 {
-	eop19620101(10); // c = 21413
+	eop19620101(21413); // c = 21413
 	GGM03S();
+	auxparam();
 	DE430Coeff();
 
     _verify(m_sum_01);
@@ -860,6 +884,7 @@ int all_tests()
 	_verify(measupdate_01);
 	_verify(g_accelharmonic_01);
 	_verify(ghamatrix_01);
+	_verify(accel_01);
 
     return 0;
 }
