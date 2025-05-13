@@ -33,6 +33,7 @@
 #include "..\include\GHAMatrix.hpp"
 #include "..\include\accel.hpp"
 #include "..\include\vareqn.hpp"
+#include "..\include\geodetic.hpp"
 #include <tuple>
 #include <cstdio>
 #include <cmath>
@@ -922,6 +923,20 @@ int vareqn_01() {
 	return 0;
 }
 
+int geodetic_01() {
+	Matrix r(3);
+	r(1)=34; r(2)=54; r(3)=3;
+	auto [lon, lat, h] = Geodetic(r);
+
+	double latexp = 1.569306928241210;
+	double lonexp = 1.008874764538081;
+	double hexp = -6.356748569071247e+06;
+	_assert(fabs(lat-latexp) < 1e-10);
+	_assert(fabs(h-hexp) < 1e-10);
+	_assert(fabs(lon-lonexp) < 1e-10);
+	return 0;
+}
+
 int all_tests()
 {
 	eop19620101(21413); // c = 21413
@@ -983,6 +998,7 @@ int all_tests()
 	_verify(ghamatrix_01);
 	_verify(accel_01);
 	_verify(vareqn_01);
+	_verify(geodetic_01);
 
     return 0;
 }
