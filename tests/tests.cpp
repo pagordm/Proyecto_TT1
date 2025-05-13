@@ -34,6 +34,7 @@
 #include "..\include\accel.hpp"
 #include "..\include\vareqn.hpp"
 #include "..\include\geodetic.hpp"
+#include "..\include\angl.hpp"
 #include <tuple>
 #include <cstdio>
 #include <cmath>
@@ -937,6 +938,17 @@ int geodetic_01() {
 	return 0;
 }
 
+int angl_01() {
+	Matrix v1(3);
+	v1(1)=0; v1(2)=0; v1(3)=1;
+	Matrix v2(3);
+	v2(1)=1; v2(2)=0; v2(3)=0;
+	double angle = angl(v1,v2);
+
+	_assert(fabs(Constants::pi/2-angle) < 1e-10);
+	return 0;
+}
+
 int all_tests()
 {
 	eop19620101(21413); // c = 21413
@@ -999,6 +1011,7 @@ int all_tests()
 	_verify(accel_01);
 	_verify(vareqn_01);
 	_verify(geodetic_01);
+	_verify(angl_01);
 
     return 0;
 }
