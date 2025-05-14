@@ -35,6 +35,10 @@
 #include "..\include\vareqn.hpp"
 #include "..\include\geodetic.hpp"
 #include "..\include\angl.hpp"
+#include "..\include\elements.hpp"
+#include "..\include\gibbs.hpp"
+#include "..\include\hgibbs.hpp"
+#include "..\include\unit.hpp"
 #include <tuple>
 #include <cstdio>
 #include <cmath>
@@ -949,6 +953,70 @@ int angl_01() {
 	return 0;
 }
 
+int elements_01() {
+	Matrix V(6);
+	V(1) = 6221397.62857869;
+	V(2) = 2867713.77965738;
+	V(3) = 3006155.98509949;
+
+	V(4) = 4645.04725161806;
+	V(5) = -2752.21591588204;
+    V(6) = -7507.99940987031;
+
+	auto [p, a, e, i, Omega, omega, M] = elements(V);
+	double expectedP = 12001693.597214;
+	double eA = 18943922.6607145;
+	double eE = 0.605361104987026;
+	double eI = 2.02656295535017;
+	double eOmega = 3.35671076650829;
+	double eomega = 2.73757289772562;
+	double eM = 6.27144693341967;
+	_assert(fabs(p-expectedP) < 1e-6);
+	_assert(fabs(a-eA) < 1e-6);
+	_assert(fabs(e-eE) < 1e-10);
+	_assert(fabs(i-eI) < 1e-10);
+	_assert(fabs(Omega-eOmega) < 1e-10);
+	_assert(fabs(omega-eomega) < 1e-10);
+	_assert(fabs(M-eM) < 1e-10);
+	return 0;
+
+}
+
+int unit_01() {
+	Matrix vec(3, 1);
+	vec(1, 1)=20784239358.2383;
+	vec(2, 1)=70646304145.8809;
+	vec(3, 1)=-13038108211.875;
+	Matrix exp(3);
+	exp(1)=0.277917884211324; exp(2)=0.944651908456325; exp(3)=-0.174339959519679;
+
+	Matrix result = unit(vec);
+	_assert(m_equals(exp, result, 1e-10));
+
+	return 0;
+}
+
+int gibbs_01() {
+	Matrix r1(3); Matrix r2(3); Matrix r3(3);
+	r1(1)=5720303.71012986;r1(2)=3152426.6965331;r1(3)=3750056.80416402;
+	r2(1)=6221397.62857869;r2(2)=2867713.77965738;r2(3)=3006155.98509949;
+	r3(1)=6699811.80976796;r3(2)=2569867.80763881;r3(3)=2154940.29542389;
+	auto [v2, theta, theta1, copa, error] = gibbs(r1.transpose(), r2.transpose(), r3.transpose());
+	Matrix ev2(3);
+	ev2(1)=4645.04725161806; ev2(2)=-2752.21591588204; ev2(3)=-7507.99940987031;
+	double etheta=0.125269502872995;
+	double etheta1=0.136454013492468;
+	double ecopa=0.00509723347775707;
+	std::string eerror = "          ok";
+	_assert(m_equals(v2, ev2.transpose(), 1e-9));
+	_assert(fabs(theta-etheta) < 1e-10);
+	_assert(fabs(theta1-etheta1) < 1e-10);
+	_assert(fabs(copa-ecopa) < 1e-10);
+	_assert(error==eerror);
+
+	return 0;
+}
+
 int all_tests()
 {
 	eop19620101(21413); // c = 21413
@@ -1012,6 +1080,9 @@ int all_tests()
 	_verify(vareqn_01);
 	_verify(geodetic_01);
 	_verify(angl_01);
+	_verify(elements_01);
+	_verify(unit_01);
+	_verify(gibbs_01);
 
     return 0;
 }

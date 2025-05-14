@@ -425,8 +425,11 @@ Matrix& Matrix::operator - (const double n) {
  * @return double reference to the dot product
  */
 double dot(Matrix &m1, Matrix &m2) {
+	if (m1.n_column==1 && m2.n_column==1 && m1.n_row==m2.n_row) {
+		return dot(m1.transpose(), m2.transpose());
+	}
 	if (m1.n_row!=1 || m2.n_row!=1 || m1.n_column!=m2.n_column) {
-		cout << "Vector dot: error in arguments" << endl;
+		cout << "Vector dot: error in arguments: m1(" << m1.n_row << "," << m1.n_column << "), m2(" << m2.n_row << "," << m2.n_column << ")" << endl;
 		exit(EXIT_FAILURE);
 	}
 	double sum = 0;
@@ -459,7 +462,7 @@ double norm(Matrix &m1) {
  */
 Matrix& cross(Matrix &m1, Matrix &m2) {
 	if (m1.n_column!=3 || m2.n_column!=3 || m1.n_row!=1 || m2.n_row!=1) {
-		cout << "Vector cross: error in arguments" << endl;
+		cout << "Vector cross: error in arguments: m1(" << m1.n_row << "," << m1.n_column << "), m2(" << m2.n_row << "," << m2.n_column << ")" << endl;
 		exit(EXIT_FAILURE);
 	}
 	Matrix *m_aux = new Matrix(3);
