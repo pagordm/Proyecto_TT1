@@ -135,6 +135,7 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
     }
 
     while (true) {   // Start step loop
+        cout << "Step loop" << endl;
 
     // If already past output point, interpolate solution and return
     if  (fabs(x-t) >= fabsdel) {
@@ -637,7 +638,7 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
         if (p5eps<erk) {
             temp2 = k+1;
             r = p5eps/pow(erk,(1.0/temp2));
-            hnew = fabsh*fmax(0.5, min(0.9,r));
+            hnew = fabsh*fmax(0.5, fmin(0.9,r));
             hnew = sign_(fmax(hnew, fouru*fabs(x)), h);
         } else {
             hnew = h;
