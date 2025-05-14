@@ -3,6 +3,9 @@
 
 #include "matrix.h"
 #include <cmath>
+#include <string.h>
+#include "mjday.hpp"
+#include "const.hpp"
 
 typedef struct {
     double Mjd_UTC, Mjd_TT;
@@ -16,6 +19,7 @@ extern Matrix Snm;
 
 extern Matrix PC;
 extern Param AuxParam;
+extern Matrix obs;
 
 void eop19620101(int c);
 
@@ -24,5 +28,7 @@ void GGM03S();
 void DE430Coeff();
 
 void auxparam();
+
+void GEOS3(int f);
 
 #endif

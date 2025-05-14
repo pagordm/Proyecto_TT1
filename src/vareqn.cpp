@@ -9,7 +9,7 @@
  * 
  * @note Last modified: 2015/08/12 M. Mahooti
  */
-Matrix& VarEqn(double x, Matrix yPhi) {
+Matrix& VarEqn(double x, Matrix& yPhi) {
     
     auto [x_pole,y_pole,UT1_UTC,LOD,dpsi,deps,dx_pole,dy_pole,TAI_UTC] = IERS(eopdata,AuxParam.Mjd_UTC,'l');
     auto [UT1_TAI,UTC_GPS,UT1_GPS,TT_UTC,GPS_UTC] = timediff(UT1_UTC,TAI_UTC);

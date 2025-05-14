@@ -25,11 +25,11 @@ std::tuple<double, double, Matrix&, Matrix&> AzElPa(Matrix& s) {
     double El = atan ( s(3) / rho );
 
     // Partials
-    Matrix dAds = Matrix(3);
+    Matrix &dAds = zeros(3);
     dAds(1) = s(2)/(rho*rho);
     dAds(2) = -s(1)/(rho*rho);
     dAds(3) = 0.0;
-    Matrix dEds = Matrix(3);
+    Matrix &dEds = zeros(3);
     dEds(1) = -s(1)*s(3)/rho;
     dEds(2) = -s(2)*s(3)/rho;
     dEds(3) = rho;

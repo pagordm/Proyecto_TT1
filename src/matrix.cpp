@@ -85,7 +85,7 @@ double& Matrix::operator () (const int row, const int column) {
  */
 double& Matrix::operator () (const int n) {
 	if (n<=0 || n>this->n_row*this->n_column) {
-		cout << "Matrix get: error in row/column: " << n << endl;
+		cout << "Matrix get: error in row/column: " << n << ", shape=(" << this->n_row << "," << this->n_column << ")" << endl;
         exit(EXIT_FAILURE);
 	}
 	
@@ -127,7 +127,7 @@ Matrix& Matrix::operator = (Matrix &m) {
  */
 Matrix& Matrix::operator + (Matrix &m) {
 	if (this->n_row != m.n_row || this->n_column != m.n_column) {
-		cout << "Matrix sum: error in n_row/n_column\n";
+		cout << "Matrix sum: error in n_row/n_column. Trying to sum " << *this << " and " << m << endl;
         exit(EXIT_FAILURE);
 	}
 	
@@ -549,7 +549,7 @@ Matrix& Matrix::extract_column(const int n) {
  */
 Matrix& union_vector(Matrix &m1, Matrix &m2) {
     if (m1.n_row != 1 || m2.n_row != 1) {
-        cout << "Union vector: error in arguments" << endl;
+        cout << "Union vector: error in arguments. Trying to join " << m1 << " and " << m2 << endl;
         exit(EXIT_FAILURE);
     }
 

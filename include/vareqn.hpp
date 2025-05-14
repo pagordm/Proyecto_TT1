@@ -13,6 +13,6 @@
 #include "global.hpp"
 #include "const.hpp"
 
-Matrix& VarEqn(double x, Matrix yPhi);
+Matrix& VarEqn(double x, Matrix& yPhi);
 
 #endif

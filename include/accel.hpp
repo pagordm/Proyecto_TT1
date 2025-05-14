@@ -15,6 +15,6 @@
 #include "global.hpp"
 #include "const.hpp"
 
-Matrix& Accel(double x, Matrix Y);
+Matrix& Accel(double x, Matrix& Y);
 
 #endif
