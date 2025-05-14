@@ -202,7 +202,7 @@ std::tuple<Matrix&, Matrix&> anglesg(double az1, double az2, double az3, double 
         
         auto [v2, theta,theta1,copa,error] = gibbs(r1,r2,r3);
         
-        if ( (error=="          ok") & (copa < Constants::pi/180) ) {
+        if ( (error!="          ok") & (copa < Constants::pi/180) ) {
             auto [v2,theta,theta1,copa,error] = hgibbs(r1,r2,r3,Mjd1,Mjd2,Mjd3);
         }
         Matrix temporal = union_vector(r2, v2);

@@ -39,6 +39,7 @@
 #include "..\include\gibbs.hpp"
 #include "..\include\hgibbs.hpp"
 #include "..\include\unit.hpp"
+#include "..\include\DEInteg.hpp"
 #include <tuple>
 #include <cstdio>
 #include <cmath>
@@ -1017,6 +1018,29 @@ int gibbs_01() {
 	return 0;
 }
 
+int deinteg_01() {
+	Matrix Y0_apr(6, 1);
+	Y0_apr(1, 1) = 6221397.62857869;
+	Y0_apr(2, 1) = 2867713.77965738;
+	Y0_apr(3, 1) = 3006155.98509949;
+	Y0_apr(4, 1) = 4645.04725161806;
+	Y0_apr(5, 1) = -2752.21591588204;
+	Y0_apr(6, 1) = -7507.99940987031;
+	Matrix result = DEInteg(Accel, 0, -134.999991953373, 1e-13, 1e-6, 6, Y0_apr);
+
+	Matrix expected(6, 1);
+	expected(1, 1) = 5542555.93722861;
+	expected(2, 1) = 3213514.8673492;
+	expected(3, 1) = 3990892.97587685;
+	expected(4, 1) = 5394.06842166351;
+	expected(5, 1) = -2365.21337882342;
+	expected(6, 1) = -7061.84554200295;
+	cout << result << endl;
+	_assert(m_equals(result, expected, 1e-10));
+	return 0;
+
+}
+
 int all_tests()
 {
 	eop19620101(21413); // c = 21413
@@ -1083,6 +1107,7 @@ int all_tests()
 	_verify(elements_01);
 	_verify(unit_01);
 	_verify(gibbs_01);
+	_verify(deinteg_01);
 
     return 0;
 }
