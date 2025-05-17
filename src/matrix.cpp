@@ -217,9 +217,10 @@ Matrix& Matrix::operator / (Matrix &m) {
 		exit(EXIT_FAILURE);
 	}
 	
-	Matrix *m_aux = &inv(m);
+	Matrix *m_aux = new Matrix(this->n_row, m.n_column);
+	*m_aux=(*this)*inv(m);
 	
-	return (*this) * (*m_aux);
+	return *m_aux;
 }
 
 /**
@@ -351,7 +352,7 @@ Matrix& eye(const int n_row) {
 Matrix& Matrix::operator / (const double n) {
 	
 	if (n==0) {
-		cout << "Double inv: error in n\n";
+		cout << "Double div: error in n\n";
 		exit(EXIT_FAILURE);
 	}
 	Matrix *m_aux = new Matrix(this->n_row, this->n_column);
@@ -372,14 +373,14 @@ Matrix& Matrix::operator / (const double n) {
  * @return Matrix& Reference to the resulting matrix.
  */
 Matrix& Matrix::operator * (const double n) {
-	Matrix *m_aux = new Matrix(this->n_row, this->n_column);
+	Matrix &m_aux = zeros(this->n_row, this->n_column);
 
 	for(int i = 1; i <= this->n_row; i++) {
 		for(int j = 1; j <= this->n_column; j++) {
-			(*m_aux)(i,j) = (*this)(i,j)*n;
+			(m_aux)(i,j) = (*this)(i,j)*n;
 		}
 	}
-	return *m_aux;
+	return m_aux;
 
 }
 /**
@@ -528,8 +529,8 @@ Matrix& Matrix::extract_column(const int n) {
     }
 	Matrix *result = new Matrix(this->n_row);
 
-	for (int i = 0; i < this->n_row; i++) {
-		(*result)(i+1) = (*this)(i+1, n);
+	for (int i = 1; i <= this->n_row; i++) {
+		(*result)(i) = (*this)(i, n);
 	}
 
 	return *result;

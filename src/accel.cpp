@@ -57,7 +57,7 @@ Matrix& Accel(double x, Matrix Y) {
     if (transpose) { 
         Y = Y.transpose(); //deshacemos el transpose
     }
-    cout << "Accel end, dY:\n" << dY << endl;
+    // cout << "Accel end, dY:\n" << dY << endl;
     return dY;
 
 }
