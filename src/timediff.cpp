@@ -23,7 +23,7 @@ std::tuple<double, double, double, double, double> timediff(double UT1_UTC, doub
     double TT_UTC  = TT_TAI-UTC_TAI;   //  TT-UTC time difference [s]
     double GPS_UTC = GPS_TAI-UTC_TAI;  // GPS-UTC time difference [s]
     
-    return std::make_tuple(UT1_TAI, UTC_GPS, UT1_GPS, TT_UTC, GPS_UTC);
+    return std::tie(UT1_TAI, UTC_GPS, UT1_GPS, TT_UTC, GPS_UTC);
 
 }
 
