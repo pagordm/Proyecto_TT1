@@ -153,7 +153,7 @@ int main() {
         // Measurement update
         
         std::tie(K, Y, P) = MeasUpdate ( Y, obs(i,2), Azim, sigma_az, dAdY, P, 6 );
-        cout << "for loop " << i << ".1, Y:" << Y << endl;
+        // cout << "for loop " << i << ".1, Y:" << Y << endl;
         // Elevation and partials
         r = Y.transpose().extract_vector(1, 3).transpose(); //Y(1:3);
         s = LT*(U*r-Rs);                          // Topocentric position [m]
@@ -162,7 +162,7 @@ int main() {
         dEdY = union_vector(dEds*LT*U, zeros(1,3));
         // Measurement update
         std::tie(K, Y, P) = MeasUpdate ( Y, obs(i,3), Elev, sigma_el, dEdY, P, 6 );
-        cout << "for loop " << i << ".2, Y" << Y << endl;
+        // cout << "for loop " << i << ".2, Y" << Y << endl;
         // Range and partials
         r = Y.extract_vector(1, 3).transpose(); //Y(1:3);
         s = LT*(U*r-Rs);                          // Topocentric position [m]
@@ -171,8 +171,8 @@ int main() {
         dDdY = union_vector(dDds*LT*U,zeros(1,3));
         // Measurement update
         std::tie(K, Y, P) = MeasUpdate ( Y, obs(i,4), Dist, sigma_range, dDdY, P, 6 );
-        cout << "for loop " << i << ".3, Y" << Y << endl;
-        return 0;
+        // cout << "for loop " << i << ".3, Y" << Y << endl;
+        // return 0;
     }
     // cout << "2" << endl;
     std::tie(x_pole,y_pole,UT1_UTC,LOD,dpsi,deps,dx_pole,dy_pole,TAI_UTC) = IERS(eopdata,obs(46,1),'l');

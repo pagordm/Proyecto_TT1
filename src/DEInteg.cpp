@@ -138,19 +138,28 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
             temp1 = i;
             w(i+1) = 1.0/temp1;
         }
+        cout << "w: \n" << w << endl;
+        cout << "g: \n" << g << endl;
+        cout << "psi: \n" << psi_ << endl;
+        cout << "rho: \n" << rho << endl;
+        cout << "ki: " << ki << endl;
+        cout << "k: " << k << endl;
         // Compute g[*]
         term = 0.0;
-        for (int j=2; j <= ki; j++) {
+        for (int j=2; j <= ki; j++) { // EL PROBLEMA ESTÁ EN ESTE BUCLE FOR
             psijm1 = psi_(j);
             gamma = (hi + term)/psijm1;
             eta = hi/psijm1;
             for (int i=1; i <= ki+1-j; i++) {
-                w(i+1) = gamma*w(i+1) - eta*w(i+2);
+                temp1=w(i+1);
+                w(i+1) = gamma*temp1 - eta*w(i+2);
             }
             g(j+1) = w(2);
             rho(j+1) = gamma*rho(j);
             term = psijm1;
         }
+        cout << "g: \n" << g << endl;
+        cout << "rho: \n" << rho << endl;
         if (yout.n_column==1) {
             yout = yout.transpose();
         }
