@@ -13,7 +13,7 @@
 class Constants {
 public:
 
-    static constexpr double eps = 2.2204e-16; // eps value from matlab
+    static constexpr double eps = 2.22044604925031e-16; // eps value from matlab
 
     static constexpr double pi = M_PI;
     static constexpr double pi2 = 2.0 * pi;                // 2pi
