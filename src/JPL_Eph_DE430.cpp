@@ -25,7 +25,6 @@ std::tuple<Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix
         if (PC(i, 1)<=JD && JD<=PC(i, 2)) break;
     } 
     PCtemp = PC.extract_row(i);//PC(i,:);
-
     t1 = PCtemp(1)-2400000.5; // MJD at start of interval
 
     dt = Mjd_TDB - t1;

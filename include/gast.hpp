@@ -2,6 +2,7 @@
 #define _GAST_
 
 #include <cmath>
+#include "const.hpp"
 #include "gmst.hpp"
 #include "eqnequinox.hpp"
 

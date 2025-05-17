@@ -22,7 +22,6 @@ Matrix& cheb3d(double t, int N, double Ta, double Tb, Matrix& Cx, Matrix& Cy, Ma
 
     // Clenshaw algorithm
     double tau = (2*t-Ta-Tb)/(Tb-Ta);  
-
     Matrix f1 = zeros(1,3);
     Matrix f2 = zeros(1,3);
     Matrix old_f1 = zeros(1,3);

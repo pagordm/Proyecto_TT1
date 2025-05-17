@@ -7,9 +7,9 @@
  */
 double gast(double Mjd_UT1) {
     
-    double gstime = fmod ( gmst(Mjd_UT1) + EqnEquinox(Mjd_UT1), 2*M_PI );
+    double gstime = fmod ( gmst(Mjd_UT1) + EqnEquinox(Mjd_UT1), 2*Constants::pi );
     if (gstime < 0) {
-        gstime += 2*M_PI;
+        gstime += 2*Constants::pi;
     }
 
     return gstime;
