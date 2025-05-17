@@ -12,7 +12,7 @@ Matrix& range(int start, int skip, int end) {
 
 
 std::tuple<Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&> JPL_Eph_DE430(double Mjd_TDB) {
-    
+    // cout << "JPL start, Mjd_TDB: " << Mjd_TDB << endl;
     double JD = Mjd_TDB + 2400000.5;
     Matrix temp, PCtemp, Cy_Earth, Cz_Earth, Cx_Earth, Cx, Cy, Cz, Cy_Moon, Cz_Moon, Cx_Moon, Nutations, Cx_Sun, Cz_Sun, Cy_Sun,
     Cx_Mercury, Cy_Mercury, Cz_Mercury, Cx_Venus, Cy_Venus, Cz_Venus, Cx_Mars, Cy_Mars, Cz_Mars, Cx_Jupiter, Cy_Jupiter, Cz_Jupiter, 
@@ -288,7 +288,17 @@ std::tuple<Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix&, Matrix
     r_Neptune = -r_Earth+r_Neptune;
     r_Pluto = -r_Earth+r_Pluto;
     r_Sun = -r_Earth+r_Sun;
-
+    // cout << "JPL end, r_Mercury:\n" << r_Mercury << endl;
+    // cout << "r_Venus:\n" << r_Venus << endl;
+    // cout << "r_Earth:\n" << r_Earth << endl;
+    // cout << "r_Mars:\n" << r_Mars << endl;
+    // cout << "r_Jupiter:\n" << r_Jupiter << endl;
+    // cout << "r_Saturn:\n" << r_Saturn << endl;
+    // cout << "r_Uranus:\n" << r_Uranus << endl;
+    // cout << "r_Neptune:\n" << r_Neptune << endl;
+    // cout << "r_Pluto:\n" << r_Pluto << endl;
+    // cout << "r_Moon:\n" << r_Moon << endl;
+    // cout << "r_Sun:\n" << r_Sun << endl;
     return std::tie(r_Mercury,r_Venus,r_Earth,r_Mars,r_Jupiter,r_Saturn,r_Uranus, r_Neptune,r_Pluto,r_Moon,r_Sun);
 
 

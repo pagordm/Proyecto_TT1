@@ -21,6 +21,7 @@ int main() {
     eop19620101(21413); // c = 21413
     GGM03S();
     DE430Coeff();
+    auxparam();
     int nobs = 46;
     GEOS3(nobs);
 
@@ -60,18 +61,13 @@ int main() {
 
     Mjd0 = Mjday(1995,1,29,02,38,0);
 
+    AuxParam.Mjd_UTC = Mjd_UTC;
+
     Mjd_UTC = obs(9,1);
 
-    AuxParam.Mjd_UTC = Mjd_UTC;
-    AuxParam.n      = 20;
-    AuxParam.m      = 20;
-    AuxParam.sun     = 1;
-    AuxParam.moon    = 1;
-    AuxParam.planets = 1;
 
     n_eqn  = 6;
-    Y = DEInteg(Accel,0,-(obs(9,1)-Mjd0)*86400.0,1e-13,1e-6,6,Y0_apr);
-
+    Y = DEInteg(Accel,0,-(obs(9,1)-Mjd0)*86400.0,1e-13,1e-6,6,Y0_apr).transpose();   
     P = zeros(6, 6);
     
     for (int i=1; i <= 3; i++) {
@@ -98,7 +94,7 @@ int main() {
         t       = (Mjd_UTC-Mjd0)*86400.0;         // Time since epoch [s]
         auto [x_pole,y_pole,UT1_UTC,LOD,dpsi,deps,dx_pole,dy_pole,TAI_UTC] = IERS(eopdata,Mjd_UTC,'l');
         auto [UT1_TAI,UTC_GPS,UT1_GPS,TT_UTC,GPS_UTC] = timediff(UT1_UTC,TAI_UTC);
-        Mjd_TT = Mjd_UTC + TT_UTC/86400;
+        Mjd_TT = Mjd_UTC + TT_UTC/86400.0;
         Mjd_UT1 = Mjd_TT + (UT1_UTC-TT_UTC)/86400.0;
         AuxParam.Mjd_UTC = Mjd_UTC;
         AuxParam.Mjd_TT = Mjd_TT;
@@ -113,15 +109,15 @@ int main() {
                 }
             }
         }
-        
-        yPhi = DEInteg(VarEqn,0,t-t_old,1e-13,1e-6,42,yPhi);
-        
+        yPhi = DEInteg(VarEqn,0,t-t_old,1e-13,1e-6,42,yPhi).transpose();
+        //return 0;
+        //cout << "yPhi: " << yPhi << endl;
         // Extract state transition matrices
         for (int j=1; j <= 6; j++) {
             //Phi(:,j) = yPhi(6*j+1:6*j+6);
             Phi.assign_column(j, yPhi.transpose().extract_vector(6*j+1, 6*j+6));
         }
-        Y = DEInteg (Accel,0,t-t_old,1e-13,1e-6,6,Y_old);
+        Y = DEInteg (Accel,0,t-t_old,1e-13,1e-6,6,Y_old).transpose();
         
         // Topocentric coordinates
         theta = gmst(Mjd_UT1);                    // Earth rotation
@@ -159,7 +155,8 @@ int main() {
     Mjd_TT = Mjd_UTC + TT_UTC/86400;
     AuxParam.Mjd_UTC = Mjd_UTC;
     AuxParam.Mjd_TT = Mjd_TT;
-    Y0 = DEInteg (Accel,0,-(obs(46,1)-obs(1,1))*86400.0,1e-13,1e-6,6,Y);
+    cout << "Last DEInteg, Y: \n" << Y << endl;
+    Y0 = DEInteg (Accel,0,-(obs(46,1)-obs(1,1))*86400.0,1e-13,1e-6,6,Y).transpose();
     
     //Y_true = [5753.173e3, 2673.361e3, 3440.304e3, 4.324207e3, -1.924299e3, -5.728216e3]';
     Y_true = zeros(6);

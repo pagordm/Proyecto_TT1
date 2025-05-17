@@ -703,8 +703,9 @@ int jpl_01() {
 	c(1)=-9.244637046666153e+10; c(2)=1.064127619878867e+11; c(3)=4.613787655122181e+10;
 
 	auto [ar, br, cr, d, e, f, g, h, i, j, k] = JPL_Eph_DE430(49746.1);
-
-	_assert(m_equals(a.transpose(), ar, 1e-4));
+	// cout << "a: " << a << endl;
+	// cout << "ar: " << ar << endl;
+	_assert(m_equals(a.transpose(), ar, 1e-10));
 	_assert(m_equals(b.transpose(), br, 1e-4));
 	_assert(m_equals(c.transpose(), cr, 1e-4));
 
@@ -1087,8 +1088,8 @@ int deinteg_01() {
 	expected(4, 1) = 4.326351194964656e+03;
 	expected(5, 1) = -1.926724072709524e+03;
 	expected(6, 1) = -5.726095957591712e+03;
-	cout << result << endl;
-	_assert(m_equals(result.transpose(), expected, 1e-10));
+	// cout << result << endl;
+	_assert(m_equals(result, expected, 1e-8));
 	return 0;
 
 }

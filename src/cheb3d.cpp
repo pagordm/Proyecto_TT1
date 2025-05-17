@@ -28,17 +28,17 @@ Matrix& cheb3d(double t, int N, double Ta, double Tb, Matrix& Cx, Matrix& Cy, Ma
 
     for (int i = N; i >= 2; i--) {
         old_f1 = f1;
-        Matrix coeffs(1,3);
+        Matrix coeffs(3);
         coeffs(1) = Cx(i);
         coeffs(2) = Cy(i);
         coeffs(3) = Cz(i);
-        f1 = f1*2*tau-f2+coeffs;
+        f1 = (f1*(2*tau))-f2+coeffs;
         f2 = old_f1;
     }
     Matrix aux(3);
     aux(1) = Cx(1);
     aux(2) = Cy(1);
     aux(3) = Cz(1);
-    Matrix& ChebApp = f1*tau-f2+aux;
+    Matrix& ChebApp = (f1*tau)-f2+aux;
     return ChebApp;
 }

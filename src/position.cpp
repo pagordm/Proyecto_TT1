@@ -9,6 +9,7 @@
  * @return Matrix& Position vector in Earth-fixed frame
  */
 Matrix& position(double lon, double lat, double h) {
+    // cout << "position start, lon: " << lon << ", lat: " << lat << ", h: " << h << endl;
     // Earth parameters
     double R_equ = Constants::R_Earth;
     double f = Constants::f_Earth;
@@ -26,6 +27,6 @@ Matrix& position(double lon, double lat, double h) {
     r(1) = (N + h) * CosLat * cos(lon);
     r(2) = (N + h) * CosLat * sin(lon);
     r(3) = ((1.0 - e2) * N + h) * SinLat;
-
+    // cout << "position end, r:\n" << r << endl;
     return r;
 }

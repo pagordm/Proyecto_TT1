@@ -4,6 +4,6 @@
 #include "matrix.h"
 #include "const.hpp"
 #include "sign_.hpp"
-Matrix& DEInteg(Matrix& f(double t, Matrix &y), double t, double tout, double relerr, double abserr, int n_eqn, Matrix &y);
+Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double relerr, double abserr, int n_eqn, Matrix &y);
 
 #endif

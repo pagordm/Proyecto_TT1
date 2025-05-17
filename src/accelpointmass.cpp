@@ -3,18 +3,18 @@
 /**
  * @brief Computes the perturbational acceleration due to a point mass
  * 
- * @param r Satellite position vector
- * @param s Point mass position vector  
+ * @param r Satellite position vector (column vector)
+ * @param s Point mass position vector  (column vector)
  * @param GM Gravitational coefficient of point mass
- * @return Matrix& Acceleration (a=d^2r/dt^2)
+ * @return Matrix& Acceleration (a=d^2r/dt^2) (column vector)
  */
 Matrix& AccelPointMass(Matrix& r, Matrix& s, double GM) {
     // Relative position vector of satellite w.r.t. point mass
-    Matrix& d = r - s;
+    Matrix d = r - s;
 
     // Acceleration
     
-    Matrix& a = (d / pow(norm(d), 3.0) + s / pow(norm(s), 3.0)) * (-GM);
-
+    Matrix& a = d / (pow(norm(d), 3.0)) + s / (pow(norm(s), 3.0));
+    a = a * (-GM);
     return a;
 }

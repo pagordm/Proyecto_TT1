@@ -447,7 +447,7 @@ double dot(Matrix &m1, Matrix &m2) {
  */
 double norm(Matrix &m1) {
 	double sum = 0.0;
-	for(int i = 1; i <=m1.n_column; i++) {
+	for(int i = 1; i <=m1.n_column*m1.n_row; i++) {
 		sum+=m1(i)*m1(i);
 	}
 	return sqrt(sum);
@@ -483,11 +483,6 @@ Matrix& cross(Matrix &m1, Matrix &m2) {
  * @return Matrix& reference to the extracted vector
  */
 Matrix& Matrix::extract_vector(const int start, const int end) {
-    if (this->n_row != 1 || start < 1 || end > this->n_column || start > end) {
-        cout << "Extract vector: error in arguments, " << start << ", " << end;
-		cout << "; matrix size: (" << n_row << ", " << n_column << ")" << endl;
-		exit(EXIT_FAILURE);
-    }
 
     int new_size = end - start + 1;
     Matrix *result = new Matrix(new_size);

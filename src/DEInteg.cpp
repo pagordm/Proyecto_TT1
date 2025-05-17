@@ -9,7 +9,7 @@ enum class DE_STATE {
     DE_INVPARAM = 6   // Invalid input parameters
 };
 
-Matrix& DEInteg(Matrix& f(double t, Matrix& y), double t, double tout, double relerr, double fabserr, int n_eqn, Matrix &y) {
+Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double relerr, double fabserr, int n_eqn, Matrix &y) {
     double eps = Constants::eps;
 
     double twou, fouru, epsilon;

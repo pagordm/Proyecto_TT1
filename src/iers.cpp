@@ -8,7 +8,6 @@
  * @return std::tuple<double, double, double, double, double, double, double, double, double> 
  */
 std::tuple<double, double, double, double, double, double, double, double, double> IERS(Matrix& eop, double Mjd_UTC, char interp) {
-    
 
     //return values
     double x_pole, y_pole, UT1_UTC, LOD, dpsi, deps, dx_pole, dy_pole, TAI_UTC;
@@ -23,10 +22,14 @@ std::tuple<double, double, double, double, double, double, double, double, doubl
         int i = 0;
         Matrix aux = eop.extract_row(4);
         for (int j = 1; j <= aux.n_column; j++) {
-            if (aux(j) == mjd) {
+            if (fabs(aux(j)-mjd)<Constants::eps) {
                 i = j;
                 break;
             }
+        }
+        if (i==0) {
+            cout << "IERS error: cant find value " << mjd << " in eop. Function arguments: eop, Mjd_UTC: " << Mjd_UTC << ", interp: " << interp << endl;
+            exit(EXIT_FAILURE);
         }
 
         //preeop = eop(:,i);

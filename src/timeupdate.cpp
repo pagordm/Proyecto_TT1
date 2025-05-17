@@ -7,5 +7,5 @@ Matrix& TimeUpdate(Matrix& P, Matrix Phi, double Qdt) {
 }
 
 Matrix& TimeUpdate(Matrix& P, Matrix Phi) {
-    return TimeUpdate(P, Phi, 0.0);
+    return TimeUpdate(P, Phi, 0);
 }
