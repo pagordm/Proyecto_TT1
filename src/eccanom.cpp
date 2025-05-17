@@ -15,6 +15,9 @@ double EccAnom(double M, double e) {
     int i = 1;
     // Starting value
     M = std::fmod(M, 2.0*Constants::pi);
+    if (M < 0) {
+        M += 2.0*Constants::pi;
+    }
     double E = 0;
     if (e<0.8)
         E = M; 

@@ -9,35 +9,34 @@ enum class DE_STATE {
     DE_INVPARAM = 6   // Invalid input parameters
 };
 
-Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double relerr, double fabserr, int n_eqn, Matrix &y) {
+
+Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double relerr, double abserr, int n_eqn, Matrix &y) {
+    if (y.n_row==1) {
+        y = y.transpose();
+    }
+
     double eps = Constants::eps;
+    bool PermitTOUT;
+    double twou, fouru, told, epsilon, x, h, hi, ki, kold, temp1, term, psijm1, gamma, eta,
+    i, p5eps, ifail, round, sum, absh, hold, hnew, k, kp1, kp2, km1, km2, ns, nsp1,
+    realns, im1, temp2, reali, temp4, nsm2, limit1, temp5, temp3, nsp2, limit2, temp6,
+    ip1, tau, xold, erkm2, erkm1, erk, err, knew, erkp1, r, rho2;
+    double del, absdel, tend, nostep, kle4, releps, abseps, delsgn;
+    bool stiff, OldPermit=false, start=false, crash=false, phase1=false, nornd=false, success=false;
+    Matrix yy, yout, ypout, g, rho, wt, v, w, phi, p, yp,sig,alpha,beta,psi_;
 
-    double twou, fouru, epsilon;
-    double del, fabsdel, tend, nostep, kle4, releps, fabseps, x, h, rho_temp;
-
-    bool PermitTOUT, stiff, start;
-    double told, ip1;
-    Matrix two(14), gstr(14);
-    Matrix yy, wt, p, yp, phi, g, sig, rho, w, alpha, beta, v, psi_;
-    double delsgn = 0;
-
-    // Added declarations for variables that were used without prior declaration
-    Matrix yout, ypout;
-    double hi, temp1, psijm1, gamma, eta, term, p5eps, round, sum, fabsh, hold, hnew, realns, temp2, reali, temp4, temp5, temp3, temp6, xold, erkm2, erkm1, erk, err, tau, erkp1, r;
-    double ki, i, j, ifail, k, kold, kp1, kp2, km1, km2, ns, nsp1, im1, nsm2, limit1, iq, nsp2, limit2, knew, l;
-    bool crash, phase1, nornd, success;
-    // fmaxnum = 500;
+    // maxnum = 500;
     twou  = 2*eps;
     fouru = 4*eps;
-
-    bool OldPermit=false;
 
     DE_STATE State_ = DE_STATE::DE_INIT;
     PermitTOUT = true;         // Allow integration past tout by default
     told = 0;
-    kold=0;
 
     // Powers of two (two(n)=2^n)
+    
+    Matrix two(14), gstr(14);
+
     two(1)=1.0;
     two(2)=2.0;
     two(3)=4.0;
@@ -53,23 +52,13 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
     two(13)=4096.0;
     two(14)=8192.0;
 
-    gstr(1) = 1.0;
-    gstr(2) = 0.5;
-    gstr(3) = 0.0833;
-    gstr(4) = 0.0417;
-    gstr(5) = 0.0264;
-    gstr(6) = 0.0188;
-    gstr(7) = 0.0143;
-    gstr(8) = 0.0114;
-    gstr(9) = 0.00936;
-    gstr(10) = 0.00789;
-    gstr(11) = 0.00679;
-    gstr(12) = 0.00592;
-    gstr(13) = 0.00524;
-    gstr(14) = 0.00468;
 
-
-
+    double gstr_d[] = {1.0, 0.5, 0.0833, 0.0417, 0.0264, 0.0188,
+            0.0143, 0.0114, 0.00936, 0.00789, 0.00679,
+            0.00592, 0.00524, 0.00468};
+    for(int pablo=1; pablo <=14; pablo++) {
+        gstr(pablo)=gstr_d[pablo-1];
+    }
     yy    = zeros(n_eqn,1);    // Allocate vectors with proper dimension
     wt    = zeros(n_eqn,1);
     p     = zeros(n_eqn,1);
@@ -88,16 +77,16 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
 
     // Return, if output time equals input time
 
-    if (t==tout) {   // No integration
+    if (t==tout)    // No integration
         return y;
-    }
+    
 
     // Test for improper parameters
 
-    epsilon = fmax(relerr,fabserr);
+    epsilon = fmax(relerr,abserr);
 
-    if ( ( relerr <  0.0         ) ||            // Negative relative error bound
-        ( fabserr <  0.0         ) ||             // Negative fabsolute error bound
+    if ( ( relerr <  0.0         ) ||             // Negative relative error bound
+        ( abserr <  0.0         ) ||             // Negative absolute error bound
         ( epsilon    <= 0.0         ) ||         // Both error bounds are non-positive
         ( State_  >  DE_STATE::DE_INVPARAM ) ||   // Invalid status flag
         ( (State_ != DE_STATE::DE_INIT) &&       
@@ -109,21 +98,20 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
     // On each call set interval of integration and counter for
     // number of steps. Adjust input error tolerances to define
     // weight vector for subroutine STEP.
-
-
+    
     del    = tout - t;
-    fabsdel = fabs(del);
+    absdel = fabs(del);
 
     tend   = t + 100.0*del;
     if (!PermitTOUT) {
         tend = tout;
     }
+
     nostep = 0;
     kle4   = 0;
     stiff  = false;
     releps = relerr/epsilon;
-    fabseps = fabserr/epsilon;
-
+    abseps = abserr/epsilon;
 
     if  ( (State_==DE_STATE::DE_INIT) || (!OldPermit) || (delsgn*del<=0.0) ) {
         // On start and restart also set the work variables x and yy(*),
@@ -136,25 +124,23 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
     }
 
     while (true) {   // Start step loop
-    //cout << "1" << endl;
+    //g(i+1)*phi(:,i+1)
     // If already past output point, interpolate solution and return
-    if  (fabs(x-t) >= fabsdel) {
-        yout  = zeros(n_eqn,1); 
+    if (fabs(x-t) >= absdel) {
+        yout  = zeros(n_eqn,1);
         ypout = zeros(n_eqn,1);
         g(2)   = 1.0;
         rho(2) = 1.0;
         hi = tout - x;
         ki = kold + 1;
-        //cout << "2, ki=" << ki << endl;
         // Initialize w[*] for computing g[*]
-        for (double i=1; i <= ki; i++) {
+        for (int i=1; i <= ki; i++) {
             temp1 = i;
             w(i+1) = 1.0/temp1;
         }
-        //cout << "3" << endl;
         // Compute g[*]
         term = 0.0;
-        for (double j=2; j <= ki; j++) {
+        for (int j=2; j <= ki; j++) {
             psijm1 = psi_(j);
             gamma = (hi + term)/psijm1;
             eta = hi/psijm1;
@@ -165,22 +151,22 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
             rho(j+1) = gamma*rho(j);
             term = psijm1;
         }
-        
-        //cout << "4" << endl;
+        if (yout.n_column==1) {
+            yout = yout.transpose();
+        }
+        if (ypout.n_column==1) {
+            ypout=ypout.transpose();
+        }
+        if (y.n_column==1) {
+            y=y.transpose();
+        }
         // Interpolate for the solution yout and for
         // the derivative of the solution ypout      
         for (int j=1; j <= ki; j++) {
             i = ki+1-j;
-            //cout << "phi:\n" << phi << endl;
-            //cout << "yout:\n" << yout << endl;
-            //cout << "phiarg:\n" << phi.extract_column(i+1)*g(i+1) << endl;
-            yout  = yout  + (phi.extract_column(i+1)*g(i+1)).transpose();
-            //cout << "yout:\n" << yout << endl;
-            ypout = ypout + (phi.extract_column(i+1)*rho(i+1)).transpose();
+            yout  = yout  + phi.extract_column(i+1)*g(i+1);
+            ypout = ypout + phi.extract_column(i+1)*rho(i+1);
         }
-        //cout << "5" << endl;
-        //cout << "yout: \n" << yout << endl;
-        //cout << "y: \n" << y << endl;
         yout = y + yout*hi;
         y    = yout;
         State_    = DE_STATE::DE_DONE; // Set return code
@@ -189,26 +175,26 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
         OldPermit = PermitTOUT;
         return y;                       // Normal exit
     }                         
-    //cout << "6" << endl;
+    
     // If cannot go past output point and sufficiently close,
     // extrapolate and return
     if ( !PermitTOUT && ( fabs(tout-x) < fouru*fabs(x) ) ) {
         h = tout - x;
+        
         yp = f(x,yy);          // Compute derivative yp(x)
         y = yy + yp*h;                // Extrapolate vector from x to tout
         State_    = DE_STATE::DE_DONE; // Set return code
         t         = tout;             // Set independent variable
         told      = t;                // Store independent variable
         OldPermit = PermitTOUT;
-        //cout << "Exit 2" << endl;
         return y;                       // Normal exit
     }
-    //cout << "7" << endl;
+    
     // Test for too much work
-    //   if (nostep >= fmaxnum)
-    //       State_ = DE_STATE::DE_NUMSTEPS; // Too many steps
+    //   if (nostep >= maxnum)
+    //       State_ = DE_STATE.DE_NUMSTEPS; // Too many steps
     //       if (stiff) 
-    //           State_ = DE_STATE::DE_STIFF;// Stiffness suspected
+    //           State_ = DE_STATE.DE_STIFF;// Stiffness suspected
     //       end
     //       y         = yy;                // Copy last step
     //       t         = x;
@@ -220,7 +206,7 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
     // Limit step size, set weight vector and take a step
     h  = sign_(min(fabs(h), fabs(tend-x)), h);
     for (int l=1; l <= n_eqn; l++) {
-        wt(l) = releps*fabs(yy(l)) + fabseps;
+        wt(l) = releps*abs(yy(l)) + abseps;
     }
     
     //   Step
@@ -238,6 +224,7 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
         crash = true;
         return y;           // Exit 
     }
+
     p5eps  = 0.5*epsilon;
     crash  = false;
     g(2)   = 1.0;
@@ -262,7 +249,6 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
 
     if (start) {
         // Initialize. Compute appropriate step size for first step. 
-        //cout << "deinteg y" << y << endl;
         yp = f(x,y);
         sum = 0.0;
         for (int l=1; l <= n_eqn; l++) {
@@ -271,11 +257,11 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
             sum = sum + (yp(l)*yp(l))/(wt(l)*wt(l));
         }
         sum  = sqrt(sum);
-        fabsh = fabs(h);
+        absh = fabs(h);
         if (epsilon<16.0*sum*h*h) {
-            fabsh=0.25*sqrt(epsilon/sum);
+            absh=0.25*sqrt(epsilon/sum);
         }
-        h    = sign_(fmax(fabsh, fouru*fabs(x)), h);
+        h    = sign_(fmax(absh, fouru*fabs(x)), h);
         hold = 0.0;
         hnew = 0.0;
         k    = 1;
@@ -299,6 +285,7 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
     // Repeat blocks 1, 2 (and 3) until step is successful               
     //                                                                   
     while(true) {
+    
     //                                                                 
     // Begin block 1                                                   
     //                                                                 
@@ -314,12 +301,12 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
     // ns is the number of steps taken with size h, including the 
     // current one. When k<ns, no coefficients change.           
     
-    if (h !=hold)
+    if (h !=hold) {
         ns=0;
-    
-    if (ns<=kold)
+    }
+    if (ns<=kold) {
         ns=ns+1;
-    
+    }
     nsp1 = ns+1;
     
     if (k>=ns) {
@@ -331,8 +318,7 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
         temp1 = h*realns;
         sig(nsp1+1) = 1.0;
         if (k>=nsp1) {
-            //cout << "8" << endl;
-            for (double i=nsp1; i <= k; i++) {
+            for (int i=nsp1; i <= k; i++) {
                 im1   = i-1;
                 temp2 = psi_(im1+1);
                 psi_(im1+1) = temp1;
@@ -342,7 +328,6 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
                 reali = i;
                 sig(i+2) = reali*alpha(i+1)*sig(i+1);
             }
-            //cout << "9" << endl;
         }
         psi_(k+1) = temp1;
         
@@ -350,7 +335,6 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
         if (ns>1) {
             // If order was raised, update diagonal part of v[*]
             if (k>kold) {
-                //cout << "10" << endl;
                 temp4 = k*kp1;
                 v(k+1) = 1.0/temp4;
                 nsm2 = ns-2;
@@ -358,9 +342,8 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
                     i = k-j;
                     v(i+1) = v(i+1) - alpha(j+2)*v(i+2);
                 }
-                //cout << "11" << endl;
             }
-            //cout << "12" << endl;
+            
             // Update V[*] and set W[*]
             limit1 = kp1 - ns;
             temp5  = alpha(ns+1);
@@ -369,21 +352,17 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
                 w(iq+1) = v(iq+1);
             }
             g(nsp1+1) = w(2);
-            //cout << "13" << endl;
         } else {
-            //cout << "14" << endl;
             for (int iq=1; iq <= k; iq++) {
                 temp3 = iq*(iq+1);
                 v(iq+1) = 1.0/temp3;
                 w(iq+1) = v(iq+1);
             }
-            //cout << "15" << endl;
         }
         
         // Compute the g[*] in the work vector w[*]
         nsp2 = ns + 2;
         if (kp1>=nsp2) {
-            //cout << "16" << endl;
             for (int i=nsp2; i <= kp1; i++) {
                 limit2 = kp2 - i;
                 temp6  = alpha(i);
@@ -392,7 +371,6 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
                 }
                 g(i+1) = w(2);
             }
-            //cout << "17" << endl;
         }
     } // if K>=NS
     
@@ -424,7 +402,7 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
         phi(l,kp1+1) = 0.0;
         p(l)       = 0.0;
     }
-    for (double j=1; j <= k; j++) {
+    for (int j=1; j <= k; j++) {
         i     = kp1 - j;
         ip1   = i+1;
         temp2 = g(i+1);
@@ -444,7 +422,7 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
     }
     xold = x;
     x = x + h;
-    fabsh = fabs(h);
+    absh = fabs(h);
     yp = f(x,p);
     
     // Estimate errors at orders k, k-1, k-2 
@@ -460,27 +438,27 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
                             *((phi(l,km1+1)+temp4)*temp3);
         }
         if (km2>=0) {
-            erkm1 = erkm1 + ((phi(l,k+1)+temp4)*temp3
-                            *((phi(l,k+1)+temp4)*temp3));
+            erkm1 = erkm1 + ((phi(l,k+1)+temp4)*temp3)
+                            *((phi(l,k+1)+temp4)*temp3);
         }
         erk = erk + (temp4*temp3)*(temp4*temp3);
     }
     
-    if (km2> 0)
-        erkm2 = fabsh*sig(km1+1)*gstr(km2+1)*sqrt(erkm2);
+    if (km2> 0) {
+        erkm2 = absh*sig(km1+1)*gstr(km2+1)*sqrt(erkm2);
+    }
+    if (km2>=0) {
+        erkm1 = absh*sig(k+1)*gstr(km1+1)*sqrt(erkm1);
+    }
     
-    if (km2>=0)
-        erkm1 = fabsh*sig(k+1)*gstr(km1+1)*sqrt(erkm1);
-    
-    
-    temp5 = fabsh*sqrt(erk);
+    temp5 = absh*sqrt(erk);
     err = temp5*(g(k+1)-g(kp1+1));
     erk = temp5*sig(kp1+1)*gstr(k+1);
     knew = k;
     
     // Test if order should be lowered 
     if (km2 >0) {
-        if (fmax(erkm1,erkm2)<=erk) {
+        if (max(erkm1,erkm2)<=erk) {
             knew=km1;
         }
     }
@@ -500,6 +478,7 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
     //
     
     success = (err<=epsilon);
+    
     if (!success) {
     
         //
@@ -534,14 +513,14 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
         // Thereafter, use optimal step size   
         ifail = ifail+1;
         temp2 = 0.5;
-        if (ifail>3)  {
+        if (ifail>3) {
             if (p5eps < 0.25*erk) {
                 temp2 = sqrt(p5eps/erk);
             }
         }
-        if (ifail>=3)
+        if (ifail>=3) {
             knew = 1;
-        
+        }
         h = temp2*h;
         k = knew;
         if (fabs(h)<fouru*fabs(x)) {
@@ -582,9 +561,9 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
         }
     } else {
         for (int l=1; l <= n_eqn; l++) {
-            rho_temp = temp1*(yp(l) - phi(l,2)) - phi(l,17);
-            y(l) = p(l) + rho_temp;
-            phi(l,16) = (y(l) - p(l)) - rho_temp;
+            rho2 = temp1*(yp(l) - phi(l,2)) - phi(l,17);
+            y(l) = p(l) + rho2;
+            phi(l,16) = (y(l) - p(l)) - rho2;
         }
     }
     yp = f(x,y);
@@ -622,7 +601,7 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
                 for (int l=1; l <= n_eqn; l++) {
                     erkp1 = erkp1 + (phi(l,kp2+1)/wt(l))*(phi(l,kp2+1)/wt(l));
                 }
-                erkp1 = fabsh*gstr(kp1+1)*sqrt(erkp1);
+                erkp1 = absh*gstr(kp1+1)*sqrt(erkp1);
                 // Using estimated error at order k+1, determine 
                 // appropriate order for next step               
                 if (k>1) {
@@ -638,7 +617,7 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
                     }
                 } else if (erkp1<0.5*erk) {
                     // raise order
-                    // Here erkp1 < erk < fmax(erkm1,ermk2) else    
+                    // Here erkp1 < erk < max(erkm1,ermk2) else    
                     // order would have been lowered in block 2.   
                     // Thus order is to be raised                  
                     k = kp1;
@@ -655,7 +634,7 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
         if (p5eps<erk) {
             temp2 = k+1;
             r = p5eps/pow(erk,(1.0/temp2));
-            hnew = fabsh*fmax(0.5, fmin(0.9,r));
+            hnew = absh*fmax(0.5, min(0.9,r));
             hnew = sign_(fmax(hnew, fouru*fabs(x)), h);
         } else {
             hnew = h;
@@ -670,8 +649,8 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
     // Test for too small tolerances
     if (crash) {
         State_    = DE_STATE::DE_BADACC;
-        relerr    = epsilon*releps;       // Modify relative and fabsolute
-        fabserr    = epsilon*fabseps;       // accuracy requirements
+        relerr    = epsilon*releps;       // Modify relative and absolute
+        abserr    = epsilon*abseps;       // accuracy requirements
         y         = yy;                   // Copy last step
         t         = x;
         told      = t;
@@ -691,23 +670,24 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
         stiff = true;
     }
     
-} // End step loop
+    } // End step loop
     
-    //   if ( State_==DE_STATE::DE_INVPARAM )
+    //   if ( State_==DE_STATE.DE_INVPARAM )
     //       error ('invalid parameters in DEInteg');
     //       exit; 
     //   end
-    //   if ( State_==DE_STATE::DE_BADACC )
+    //   if ( State_==DE_STATE.DE_BADACC )
     //       warning ('on','Accuracy requirement not achieved in DEInteg');
     //   end
-    //   if ( State_==DE_STATE::DE_STIFF )
+    //   if ( State_==DE_STATE.DE_STIFF )
     //       warning ('on','Stiff problem suspected in DEInteg');
     //   end
-    //   if ( State_ >= DE_STATE::DE_DONE )
+    //   if ( State_ >= DE_STATE.DE_DONE )
     //       break;
     //   end
     //   
     // end
+    return y; //creo que nunca llegamos aquí, estamos en un while(true) sin break
 
-    return y;
+
 }

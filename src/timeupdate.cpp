@@ -2,8 +2,8 @@
 
 Matrix& TimeUpdate(Matrix& P, Matrix Phi, double Qdt) {
     
-    P = Phi * P * Phi.transpose() + Qdt;
-    return P;
+    Matrix& nP = Phi * P * Phi.transpose() + Qdt;
+    return nP;
 }
 
 Matrix& TimeUpdate(Matrix& P, Matrix Phi) {

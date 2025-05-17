@@ -38,8 +38,8 @@ std::tuple<double, double, double, double, double, double, double, double, doubl
         //nexteop = eop(:,i+1);
         Matrix nexteop = eop.extract_column(i+1);
         
-        double mfme = 1440*(Mjd_UTC-floor(Mjd_UTC));
-        double fixf = mfme/1440;
+        double mfme = (Mjd_UTC-floor(Mjd_UTC));
+        double fixf = mfme;
         // Setting of IERS Earth rotation parameters
         // (UT1-UTC [s], TAI-UTC [s], x ["], y ["])
         x_pole  = preeop(5)+(nexteop(5)-preeop(5))*fixf;
@@ -64,7 +64,7 @@ std::tuple<double, double, double, double, double, double, double, double, doubl
         int i = 0;
         Matrix aux = eop.extract_row(4);
         for (int j = 1; j <= aux.n_column; j++) {
-            if (aux(j) == mjd) {
+            if (fabs(aux(j)-mjd)<Constants::eps) {
                 i = j;
                 break;
             }

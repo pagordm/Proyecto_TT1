@@ -10,11 +10,13 @@
  * @return Matrix& - Gradient (G=da/dr) in the true-of-date system
  */
 Matrix& G_AccelHarmonic(Matrix r, Matrix U, int n_max, int m_max) {
-    
+    if (r.n_row==1) {
+        r = r.transpose(); //convertimos el vector fila en vector columna
+    }
     double d = 1.0;   // Position increment [m]
 
     Matrix& G = zeros(3,3);
-    Matrix& dr = zeros(3,1);
+    Matrix dr = zeros(3,1);
     Matrix da;
     // Gradient
     for (int i=1; i <= 3; i++) {

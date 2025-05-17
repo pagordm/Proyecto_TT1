@@ -25,7 +25,8 @@ int main() {
     int nobs = 46;
     GEOS3(nobs);
 
-    double sigma_range, sigma_az, sigma_el, lat, lon, alt, Mjd1, Mjd2, Mjd3, Mjd0, Mjd_UTC, Mjd_TT, Mjd_UT1, theta, Dist, Azim, Elev;
+    long double sigma_range, sigma_az, sigma_el, lat, lon, alt, Mjd1, Mjd2, Mjd3, Mjd0, Mjd_UTC, Mjd_TT, Mjd_UT1, theta, Dist, Azim, Elev;
+    long double x_pole,y_pole,UT1_UTC,LOD,dpsi,deps,dx_pole,dy_pole,TAI_UTC, UT1_TAI,UTC_GPS,UT1_GPS,TT_UTC,GPS_UTC;
     int n_eqn, t, t_old;
     Matrix Rs, Y0_apr, Y, P, LT, yPhi, Phi, Y_old, U, r, s, dAdY, dEdY, dDds, dDdY, K, Y0, Y_true, dAds, dEds;
     sigma_range = 92.5;          // [m]
@@ -61,13 +62,14 @@ int main() {
 
     Mjd0 = Mjday(1995,1,29,02,38,0);
 
-    AuxParam.Mjd_UTC = Mjd_UTC;
-
     Mjd_UTC = obs(9,1);
 
+    AuxParam.Mjd_UTC = Mjd_UTC;
 
     n_eqn  = 6;
+
     Y = DEInteg(Accel,0,-(obs(9,1)-Mjd0)*86400.0,1e-13,1e-6,6,Y0_apr).transpose();   
+    cout << "First DEInteg Y: " << Y << endl;
     P = zeros(6, 6);
     
     for (int i=1; i <= 3; i++) {
@@ -85,6 +87,7 @@ int main() {
     t = 0;
 
     for (int i=1; i <= nobs; i++) {    
+        //cout << "for loop " << i << endl;
         // Previous step
         t_old = t;
         Y_old = Y;
@@ -92,8 +95,9 @@ int main() {
         // Time increment and propagation
         Mjd_UTC = obs(i,1);                       // Modified Julian Date
         t       = (Mjd_UTC-Mjd0)*86400.0;         // Time since epoch [s]
-        auto [x_pole,y_pole,UT1_UTC,LOD,dpsi,deps,dx_pole,dy_pole,TAI_UTC] = IERS(eopdata,Mjd_UTC,'l');
-        auto [UT1_TAI,UTC_GPS,UT1_GPS,TT_UTC,GPS_UTC] = timediff(UT1_UTC,TAI_UTC);
+        std::tie(x_pole,y_pole,UT1_UTC,LOD,dpsi,deps,dx_pole,dy_pole,TAI_UTC) = IERS(eopdata,Mjd_UTC,'l');
+        // cout << "for loop " << i << ".1" << endl;
+        std::tie(UT1_TAI,UTC_GPS,UT1_GPS,TT_UTC,GPS_UTC) = timediff(UT1_UTC,TAI_UTC);
         Mjd_TT = Mjd_UTC + TT_UTC/86400.0;
         Mjd_UT1 = Mjd_TT + (UT1_UTC-TT_UTC)/86400.0;
         AuxParam.Mjd_UTC = Mjd_UTC;
@@ -109,29 +113,47 @@ int main() {
                 }
             }
         }
+        if (yPhi.n_row==1) {
+            yPhi = yPhi.transpose();
+        }
         yPhi = DEInteg(VarEqn,0,t-t_old,1e-13,1e-6,42,yPhi).transpose();
+        // cout << "for loop " << i << ".2" << endl;
         //return 0;
         //cout << "yPhi: " << yPhi << endl;
         // Extract state transition matrices
         for (int j=1; j <= 6; j++) {
             //Phi(:,j) = yPhi(6*j+1:6*j+6);
-            Phi.assign_column(j, yPhi.transpose().extract_vector(6*j+1, 6*j+6));
+            Phi.assign_column(j, yPhi.extract_vector(6*j+1, 6*j+6));
         }
+        // cout << "for loop " << i << ".2.1" << endl;
+        if (Y_old.n_row==1) {
+            Y_old=Y_old.transpose();
+        }
+        //cout << "for loop " << i << ".0.1, t-told: " << t-t_old << ", Y_old:\n" << Y_old << endl; 
         Y = DEInteg (Accel,0,t-t_old,1e-13,1e-6,6,Y_old).transpose();
-        
+        cout << "for loop " << i << ", Y: "<< Y << endl;
+        return 0;
         // Topocentric coordinates
         theta = gmst(Mjd_UT1);                    // Earth rotation
         U = R_z(theta);
-        r = Y.transpose().extract_vector(1, 3).transpose(); //Y(1:3);
+        // cout << "for loop " << i << ".3.1, Y: "<< Y << endl;
+        r = Y.extract_vector(1, 3).transpose(); //Y(1:3);
         s = LT*(U*r-Rs);                          // Topocentric position [m]
         // Time update
         P = TimeUpdate(P, Phi);
         // Azimuth and partials
+        // cout << "for loop " << i << ".3.2" << endl;
         std::tie(Azim, Elev, dAds, dEds) = AzElPa(s);     // Azimuth, Elevation
         //dAdY = [dAds*LT*U,zeros(1,3)];
         dAdY = union_vector(dAds*LT*U, zeros(1,3));
+        // cout << "for loop " << i << ".3.3" << endl;
+        if (Y.n_row==1) {
+            Y=Y.transpose();
+        }
         // Measurement update
+        
         std::tie(K, Y, P) = MeasUpdate ( Y, obs(i,2), Azim, sigma_az, dAdY, P, 6 );
+        cout << "for loop " << i << ".1, Y:" << Y << endl;
         // Elevation and partials
         r = Y.transpose().extract_vector(1, 3).transpose(); //Y(1:3);
         s = LT*(U*r-Rs);                          // Topocentric position [m]
@@ -140,23 +162,26 @@ int main() {
         dEdY = union_vector(dEds*LT*U, zeros(1,3));
         // Measurement update
         std::tie(K, Y, P) = MeasUpdate ( Y, obs(i,3), Elev, sigma_el, dEdY, P, 6 );
-
+        cout << "for loop " << i << ".2, Y" << Y << endl;
         // Range and partials
-        r = Y.transpose().extract_vector(1, 3).transpose(); //Y(1:3);
+        r = Y.extract_vector(1, 3).transpose(); //Y(1:3);
         s = LT*(U*r-Rs);                          // Topocentric position [m]
         Dist = norm(s); dDds = (s/Dist).transpose();         // Range
         //dDdY = [dDds*LT*U,zeros(1,3)];
         dDdY = union_vector(dDds*LT*U,zeros(1,3));
         // Measurement update
         std::tie(K, Y, P) = MeasUpdate ( Y, obs(i,4), Dist, sigma_range, dDdY, P, 6 );
+        cout << "for loop " << i << ".3, Y" << Y << endl;
+        return 0;
     }
-    auto [x_pole,y_pole,UT1_UTC,LOD,dpsi,deps,dx_pole,dy_pole,TAI_UTC] = IERS(eopdata,obs(46,1),'l');
-    auto [UT1_TAI,UTC_GPS,UT1_GPS,TT_UTC,GPS_UTC] = timediff(UT1_UTC,TAI_UTC);
+    // cout << "2" << endl;
+    std::tie(x_pole,y_pole,UT1_UTC,LOD,dpsi,deps,dx_pole,dy_pole,TAI_UTC) = IERS(eopdata,obs(46,1),'l');
+    std::tie(UT1_TAI,UTC_GPS,UT1_GPS,TT_UTC,GPS_UTC) = timediff(UT1_UTC,TAI_UTC);
     Mjd_TT = Mjd_UTC + TT_UTC/86400;
     AuxParam.Mjd_UTC = Mjd_UTC;
     AuxParam.Mjd_TT = Mjd_TT;
     cout << "Last DEInteg, Y: \n" << Y << endl;
-    Y0 = DEInteg (Accel,0,-(obs(46,1)-obs(1,1))*86400.0,1e-13,1e-6,6,Y).transpose();
+    Y0 = DEInteg (Accel,0,-(obs(46,1)-obs(1,1))*86400.0,1e-13,1e-6,6,Y);
     
     //Y_true = [5753.173e3, 2673.361e3, 3440.304e3, 4.324207e3, -1.924299e3, -5.728216e3]';
     Y_true = zeros(6);
@@ -166,7 +191,6 @@ int main() {
     Y_true(4) = 4.324207e3;
     Y_true(5) = -1.924299e3;
     Y_true(6) = -5.728216e3;
-    Y_true = Y_true.transpose();
     
     printf("\nError of Position Estimation\n");
     printf("dX%10.1f [m]\n", Y0(1)-Y_true(1));

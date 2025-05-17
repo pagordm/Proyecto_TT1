@@ -118,12 +118,13 @@ std::tuple<double, double> NutAngles(double Mjd_TT) {
         {    2, 0, 0, 2, 0,      10,    0,       0,    0},   // 104
         {    0, 0, 2, 4, 2,     -10,    0,       0,    0},   // 105
         {    0, 1, 0, 1, 0,      10,    0,       0,    0}   // 106
-		 };
-		 for (int i = 0; i < C.n_row; i++) {
-            for (int j = 0; j < C.n_column; j++) {
-                C.data[i][j] = values[i][j];
-            }
+	};
+    //Add values into C matrix
+    for (int i = 0; i < C.n_row; i++) {
+        for (int j = 0; j < C.n_column; j++) {
+            C(i+1, j+1) = values[i][j];
         }
+    }
     // Mean arguments of luni-solar motion
 
     //   l   mean anomaly of the Moon
@@ -134,9 +135,8 @@ std::tuple<double, double> NutAngles(double Mjd_TT) {
 
     
 
-    double l  = fmod(485866.733 + (1325.0*rev +  715922.633)*T + 31.310*T2 + 0.064*T3, rev );
-    double lp = fmod ( 1287099.804 + (  99.0*rev + 1292581.224)*T
-                                -  0.577*T2 - 0.012*T3, rev );
+    double l  = fmod(485866.733  + (1325.0*rev +  715922.633)*T + 31.310*T2 + 0.064*T3, rev );
+    double lp = fmod(1287099.804 + (99.0*rev + 1292581.224)*T - 0.577*T2 - 0.012*T3, rev );
     double F  = fmod (  335778.877 + (1342.0*rev +  295263.137)*T
                                 - 13.257*T2 + 0.011*T3, rev );
     double D  = fmod ( 1072261.307 + (1236.0*rev + 1105601.328)*T
@@ -158,7 +158,7 @@ std::tuple<double, double> NutAngles(double Mjd_TT) {
     dpsi = 1.0e-5 * dpsi/Constants::Arcs;
     deps = 1.0e-5 * deps/Constants::Arcs;
 
-    return std::make_tuple(dpsi, deps);
+    return std::tie(dpsi, deps);
 }
 
 

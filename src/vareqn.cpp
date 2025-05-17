@@ -10,7 +10,7 @@
  * @note Last modified: 2015/08/12 M. Mahooti
  */
 Matrix& VarEqn(double x, Matrix yPhi) {
-    if (yPhi.n_row==1) {
+    if (yPhi.n_row==1) { // Si es un vector fila lo trasponemos a un vector columna
         yPhi=yPhi.transpose();
     }
     auto [x_pole,y_pole,UT1_UTC,LOD,dpsi,deps,dx_pole,dy_pole,TAI_UTC] = IERS(eopdata,AuxParam.Mjd_UTC,'l');
@@ -26,19 +26,19 @@ Matrix& VarEqn(double x, Matrix yPhi) {
     E = PoleMatrix(x_pole,y_pole) * GHAMatrix(Mjd_UT1) * T;
 
     // State vector components
-    r = yPhi.transpose().extract_vector(1,3);
-    v = yPhi.transpose().extract_vector(4,6);
+    r = yPhi.extract_vector(1,3);
+    v = yPhi.extract_vector(4,6);
     Phi = zeros(6, 6);
 
     // State transition matrix
     for (int j=1; j <= 6; j++) {
         //Phi(:,j) = yPhi(6*j+1:6*j+6);
-        Phi.assign_column(j, yPhi.transpose().extract_vector(6*j+1, 6*j+6));
+        Phi.assign_column(j, yPhi.extract_vector(6*j+1, 6*j+6));
     }
 
     // Acceleration and gradient
-    a = AccelHarmonic ( r.transpose(), E, AuxParam.n, AuxParam.m ).transpose();
-    G = G_AccelHarmonic ( r.transpose(), E, AuxParam.n, AuxParam.m );
+    a = AccelHarmonic ( r, E, AuxParam.n, AuxParam.m ).transpose();
+    G = G_AccelHarmonic ( r.transpose(), E, AuxParam.n, AuxParam.m ); //r.transpose() needed?
 
     // Time derivative of state transition matrix
     Matrix& yPhip = zeros(42,1);
