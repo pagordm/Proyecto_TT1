@@ -136,7 +136,7 @@ Matrix& DEInteg(Matrix& f(double t, Matrix& y), double t, double tout, double re
     }
 
     while (true) {   // Start step loop
-    cout << "1" << endl;
+    //cout << "1" << endl;
     // If already past output point, interpolate solution and return
     if  (fabs(x-t) >= fabsdel) {
         yout  = zeros(n_eqn,1); 
@@ -145,13 +145,13 @@ Matrix& DEInteg(Matrix& f(double t, Matrix& y), double t, double tout, double re
         rho(2) = 1.0;
         hi = tout - x;
         ki = kold + 1;
-        cout << "2, ki=" << ki << endl;
+        //cout << "2, ki=" << ki << endl;
         // Initialize w[*] for computing g[*]
         for (double i=1; i <= ki; i++) {
             temp1 = i;
             w(i+1) = 1.0/temp1;
         }
-        cout << "3" << endl;
+        //cout << "3" << endl;
         // Compute g[*]
         term = 0.0;
         for (double j=2; j <= ki; j++) {
@@ -166,7 +166,7 @@ Matrix& DEInteg(Matrix& f(double t, Matrix& y), double t, double tout, double re
             term = psijm1;
         }
         
-        cout << "4" << endl;
+        //cout << "4" << endl;
         // Interpolate for the solution yout and for
         // the derivative of the solution ypout      
         for (int j=1; j <= ki; j++) {
@@ -178,7 +178,7 @@ Matrix& DEInteg(Matrix& f(double t, Matrix& y), double t, double tout, double re
             //cout << "yout:\n" << yout << endl;
             ypout = ypout + (phi.extract_column(i+1)*rho(i+1)).transpose();
         }
-        cout << "5" << endl;
+        //cout << "5" << endl;
         //cout << "yout: \n" << yout << endl;
         //cout << "y: \n" << y << endl;
         yout = y + yout*hi;
@@ -189,7 +189,7 @@ Matrix& DEInteg(Matrix& f(double t, Matrix& y), double t, double tout, double re
         OldPermit = PermitTOUT;
         return y;                       // Normal exit
     }                         
-    cout << "6" << endl;
+    //cout << "6" << endl;
     // If cannot go past output point and sufficiently close,
     // extrapolate and return
     if ( !PermitTOUT && ( fabs(tout-x) < fouru*fabs(x) ) ) {
@@ -203,7 +203,7 @@ Matrix& DEInteg(Matrix& f(double t, Matrix& y), double t, double tout, double re
         //cout << "Exit 2" << endl;
         return y;                       // Normal exit
     }
-    cout << "7" << endl;
+    //cout << "7" << endl;
     // Test for too much work
     //   if (nostep >= fmaxnum)
     //       State_ = DE_STATE::DE_NUMSTEPS; // Too many steps
@@ -331,7 +331,7 @@ Matrix& DEInteg(Matrix& f(double t, Matrix& y), double t, double tout, double re
         temp1 = h*realns;
         sig(nsp1+1) = 1.0;
         if (k>=nsp1) {
-            cout << "8" << endl;
+            //cout << "8" << endl;
             for (double i=nsp1; i <= k; i++) {
                 im1   = i-1;
                 temp2 = psi_(im1+1);
@@ -342,7 +342,7 @@ Matrix& DEInteg(Matrix& f(double t, Matrix& y), double t, double tout, double re
                 reali = i;
                 sig(i+2) = reali*alpha(i+1)*sig(i+1);
             }
-            cout << "9" << endl;
+            //cout << "9" << endl;
         }
         psi_(k+1) = temp1;
         
@@ -350,7 +350,7 @@ Matrix& DEInteg(Matrix& f(double t, Matrix& y), double t, double tout, double re
         if (ns>1) {
             // If order was raised, update diagonal part of v[*]
             if (k>kold) {
-                cout << "10" << endl;
+                //cout << "10" << endl;
                 temp4 = k*kp1;
                 v(k+1) = 1.0/temp4;
                 nsm2 = ns-2;
@@ -358,9 +358,9 @@ Matrix& DEInteg(Matrix& f(double t, Matrix& y), double t, double tout, double re
                     i = k-j;
                     v(i+1) = v(i+1) - alpha(j+2)*v(i+2);
                 }
-                cout << "11" << endl;
+                //cout << "11" << endl;
             }
-            cout << "12" << endl;
+            //cout << "12" << endl;
             // Update V[*] and set W[*]
             limit1 = kp1 - ns;
             temp5  = alpha(ns+1);
@@ -369,21 +369,21 @@ Matrix& DEInteg(Matrix& f(double t, Matrix& y), double t, double tout, double re
                 w(iq+1) = v(iq+1);
             }
             g(nsp1+1) = w(2);
-            cout << "13" << endl;
+            //cout << "13" << endl;
         } else {
-            cout << "14" << endl;
+            //cout << "14" << endl;
             for (int iq=1; iq <= k; iq++) {
                 temp3 = iq*(iq+1);
                 v(iq+1) = 1.0/temp3;
                 w(iq+1) = v(iq+1);
             }
-            cout << "15" << endl;
+            //cout << "15" << endl;
         }
         
         // Compute the g[*] in the work vector w[*]
         nsp2 = ns + 2;
         if (kp1>=nsp2) {
-            cout << "16" << endl;
+            //cout << "16" << endl;
             for (int i=nsp2; i <= kp1; i++) {
                 limit2 = kp2 - i;
                 temp6  = alpha(i);
@@ -392,7 +392,7 @@ Matrix& DEInteg(Matrix& f(double t, Matrix& y), double t, double tout, double re
                 }
                 g(i+1) = w(2);
             }
-            cout << "17" << endl;
+            //cout << "17" << endl;
         }
     } // if K>=NS
     
