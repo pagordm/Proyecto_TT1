@@ -25,9 +25,9 @@ int main() {
     int nobs = 46;
     GEOS3(nobs);
 
-    long double sigma_range, sigma_az, sigma_el, lat, lon, alt, Mjd1, Mjd2, Mjd3, Mjd0, Mjd_UTC, Mjd_TT, Mjd_UT1, theta, Dist, Azim, Elev;
-    long double x_pole,y_pole,UT1_UTC,LOD,dpsi,deps,dx_pole,dy_pole,TAI_UTC, UT1_TAI,UTC_GPS,UT1_GPS,TT_UTC,GPS_UTC;
-    int n_eqn, t, t_old;
+    double sigma_range, sigma_az, sigma_el, lat, lon, alt, Mjd1, Mjd2, Mjd3, Mjd0, Mjd_UTC, Mjd_TT, Mjd_UT1, theta, Dist, Azim, Elev;
+    double x_pole,y_pole,UT1_UTC,LOD,dpsi,deps,dx_pole,dy_pole,TAI_UTC, UT1_TAI,UTC_GPS,UT1_GPS,TT_UTC,GPS_UTC, t, t_old;
+    int n_eqn;
     Matrix Rs, Y0_apr, Y, P, LT, yPhi, Phi, Y_old, U, r, s, dAdY, dEdY, dDds, dDdY, K, Y0, Y_true, dAds, dEds;
     sigma_range = 92.5;          // [m]
     sigma_az = 0.0224*Constants::Rad; // [rad]
@@ -69,7 +69,7 @@ int main() {
     n_eqn  = 6;
 
     Y = DEInteg(Accel,0,-(obs(9,1)-Mjd0)*86400.0,1e-13,1e-6,6,Y0_apr).transpose();   
-    cout << "First DEInteg Y: " << Y << endl;
+    //cout << "First DEInteg Y: " << Y << endl;
     P = zeros(6, 6);
     
     for (int i=1; i <= 3; i++) {
@@ -95,6 +95,7 @@ int main() {
         // Time increment and propagation
         Mjd_UTC = obs(i,1);                       // Modified Julian Date
         t       = (Mjd_UTC-Mjd0)*86400.0;         // Time since epoch [s]
+
         std::tie(x_pole,y_pole,UT1_UTC,LOD,dpsi,deps,dx_pole,dy_pole,TAI_UTC) = IERS(eopdata,Mjd_UTC,'l');
         // cout << "for loop " << i << ".1" << endl;
         std::tie(UT1_TAI,UTC_GPS,UT1_GPS,TT_UTC,GPS_UTC) = timediff(UT1_UTC,TAI_UTC);
@@ -129,10 +130,11 @@ int main() {
         if (Y_old.n_row==1) {
             Y_old=Y_old.transpose();
         }
+        //printf("t-t_old: %5.20lf \n", t-t_old);
         //cout << "for loop " << i << ".0.1, t-told: " << t-t_old << ", Y_old:\n" << Y_old << endl; 
         Y = DEInteg (Accel,0,t-t_old,1e-13,1e-6,6,Y_old).transpose();
-        cout << "for loop " << i << ", Y: "<< Y << endl;
-        return 0;
+        //cout << "for loop " << i << ", Y: "<< Y << endl;
+        //return 0;
         // Topocentric coordinates
         theta = gmst(Mjd_UT1);                    // Earth rotation
         U = R_z(theta);
@@ -180,7 +182,7 @@ int main() {
     Mjd_TT = Mjd_UTC + TT_UTC/86400;
     AuxParam.Mjd_UTC = Mjd_UTC;
     AuxParam.Mjd_TT = Mjd_TT;
-    cout << "Last DEInteg, Y: \n" << Y << endl;
+    //cout << "Last DEInteg, Y: \n" << Y << endl;
     Y0 = DEInteg (Accel,0,-(obs(46,1)-obs(1,1))*86400.0,1e-13,1e-6,6,Y);
     
     //Y_true = [5753.173e3, 2673.361e3, 3440.304e3, 4.324207e3, -1.924299e3, -5.728216e3]';

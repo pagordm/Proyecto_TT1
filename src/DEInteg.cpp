@@ -23,7 +23,7 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
     ip1, tau, xold, erkm2, erkm1, erk, err, knew, erkp1, r, rho2;
     double del, absdel, tend, nostep, kle4, releps, abseps, delsgn;
     bool stiff, OldPermit=false, start=false, crash=false, phase1=false, nornd=false, success=false;
-    Matrix yy, yout, ypout, g, rho, wt, v, w, phi, p, yp,sig,alpha,beta,psi_;
+    Matrix yy, yout=zeros(n_eqn, 1), ypout=zeros(n_eqn, 1), g, rho, wt, v, w, phi, p, yp,sig,alpha,beta,psi_;
 
     // maxnum = 500;
     twou  = 2*eps;
@@ -121,9 +121,12 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
         yy     = y;
         delsgn = sign_(1.0, del);
         h      = sign_( fmax(fouru*fabs(x), fabs(tout-x)), tout-x );
+
+        // cout << "Intial x assignment, new: " << x << "(h: "<<h<<")"<<endl;
     }
 
     while (true) {   // Start step loop
+    // cout << "Iteracion " << nostep << ", x: " << x<< endl;
     //g(i+1)*phi(:,i+1)
     // If already past output point, interpolate solution and return
     if (fabs(x-t) >= absdel) {
@@ -138,28 +141,25 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
             temp1 = i;
             w(i+1) = 1.0/temp1;
         }
-        cout << "w: \n" << w << endl;
-        cout << "g: \n" << g << endl;
-        cout << "psi: \n" << psi_ << endl;
-        cout << "rho: \n" << rho << endl;
-        cout << "ki: " << ki << endl;
-        cout << "k: " << k << endl;
+        // printf("hi: %5.20lf\n", hi);
+        // printf("tout: %5.20lf\n", tout);
+        // printf("x: %5.20lf\n", x);
+        // cout << "---START LOOP---" << endl;
         // Compute g[*]
         term = 0.0;
-        for (int j=2; j <= ki; j++) { // EL PROBLEMA ESTÁ EN ESTE BUCLE FOR
+        for (int j=2; j <= ki; j++) { 
+            
             psijm1 = psi_(j);
             gamma = (hi + term)/psijm1;
             eta = hi/psijm1;
             for (int i=1; i <= ki+1-j; i++) {
-                temp1=w(i+1);
-                w(i+1) = gamma*temp1 - eta*w(i+2);
+                // temp1=w(i+1);
+                w(i+1) = gamma*w(i+1) - eta*w(i+2);
             }
             g(j+1) = w(2);
             rho(j+1) = gamma*rho(j);
             term = psijm1;
         }
-        cout << "g: \n" << g << endl;
-        cout << "rho: \n" << rho << endl;
         if (yout.n_column==1) {
             yout = yout.transpose();
         }
@@ -430,7 +430,9 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
         }
     }
     xold = x;
+    // cout << "x update, prev: " << x;
     x = x + h;
+    // cout << ", new: " << x << "(h: "<<h<<")"<<endl;
     absh = fabs(h);
     yp = f(x,p);
     
@@ -503,7 +505,9 @@ Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double rel
         
         // Restore x, phi[*,*] and psi[*]
         phase1 = false; 
+        // cout << "x update (rollback to old), prev: " << x;
         x = xold;
+        // cout << ", new: " << x << "(h: "<<h<<")"<<endl;
         for (int i=1; i <= k; i++) {
             temp1 = 1.0/beta(i+1);
             ip1 = i+1;
