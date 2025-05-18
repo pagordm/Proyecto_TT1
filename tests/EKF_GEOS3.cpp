@@ -67,9 +67,9 @@ int main() {
     AuxParam.Mjd_UTC = Mjd_UTC;
 
     n_eqn  = 6;
-
+    
     Y = DEInteg(Accel,0,-(obs(9,1)-Mjd0)*86400.0,1e-13,1e-6,6,Y0_apr).transpose();   
-    //cout << "First DEInteg Y: " << Y << endl;
+    cout << "First DEInteg Y: " << Y << endl;
     P = zeros(6, 6);
     
     for (int i=1; i <= 3; i++) {
@@ -133,7 +133,7 @@ int main() {
         //printf("t-t_old: %5.20lf \n", t-t_old);
         //cout << "for loop " << i << ".0.1, t-told: " << t-t_old << ", Y_old:\n" << Y_old << endl; 
         Y = DEInteg (Accel,0,t-t_old,1e-13,1e-6,6,Y_old).transpose();
-        //cout << "for loop " << i << ", Y: "<< Y << endl;
+        // cout << "for loop " << i << ", Y: "<< Y << endl;
         //return 0;
         // Topocentric coordinates
         theta = gmst(Mjd_UT1);                    // Earth rotation
