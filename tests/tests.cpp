@@ -1095,6 +1095,42 @@ int deinteg_01() {
 
 }
 
+int hgibbs_01() {
+	double Mjd1=4.974611015046295e+04;
+	double Mjd2=4.974611128472211e+04;
+	double Mjd3=4.974611253472231e+04;
+	Matrix r1(3, 1);
+	r1(1, 1)=5.720303710129856e+06;
+	r1(2, 1)=3.152426696533103e+06;
+	r1(3, 1)=3.750056804164019e+06;
+	Matrix r2(3,1);
+	r2(1, 1) = 6.221397628578685e+06;
+	r2(2, 1) = 2.867713779657379e+06;
+	r2(3, 1) = 3.006155985099489e+06;
+	Matrix r3(3, 1);
+	r3(1, 1) = 6.699811809767957e+06;
+	r3(2, 1) = 2.569867807638814e+06;
+	r3(3, 1) = 2.154940295423891e+06;
+
+	Matrix ev2(3, 1);
+	ev2(1, 1) = 4.796825169167805e+03;
+	ev2(2, 1) = -2.839418128699730e+03;
+	ev2(3, 1) = -7.741594338630217e+03;
+	double etheta = 0.125269502872995;
+	double etheta1 = 0.136454013492468;
+	double ecopa = 0.005097233477757;
+	std::string eerror = "   angl > 1ø";
+	auto [v2, theta, theta1, copa, error] = hgibbs(r1, r2, r3, Mjd1, Mjd2, Mjd3);
+
+	_assert(m_equals(v2, ev2, 1e-10));
+	_assert(fabs(theta-etheta) < 1e-10);
+	_assert(fabs(theta1-etheta1) < 1e-10);
+	_assert(fabs(ecopa-copa) < 1e-10);
+	_assert(error==eerror);
+
+	return 0;
+}
+
 int all_tests()
 {
 	eop19620101(21413); // c = 21413
@@ -1163,6 +1199,7 @@ int all_tests()
 	_verify(unit_01);
 	_verify(gibbs_01);
 	_verify(deinteg_01);
+	_verify(hgibbs_01);
 
     return 0;
 }

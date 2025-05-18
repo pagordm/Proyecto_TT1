@@ -41,12 +41,12 @@ std::tuple<Matrix&, double, double, double, std::string> hgibbs(Matrix r1, Matri
     dt31= (Mjd3-Mjd1)*86400.0;
     dt32= (Mjd3-Mjd2)*86400.0;
 
-    p = cross( r2,r3 );
+    p = cross( r2.transpose(),r3.transpose() ).transpose();
     pn = unit( p );
     r1n = unit( r1 );
     copa=  asin( dot( pn,r1n ) );
 
-    if ( abs( dot(r1n,pn) ) > 0.017452406 ) {
+    if ( fabs( dot(r1n,pn) ) > 0.017452406 ) {
         error= "not coplanar";
     }
 
