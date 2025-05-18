@@ -53,58 +53,63 @@ std::tuple<Matrix&, Matrix&> anglesg(double az1, double az2, double az3, double 
     double G1, G2, G3;
     double D1, D2, D3;
     double tausqr;
-
+    double UT1_TAI,UTC_GPS,UT1_GPS,TT_UTC,GPS_UTC;
+    double x_pole,y_pole,UT1_UTC,LOD,dpsi,deps,dx_pole,dy_pole,TAI_UTC;
+    // cout << "1" << endl;
     L1(1)=cos(el1)*sin(az1); L1(2)= cos(el1)*cos(az1); L1(3)= sin(el1);;
     L2(1)=cos(el2)*sin(az2); L2(2)= cos(el2)*cos(az2); L2(3)= sin(el2);;
     L3(1)=cos(el3)*sin(az3); L3(2)= cos(el3)*cos(az3); L3(3)= sin(el3);;
-
+    // cout << "2" << endl;
     auto [lon1, lat1, h1] = Geodetic(Rs1);
     auto [lon2, lat2, h2] = Geodetic(Rs2);
     auto [lon3, lat3, h3] = Geodetic(Rs3);
-
+    // cout << "lon1: "<< lon1 << ", lat1: " << lat1 << endl;
     M1 = LTC(lon1, lat1);
     M2 = LTC(lon2, lat2);
     M3 = LTC(lon3, lat3);
+    // cout << "m1: \n" << M1;
+    
 
+    // cout << "4" << endl;
     // body-fixed system
-    Lb1 = M1.transpose()*L1;
-    Lb2 = M1.transpose()*L2;
-    Lb3 = M1.transpose()*L3;
-
+    Lb1 = M1.transpose()*L1.transpose();
+    Lb2 = M1.transpose()*L2.transpose();
+    Lb3 = M1.transpose()*L3.transpose();
+    // cout << "5" << endl;
     // mean of date system (J2000)
-    {
-        Mjd_UTC = Mjd1;
-        auto [x_pole,y_pole,UT1_UTC,LOD,dpsi,deps,dx_pole,dy_pole,TAI_UTC] = IERS(eopdata,Mjd_UTC,'l');
-        auto [UT1_TAI,UTC_GPS,UT1_GPS,TT_UTC,GPS_UTC] = timediff(UT1_UTC,TAI_UTC);
-        Mjd_TT = Mjd_UTC + TT_UTC/86400;
-        Mjd_UT1 = Mjd_TT + (UT1_UTC-TT_UTC)/86400;
+    
+    Mjd_UTC = Mjd1;
+    std::tie(x_pole,y_pole,UT1_UTC,LOD,dpsi,deps,dx_pole,dy_pole,TAI_UTC) = IERS(eopdata,Mjd_UTC,'l');
+    std::tie(UT1_TAI,UTC_GPS,UT1_GPS,TT_UTC,GPS_UTC) = timediff(UT1_UTC,TAI_UTC);
+    Mjd_TT = Mjd_UTC + TT_UTC/86400;
+    Mjd_UT1 = Mjd_TT + (UT1_UTC-TT_UTC)/86400;
+    // cout << "6" << endl;
+    P = PrecMatrix(Constants::MJD_J2000,Mjd_TT);
+    N = NutMatrix(Mjd_TT);
+    T = N * P;
+    E = PoleMatrix(x_pole,y_pole) * GHAMatrix(Mjd_UT1) * T;
+    // cout << "7" << endl;
+    Lm1 = E.transpose()*Lb1;
+    Rs1 = E.transpose()*Rs1;
+    // cout << "8" << endl;
+    
+    Mjd_UTC = Mjd2;
+    std::tie(x_pole,y_pole,UT1_UTC,LOD,dpsi,deps,dx_pole,dy_pole,TAI_UTC) = IERS(eopdata,Mjd_UTC,'l');
+    std::tie(UT1_TAI,UTC_GPS,UT1_GPS,TT_UTC,GPS_UTC) = timediff(UT1_UTC,TAI_UTC);
+    Mjd_TT = Mjd_UTC + TT_UTC/86400;
+    Mjd_UT1 = Mjd_TT + (UT1_UTC-TT_UTC)/86400;
 
-        Matrix P = PrecMatrix(Constants::MJD_J2000,Mjd_TT);
-        Matrix N = NutMatrix(Mjd_TT);
-        Matrix T = N * P;
-        Matrix E = PoleMatrix(x_pole,y_pole) * GHAMatrix(Mjd_UT1) * T;
+    P = PrecMatrix(Constants::MJD_J2000,Mjd_TT);
+    N = NutMatrix(Mjd_TT);
+    T = N * P;
+    E = PoleMatrix(x_pole,y_pole) * GHAMatrix(Mjd_UT1) * T;
 
-        Lm1 = E.transpose()*Lb1;
-        Rs1 = E.transpose()*Rs1;
-    }
-    {
-        Mjd_UTC = Mjd2;
-        auto [x_pole,y_pole,UT1_UTC,LOD,dpsi,deps,dx_pole,dy_pole,TAI_UTC] = IERS(eopdata,Mjd_UTC,'l');
-        auto [UT1_TAI,UTC_GPS,UT1_GPS,TT_UTC,GPS_UTC] = timediff(UT1_UTC,TAI_UTC);
-        Mjd_TT = Mjd_UTC + TT_UTC/86400;
-        Mjd_UT1 = Mjd_TT + (UT1_UTC-TT_UTC)/86400;
-
-        P = PrecMatrix(Constants::MJD_J2000,Mjd_TT);
-        N = NutMatrix(Mjd_TT);
-        T = N * P;
-        E = PoleMatrix(x_pole,y_pole) * GHAMatrix(Mjd_UT1) * T;
-
-        Lm2 = E.transpose()*Lb2;
-        Rs2 = E.transpose()*Rs2;
-    }
+    Lm2 = E.transpose()*Lb2;
+    Rs2 = E.transpose()*Rs2;
+    
     Mjd_UTC = Mjd3;
-    auto [x_pole,y_pole,UT1_UTC,LOD,dpsi,deps,dx_pole,dy_pole,TAI_UTC] = IERS(eopdata,Mjd_UTC,'l');
-    auto [UT1_TAI,UTC_GPS,UT1_GPS,TT_UTC,GPS_UTC] = timediff(UT1_UTC,TAI_UTC);
+    std::tie(x_pole,y_pole,UT1_UTC,LOD,dpsi,deps,dx_pole,dy_pole,TAI_UTC) = IERS(eopdata,Mjd_UTC,'l');
+    std::tie(UT1_TAI,UTC_GPS,UT1_GPS,TT_UTC,GPS_UTC) = timediff(UT1_UTC,TAI_UTC);
     Mjd_TT = Mjd_UTC + TT_UTC/86400;
     Mjd_UT1 = Mjd_TT + (UT1_UTC-TT_UTC)/86400.0;
 
@@ -130,10 +135,11 @@ std::tuple<Matrix&, Matrix&> anglesg(double az1, double az2, double az3, double 
     aux1.assign_column(1, Lm1.transpose());
     aux1.assign_column(2, Lm2.transpose());
     aux1.assign_column(3, Lm3.transpose());
-
+    
     aux2.assign_column(1, Rs1.transpose());
     aux2.assign_column(2, Rs2.transpose());
     aux2.assign_column(3, Rs2.transpose());
+
     D = inv(aux1)*aux2;
 
     d1s = D(2,1)*a1-D(2,2)+D(2,3)*a3;
@@ -141,7 +147,7 @@ std::tuple<Matrix&, Matrix&> anglesg(double az1, double az2, double az3, double 
 
     Ccye = 2*dot(Lm2,Rs2);
     
-    double poly[9] = {
+    double poly[10] = {
         1.0,  // R2^8... polynomial
         0.0,
         -(pow(d1s,2) + d1s*Ccye + pow(norm(Rs2),2)),
@@ -152,7 +158,7 @@ std::tuple<Matrix&, Matrix&> anglesg(double az1, double az2, double az3, double 
         0.0,
         -pow(Constants::GM_Earth,2)*pow(d2s,2)
     };
-    double zeror[8], zeroi[8];
+    double zeror[10], zeroi[10];
     //rootarr = roots( poly );
     real_poly_roots(poly, 8, zeror, zeroi);
     bigr2= -99999990.0;
@@ -188,7 +194,7 @@ std::tuple<Matrix&, Matrix&> anglesg(double az1, double az2, double az3, double 
     rho2 = 99999999.9;
     ll   = 0;
 
-    while ((abs(rhoold2-rho2) > 1e-12) && (ll <= 0 )) {
+    while ((fabs(rhoold2-rho2) > 1e-12) && (ll <= 0 )) {
         ll = ll + 1;
         rho2 = rhoold2;
         
@@ -200,12 +206,12 @@ std::tuple<Matrix&, Matrix&> anglesg(double az1, double az2, double az3, double 
         magr2 = norm(r2);
         magr3 = norm(r3);
         
-        auto [v2, theta,theta1,copa,error] = gibbs(r1,r2,r3);
+        std::tie(v2, theta,theta1,copa,error) = gibbs(r1,r2,r3);
         
         if ( (error!="          ok") & (copa < Constants::pi/180) ) {
-            auto [v2,theta,theta1,copa,error] = hgibbs(r1,r2,r3,Mjd1,Mjd2,Mjd3);
+            std::tie(v2,theta,theta1,copa,error) = hgibbs(r1,r2,r3,Mjd1,Mjd2,Mjd3);
         }
-        Matrix temporal = union_vector(r2, v2);
+        Matrix temporal = union_vector(r2.transpose(), v2.transpose());
         auto [p, a, e, i, Omega, omega, M] = elements (temporal);
         
         if ( ll <= 8)  {
@@ -257,7 +263,7 @@ std::tuple<Matrix&, Matrix&> anglesg(double az1, double az2, double az3, double 
         Matrix aux4(3), aux5(3);
         aux4(1)=D1; aux4(2)=D2; aux4(3)=D3;
         aux5(1)=C1; aux5(2)=C2; aux5(3)=C3;
-        double temp2 = (-aux4*aux5.transpose())(0,0);
+        double temp2 = (-aux4*aux5.transpose())(1,1);
         rhoold1 = temp2/(a1+b1*u);
         rhoold2 = -temp2;
         rhoold3 = temp2/(a3+b3*u);

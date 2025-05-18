@@ -40,6 +40,7 @@
 #include "..\include\hgibbs.hpp"
 #include "..\include\unit.hpp"
 #include "..\include\DEInteg.hpp"
+#include "..\include\anglesg.hpp"
 #include <tuple>
 #include <cstdio>
 #include <cmath>
@@ -1131,6 +1132,38 @@ int hgibbs_01() {
 	return 0;
 }
 
+int anglesg_01() {
+	double arg1=1.0559084894933;
+	double arg2=1.36310214580757;
+	double arg3=1.97615602688759;
+	double arg4=0.282624656433946;
+	double arg5=0.453434794338875;
+	double arg6=0.586427138011591;
+	double Mjd1=4.974611015046295e+04;
+	double Mjd2=4.974611128472211e+04;
+	double Mjd3=4.974611253472231e+04;
+	Matrix Rs(3, 1);
+	Rs(1, 1) = -5.512567840036068e+06;
+	Rs(2, 1) = -2.196994446669333e+06;
+	Rs(3, 1) = 2.330804966146887e+06;
+	Matrix r2(3, 1);
+    r2(1,1)=6221397.62857869;
+    r2(2,1)=2867713.77965738;
+    r2(3,1)=3006155.98509949;
+    Matrix v2(3,1);
+    v2(1,1)=4645.04725161806;
+    v2(2,1)=-2752.21591588204;
+    v2(3,1)=-7507.99940987031;
+
+	auto [r2res, v2res] = anglesg(arg1, arg2, arg3, arg4, arg5, arg6, Mjd1, Mjd2, Mjd3, Rs, Rs, Rs);
+	// cout << "r2res:" << r2res;
+	// cout << "v2res:" << v2res;
+	_assert(m_equals(r2, r2res, 1e-6));
+	_assert(m_equals(v2, v2res, 1e-6));
+
+	return 0;
+}
+
 int all_tests()
 {
 	eop19620101(21413); // c = 21413
@@ -1200,6 +1233,7 @@ int all_tests()
 	_verify(gibbs_01);
 	_verify(deinteg_01);
 	_verify(hgibbs_01);
+	_verify(anglesg_01);
 
     return 0;
 }
