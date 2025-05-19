@@ -69,7 +69,7 @@ int main() {
     n_eqn  = 6;
     
     Y = DEInteg(Accel,0,-(obs(9,1)-Mjd0)*86400.0,1e-13,1e-6,6,Y0_apr).transpose();   
-    cout << "First DEInteg Y: " << Y << endl;
+    // cout << "First DEInteg Y: " << Y << endl;
     P = zeros(6, 6);
     
     for (int i=1; i <= 3; i++) {
