@@ -1,3 +1,11 @@
+/**
+ * @file rpoly.h
+ * @author Pablo Gordillo Minchinela
+ * @brief This header contains the code for calculating roots of polynomials.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #ifndef BEGIN_C_DECLS
 #define BEGIN_C_DECLS
 

@@ -1,3 +1,11 @@
+/**
+ * @file iers.hpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This header contains the iers function declaration.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #ifndef _IERS_
 #define _IERS_
 

@@ -1,3 +1,9 @@
+/**
+ * @file accelpointmass.hpp 
+ * @author Pablo Gordillo Minchinela
+ * @brief Point Mass Acceleration calculation
+ * 
+ */
 #ifndef _ACCELPM_
 #define _ACCELPM_
 

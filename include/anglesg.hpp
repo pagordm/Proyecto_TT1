@@ -1,3 +1,9 @@
+/**
+ * @file anglesg.hpp
+ * @author Pablo Gordillo Minchinela
+ * @brief Anglesg function for EKF
+ * 
+ */
 #ifndef _ANGLESG_
 #define _ANGLESG_
 

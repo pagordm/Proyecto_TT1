@@ -1,3 +1,11 @@
+/**
+ * @file DEInteg.hpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This function contains the DEInteg integration function.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #ifndef _DEINTEG_
 #define _DEINTEG_
 

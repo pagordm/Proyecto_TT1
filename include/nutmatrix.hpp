@@ -1,3 +1,11 @@
+/**
+ * @file nutmatrix.hpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This header contains the NutMatrix function declaration.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #ifndef _NUTMATRIX_
 #define _NUTMATRIX_
 

@@ -1,3 +1,9 @@
+/**
+ * @file accelharmonic.hpp
+ * @author Pablo Gordillo Minchinela
+ * @brief Harmonic acceleration functions
+ * 
+ */
 #ifndef _ACCELHARMONIC_
 #define _ACCELHARMONIC_
 

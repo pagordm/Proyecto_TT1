@@ -1,3 +1,11 @@
+/**
+ * @file matrix.h
+ * @author Pablo Gordillo Minchinela
+ * @brief This header contains the Matrix class declaration and its methods.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #ifndef _MATRIX_
 #define _MATRIX_
 

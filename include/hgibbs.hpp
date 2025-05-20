@@ -1,3 +1,11 @@
+/**
+ * @file hgibbs.hpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This header contains the hgibbs function declaration.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #ifndef _HGIBBS_
 #define _HGIBBS_
 

@@ -1,3 +1,11 @@
+/**
+ * @file JPL_Eph_DE430.hpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This header contains the JPL_Eph_DE430 function declaration.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #ifndef _JPL_
 #define _JPL_
 

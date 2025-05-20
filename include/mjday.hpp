@@ -1,3 +1,11 @@
+/**
+ * @file mjday.hpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This header contains the Mjday function declaration.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #ifndef _MJDAY_
 #define _MJDAY_
 

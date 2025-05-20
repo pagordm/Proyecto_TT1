@@ -1,3 +1,11 @@
+/**
+ * @file legendre.hpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This header contains the Legendre function declaration.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #ifndef _LEGENDRE_
 #define _LEGENDRE_
 

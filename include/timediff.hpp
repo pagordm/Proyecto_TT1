@@ -1,3 +1,11 @@
+/**
+ * @file timediff.hpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This header contains the timediff function declaration.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #ifndef _TIMEDIFF_
 #define _TIMEDIFF_
 

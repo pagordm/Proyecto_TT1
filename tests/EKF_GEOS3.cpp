@@ -1,3 +1,11 @@
+/**
+ * @file EKF_GEOS3.cpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This file contains the main program of the project.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #include "..\include\matrix.h"
 #include "..\include\global.hpp"
 #include "..\include\legendre.hpp"

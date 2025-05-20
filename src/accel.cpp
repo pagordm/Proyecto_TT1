@@ -1,3 +1,14 @@
+/**
+ * @file accel.cpp
+ * @brief Implementation of satellite acceleration computations.
+ *
+ * This file contains functions to compute the acceleration of an Earth-orbiting satellite,
+ * including the effects of Earth's harmonic gravity field, gravitational perturbations from
+ * the Sun and Moon, solar radiation pressure, and atmospheric drag.
+ *
+ * @author Pablo Gordillo
+ */
+
 #include "..\include\accel.hpp"
 
 /**

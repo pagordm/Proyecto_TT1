@@ -1,3 +1,11 @@
+/**
+ * @file tests.cpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This file contains the tests of the project.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #define _USE_MATH_DEFINES
 #include "..\include\matrix.h"
 #include "..\include\R_x.hpp"

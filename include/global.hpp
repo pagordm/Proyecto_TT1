@@ -1,3 +1,11 @@
+/**
+ * @file global.hpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This header contains global variables used throughout the project, and functions to initialize them.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #ifndef _GLOBAL_
 #define _GLOBAL_
 

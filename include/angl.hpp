@@ -1,3 +1,9 @@
+/**
+ * @file angl.hpp
+ * @author Pablo Gordillo Minchinela
+ * @brief Angl functions
+ * 
+ */
 #ifndef _ANGL_
 #define _ANGL_
 

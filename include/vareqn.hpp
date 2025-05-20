@@ -1,3 +1,11 @@
+/**
+ * @file vareqn.hpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This header contains the VarEqn function declaration.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #ifndef _VAREQN_
 #define _VAREQN_
 

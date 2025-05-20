@@ -1,3 +1,9 @@
+/**
+ * @file cheb3d.hpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This header contains the cheb3d function
+ * 
+ */
 #ifndef _CHEB3D_
 #define _CHEB3D_
 

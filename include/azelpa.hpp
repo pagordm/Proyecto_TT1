@@ -1,3 +1,9 @@
+/**
+ * @file azelpa.hpp
+ * @author Pablo Gordillo Minchinela
+ * @brief AzElPa functions
+ * 
+ */
 #ifndef _AZELPA_
 #define _AZELPA_
 

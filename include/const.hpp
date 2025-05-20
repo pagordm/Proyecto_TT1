@@ -1,3 +1,11 @@
+/**
+ * @file const.hpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This function contains constants used throughout the project
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #ifndef _CONST_
 #define _CONST_
 

@@ -1,3 +1,11 @@
+/**
+ * @file GHAMatrix.hpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This function contains the GHAMatrix function declaration.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #ifndef _GHAMATRIX_
 #define _GHAMATRIX_
 

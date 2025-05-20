@@ -1,3 +1,11 @@
+/**
+ * @file PoleMatrix.hpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This header contains the PoleMatrix function declaration.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #ifndef _POLEMATRIX_
 #define _POLEMATRIX_
 

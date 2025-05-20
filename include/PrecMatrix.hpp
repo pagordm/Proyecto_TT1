@@ -1,3 +1,11 @@
+/**
+ * @file PrecMatrix.hpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This header contains the PrecMatrix function declaration.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #ifndef _PRECMATRIX_
 #define _PRECMATRIX_
 

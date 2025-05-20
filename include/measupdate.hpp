@@ -1,3 +1,11 @@
+/**
+ * @file measupdate.hpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This header contains the MeasUpdate function declaration.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #ifndef _MEASUPDATE_
 #define _MEASUPDATE_
 
