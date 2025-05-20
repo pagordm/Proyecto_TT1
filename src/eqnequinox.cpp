@@ -1,3 +1,11 @@
+/**
+ * @file eqnequinox.cpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This file contains the implementation of the function EqnEquinox.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #include "..\include\eqnequinox.hpp"
 
 /**

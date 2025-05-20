@@ -1,3 +1,11 @@
+/**
+ * @file R_z.cpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This file contains the implementation of the function R_z.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #include "..\include\R_z.hpp"
 #include <cmath>
 /**

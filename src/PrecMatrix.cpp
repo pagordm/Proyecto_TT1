@@ -1,3 +1,11 @@
+/**
+ * @file PrecMatrix.cpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This file contains the implementation of the function PrecMatrix.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #include "..\include\PrecMatrix.hpp"
 
 Matrix& PrecMatrix(double Mjd_1, double Mjd_2) {

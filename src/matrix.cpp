@@ -1,3 +1,11 @@
+/**
+ * @file matrix.cpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This file contains the implementation of the functions described in matrix.h.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #include "..\include\matrix.h"
 
 /**

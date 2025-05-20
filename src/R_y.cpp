@@ -1,3 +1,11 @@
+/**
+ * @file R_y.cpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This file contains the implementation of the function R_y.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #include "..\include\R_y.hpp"
 #include <cmath>
 /**

@@ -1,3 +1,11 @@
+/**
+ * @file sign_.cpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This file contains the implementation of the function sign_.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #include "..\include\sign_.hpp"
 
 /**

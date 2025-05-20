@@ -1,3 +1,11 @@
+/**
+ * @file mjday_tdb.cpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This file contains the implementation of the function Mjd_TDB.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #include "..\include\mjday_tdb.hpp"
 
 /**

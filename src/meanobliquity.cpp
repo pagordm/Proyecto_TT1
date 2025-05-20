@@ -1,3 +1,11 @@
+/**
+ * @file meanobliquity.cpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This file contains the implementation of the function MeanObliquity.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #include "..\include\meanobliquity.hpp"
 
 /**

@@ -1,3 +1,11 @@
+/**
+ * @file gibbs.cpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This file contains the implementation of the function gibbs.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #include "..\include\gibbs.hpp"
 
 /**

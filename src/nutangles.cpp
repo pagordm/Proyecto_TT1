@@ -1,3 +1,11 @@
+/**
+ * @file nutangles.cpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This file contains the implementation of the function NutAngles.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #include "..\include\nutangles.hpp"
 
 std::tuple<double, double> NutAngles(double Mjd_TT) {

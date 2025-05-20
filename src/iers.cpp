@@ -1,3 +1,11 @@
+/**
+ * @file iers.cpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This file contains the implementation of the function IERS.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #include "..\include\iers.hpp"
 /**
  * @brief IERS: Management of IERS time and polar motion data

@@ -1,3 +1,11 @@
+/**
+ * @file anglesg.cpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This file contains the implementation of the function Anglesg.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #include "..\include\anglesg.hpp"
 
 /**

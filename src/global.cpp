@@ -1,3 +1,11 @@
+/**
+ * @file global.cpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This file contains the implementations of the methods and variables described in global.hpp.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #include "..\include\global.hpp"
 #include "..\include\matrix.h"
 

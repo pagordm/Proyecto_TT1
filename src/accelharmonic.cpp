@@ -1,3 +1,11 @@
+/**
+ * @file accelharmonic.cpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This file contains the implementation of the function AccelHarmonic
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #include "../include/accelharmonic.hpp"
 #include "../include/global.hpp"
 #include "../include/const.hpp"

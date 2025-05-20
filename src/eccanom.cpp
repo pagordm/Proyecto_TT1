@@ -1,3 +1,11 @@
+/**
+ * @file eccanom.cpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This file contains the implementation of the function EccAnom.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #include "../include/eccanom.hpp"
 
 #include <cmath>

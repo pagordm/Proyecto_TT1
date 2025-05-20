@@ -1,3 +1,11 @@
+/**
+ * @file DEInteg.cpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This file contains the implementation of the function DEInteg.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #include "..\include\DEInteg.hpp"
 
 enum class DE_STATE {
@@ -9,6 +17,21 @@ enum class DE_STATE {
     DE_INVPARAM = 6   // Invalid input parameters
 };
 
+/**
+ * @brief
+ * Numerical integration methods for ordinary differential equations.
+ *
+ * This module provides an implementation of the variable order, variable stepsize
+ * multistep method of Shampine & Gordon.
+ *
+ * @details
+ * Reference:
+ *   Shampine, Gordon: "Computer Solution of Ordinary Differential Equations",
+ *   Freeman and Comp., San Francisco (1975).
+ *
+ * @author M. Mahooti
+ * @date Last modified: 2015/08/25
+ */
 
 Matrix& DEInteg(Matrix& f(double t, Matrix y), double t, double tout, double relerr, double abserr, int n_eqn, Matrix &y) {
     if (y.n_row==1) {

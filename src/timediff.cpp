@@ -1,3 +1,11 @@
+/**
+ * @file timediff.cpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This file contains the implementation of the function timediff.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #include "..\include\timediff.hpp"
 /**
  * @brief Calculates time differences between different time systems

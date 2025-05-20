@@ -1,3 +1,11 @@
+/**
+ * @file JPL_Eph_DE430.cpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This file contains the implementation of the function JPL_Eph_DE430.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #include "..\include\JPL_Eph_DE430.hpp"
 
 Matrix& range(int start, int skip, int end) {

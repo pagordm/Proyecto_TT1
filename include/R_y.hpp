@@ -9,7 +9,7 @@
 #ifndef _R_Y_
 #define _R_Y_
 
-#include "..\include\matrix.h"
+#include "matrix.h"
 #include <cmath>
 
 using namespace std;

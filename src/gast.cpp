@@ -1,3 +1,11 @@
+/**
+ * @file gast.cpp
+ * @author Pablo Gordillo Minchinela
+ * @brief This file contains the implementation of the function gast.
+ * @date 2025-05-20
+ * 
+ * 
+ */
 #include "..\include\gast.hpp"
 /**
  * @brief Greenwich Apparent Sidereal Time

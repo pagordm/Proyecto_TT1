@@ -1,3 +1,7 @@
+/**
+ * @brief This file contains the implementation of the functions to calculate roots of polynomials.
+ * 
+ */
 // Adapted in 2013 by Ethan Eade from NETLIB program 493:
 //    rpoly.f, Jenkins and Traub, 1972
 // Original comments preserved (with small modifications) below.
