@@ -22,10 +22,12 @@
 #include "..\include\timeupdate.hpp"
 #include "..\include\measupdate.hpp"
 #include <iostream>
+#include <chrono>
 
 using namespace std;
 
 int main() {
+    auto start = chrono::high_resolution_clock::now();
     eop19620101(21413); // c = 21413
     GGM03S();
     DE430Coeff();
@@ -210,7 +212,10 @@ int main() {
     printf("dVx%8.1f [m/s]\n", Y0(4)-Y_true(4));
     printf("dVy%8.1f [m/s]\n", Y0(5)-Y_true(5));
     printf("dVz%8.1f [m/s]\n", Y0(6)-Y_true(6));
+    auto end = chrono::high_resolution_clock::now();
+	chrono::duration<double, micro> duration = end - start;
 
+    cout << "Tiempo de ejecucion: " << duration.count() / 1e6 << " segundos" << endl;
 
     return 0;
 }
