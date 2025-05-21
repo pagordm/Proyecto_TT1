@@ -1,0 +1,19 @@
+<map id="/github/workspace/include/R_y.hpp" name="/github/workspace/include/R_y.hpp">
+<area shape="rect" id="Node000001" title="This header contains the R_y function declaration." alt="" coords="201,5,374,46"/>
+<area shape="rect" id="Node000002" href="$LTC_8hpp.html" title="This header contains the LTC function declaration." alt="" coords="5,94,178,135"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="230,55,137,96,135,91,228,50"/>
+<area shape="rect" id="Node000004" href="$PoleMatrix_8hpp.html" title="This header contains the PoleMatrix function declaration." alt="" coords="397,94,570,135"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="347,50,440,91,438,96,345,55"/>
+<area shape="rect" id="Node000007" href="$PrecMatrix_8hpp.html" title="This header contains the PrecMatrix function declaration." alt="" coords="201,94,374,135"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="290,62,290,94,285,94,285,62"/>
+<area shape="rect" id="Node000003" href="$anglesg_8hpp.html" title="Anglesg function for EKF." alt="" coords="5,183,178,223"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="94,150,94,182,89,182,89,150"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="383,141,179,185,178,180,382,135"/>
+<area shape="rect" id="Node000005" href="$accel_8hpp.html" title="Declarations for satellite acceleration computations." alt="" coords="397,183,570,223"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="486,150,486,182,481,182,481,150"/>
+<area shape="rect" id="Node000006" href="$vareqn_8hpp.html" title="This header contains the VarEqn function declaration." alt="" coords="201,183,374,223"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="426,144,333,185,331,180,424,139"/>
+<area shape="poly" id="edge9_Node000007_Node000003" title=" " alt="" coords="230,144,137,185,135,180,228,139"/>
+<area shape="poly" id="edge8_Node000007_Node000005" title=" " alt="" coords="347,139,440,180,438,185,345,144"/>
+<area shape="poly" id="edge10_Node000007_Node000006" title=" " alt="" coords="290,150,290,182,285,182,285,150"/>
+</map>

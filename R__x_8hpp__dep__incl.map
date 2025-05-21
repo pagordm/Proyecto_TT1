@@ -1,0 +1,16 @@
+<map id="/github/workspace/include/R_x.hpp" name="/github/workspace/include/R_x.hpp">
+<area shape="rect" id="Node000001" title="This header contains the R_x function declaration." alt="" coords="200,5,372,46"/>
+<area shape="rect" id="Node000002" href="$PoleMatrix_8hpp.html" title="This header contains the PoleMatrix function declaration." alt="" coords="103,94,275,135"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="255,58,213,96,209,92,251,54"/>
+<area shape="rect" id="Node000006" href="$nutmatrix_8hpp.html" title="This header contains the NutMatrix function declaration." alt="" coords="299,94,471,135"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="322,54,364,92,361,96,318,58"/>
+<area shape="rect" id="Node000003" href="$accel_8hpp.html" title="Declarations for satellite acceleration computations." alt="" coords="5,183,178,223"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="157,147,115,184,112,180,154,143"/>
+<area shape="rect" id="Node000004" href="$anglesg_8hpp.html" title="Anglesg function for EKF." alt="" coords="201,183,374,223"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="224,143,267,180,263,184,221,147"/>
+<area shape="rect" id="Node000005" href="$vareqn_8hpp.html" title="This header contains the VarEqn function declaration." alt="" coords="397,183,570,223"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="271,137,417,180,416,185,270,142"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="304,142,159,185,157,180,303,137"/>
+<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="353,147,311,184,308,180,350,143"/>
+<area shape="poly" id="edge8_Node000006_Node000005" title=" " alt="" coords="420,143,463,180,459,184,417,147"/>
+</map>
