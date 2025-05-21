@@ -479,7 +479,7 @@ int accelpointmass_01() {
 	return 0;
 }
 
-int cheb3d_01() {
+int checd_01() {
 	Matrix Cx(10);
 	Cx(1)=0.040415016726888; Cx(2)=-0.000694670662256884; Cx(3)=0.00025866083199944; Cx(4)=7.50904395359041e-07; Cx(5)=-5.93855864146682e-07; Cx(6)=8.16521467824851e-07; Cx(7)=-1.91863736412801e-07; Cx(8)=-2.07578684050435e-08; Cx(9)=7.56679389322787e-09; Cx(10)=1.37625072631299e-10;
 	Matrix Cy(10);
@@ -495,7 +495,7 @@ int cheb3d_01() {
 	return 0;
 }
 
-int cheb3d_02() { //Usamos r_Earth de JPL
+int checd_02() { //Usamos r_Earth de JPL
 	Matrix Cx(13);
 	Cx(1) = -103506598.42109;
 	Cx(2) = -14927175.9535129;
@@ -634,14 +634,20 @@ int azelpa_01() {
 }
 
 int iers_01() {
-	Matrix s = eye(15);
-	std::tuple<double, double, double, double, double, double, double, double, double> result = IERS(eopdata, 37670);
+	double Mjd_UTC=49746.1163541665;
 	
-
-	_assert(fabs(std::get<0>(result) - (-1.338037278494208e-07)) < 1e-10);
-	_assert(fabs(std::get<1>(result) - 1.058353113998928e-06) < 1e-10);
-	_assert(fabs(std::get<2>(result) - 0.030535300000000) < 1e-10);
-
+	auto [a,b,c,d,e,f,g,h,i] = IERS(eopdata,Mjd_UTC,'l');
+	
+	double p = 1e-10;
+	_assert(fabs(a+5.5937872420407e-07) < p);
+	_assert(fabs(b-2.33559834147197e-06) < p);
+	_assert(fabs(c-0.325747632958709) < p);
+	_assert(fabs(d-0.00272698971874332) < p);
+	_assert(fabs(e+1.16882953161744e-07) < p);
+	_assert(fabs(f+2.4783506198648e-08) < p);
+	_assert(fabs(g+8.43027359626024e-10) < p);
+	_assert(fabs(h+1.56811369105037e-09) < p);
+	_assert(fabs(i-29) < p);
 	return 0;
 }
 
@@ -704,20 +710,44 @@ int eqnequinox_01() {
 }
 
 int jpl_01() {
-	Matrix a(3);
-	a(1)=8.381066621167137e+10; a(2)=-6.530025356227299e+10; a(3)=-2.340059142315123e+10;
-	Matrix b(3);
-	b(1)=-1.525487109073703e+10; b(2)=-1.101196198394985e+11; b(3)=-4.101455778214513e+10;
-	Matrix c(3);
-	c(1)=-9.244637046666153e+10; c(2)=1.064127619878867e+11; c(3)=4.613787655122181e+10;
+	auto [r_Mercury,r_Venus,r_Earth,r_Mars,r_Jupiter,r_Saturn,r_Uranus,r_Neptune,r_Pluto,r_Moon,r_Sun] = JPL_Eph_DE430(49746.1);
+	Matrix a(3,1);
+	a(1,1)=83810666211.6714;a(2,1)=-65300253562.273;a(3,1)=-23400591423.1512;
+	Matrix b(3,1);
+	b(1,1)=-15254871090.737;b(2,1)=-110119619839.499;b(3,1)=-41014557782.1451;
+	Matrix c(3,1);
+	c(1,1)=-92446370466.6615;c(2,1)=106412761987.887;c(3,1)=46137876551.2218;
+	Matrix d(3,1);
+	d(1,1)=-88286755974.9184;d(2,1)=46961779170.9088;d(3,1)=29069662998.0302;
+	Matrix e(3,1);
+	e(1,1)=-298422178337.688;e(2,1)=-754510732235.042;e(3,1)=-314415669431.536;
+	Matrix f(3,1);
+	f(1,1)=1482007182963.1;f(2,1)=-453899645892.782;f(3,1)=-249413567763.422;
+	Matrix g(3,1);
+	g(1,1)=1412337137361.43;g(2,1)=-2511375518242.91;g(3,1)=-1118117451413.37;
+	Matrix h(3,1);
+	h(1,1)=1871221039794.16;h(2,1)=-3928996288702.76;h(3,1)=-1655028957852.41;
+	Matrix i(3,1);
+	i(1,1)=-2171444383702.46;i(2,1)=-3915447988031.43;i(3,1)=-552721549757.353;
+	Matrix j(3,1);
+	j(1,1)=88301268.8063318;j(2,1)=-336822619.971717;j(3,1)=-114792187.645337;
+	Matrix k(3,1);
+	k(1,1)=92273673176.1919;k(2,1)=-105393042175.493;k(3,1)=-45694105289.8874;
 
-	auto [ar, br, cr, d, e, f, g, h, i, j, k] = JPL_Eph_DE430(49746.1);
-	// cout << "a: " << a << endl;
-	// cout << "ar: " << ar << endl;
-	_assert(m_equals(a.transpose(), ar, 1e-10));
-	_assert(m_equals(b.transpose(), br, 1e-4));
-	_assert(m_equals(c.transpose(), cr, 1e-4));
+	double p = 1e-2;
+	_assert(m_equals(r_Mercury,a, p));
+	_assert(m_equals(r_Venus,b, p));
+	_assert(m_equals(r_Earth,c, p));
+	_assert(m_equals(r_Mars,d, p));
+	_assert(m_equals(r_Jupiter,e, p));
+	_assert(m_equals(r_Saturn,f, p));
+	_assert(m_equals(r_Uranus,g, p));
+	_assert(m_equals(r_Neptune,h, p));
+	_assert(m_equals(r_Pluto,i, p));
+	_assert(m_equals(r_Moon,j, p));
+	_assert(m_equals(r_Sun,k, p));
 
+	
 	return 0;
 }
 
@@ -1207,8 +1237,8 @@ int all_tests()
 	_verify(R_z_01);
 	_verify(position_01);
 	_verify(accelpointmass_01);
-	_verify(cheb3d_01);
-	_verify(cheb3d_02);
+	_verify(checd_01);
+	_verify(checd_02);
 	_verify(sign_01);
 	_verify(eccanom_01);
 	_verify(frac_01);

@@ -107,6 +107,7 @@ double& Matrix::operator () (const int n) {
  * @return Matrix& A reference to this, to be used in chaining assignments.
  */
 Matrix& Matrix::operator = (Matrix &m) {
+	if (this==&m) return m;
 	//Recreate the matrix with the same shape as m
 	this->n_row = m.n_row;
 	this->n_column = m.n_column;
