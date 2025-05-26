@@ -1,0 +1,18 @@
+<map id="/github/workspace/include/nutangles.hpp" name="/github/workspace/include/nutangles.hpp">
+<area shape="rect" id="Node000001" title="This header contains the NutAngles function declaration." alt="" coords="80,5,252,46"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,94,55,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="133,49,65,88,62,84,131,44"/>
+<area shape="rect" id="Node000003" href="$const_8hpp.html" title="This function contains constants used throughout the project." alt="" coords="79,94,157,120"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="156,48,135,82,131,79,152,45"/>
+<area shape="rect" id="Node000004" href="$matrix_8h.html" title="This header contains the Matrix class declaration and its methods." alt="" coords="181,94,247,120"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="180,45,201,79,197,82,176,48"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="273,168,331,193"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="203,44,233,65,261,92,281,122,295,152,290,154,277,125,257,96,230,70,200,49"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="15,168,72,193"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="186,123,87,164,85,159,184,118"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="95,168,154,193"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="201,122,153,160,150,156,197,118"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="231,118,277,156,274,160,227,122"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="178,168,250,193"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="217,120,217,152,211,152,211,120"/>
+</map>

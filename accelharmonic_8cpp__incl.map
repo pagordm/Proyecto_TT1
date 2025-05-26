@@ -1,0 +1,33 @@
+<map id="/github/workspace/src/accelharmonic.cpp" name="/github/workspace/src/accelharmonic.cpp">
+<area shape="rect" id="Node000001" title="This file contains the implementation of the function AccelHarmonic." alt="" coords="288,5,437,46"/>
+<area shape="rect" id="Node000002" href="$accelharmonic_8hpp.html" title="Harmonic acceleration functions." alt="" coords="178,94,363,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="342,48,298,86,295,82,338,44"/>
+<area shape="rect" id="Node000008" href="$global_8hpp.html" title="This header contains global variables used throughout the project, and functions to initialize them." alt="" coords="388,94,522,120"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="387,44,431,82,427,86,384,48"/>
+<area shape="rect" id="Node000011" href="$const_8hpp.html" title="This function contains constants used throughout the project." alt="" coords="551,168,628,193"/>
+<area shape="poly" id="edge15_Node000001_Node000011" title=" " alt="" coords="439,43,488,63,535,92,562,121,580,152,576,155,557,124,532,96,486,68,437,48"/>
+<area shape="rect" id="Node000012" href="$legendre_8hpp.html" title="This header contains the Legendre function declaration." alt="" coords="5,94,155,120"/>
+<area shape="poly" id="edge16_Node000001_Node000012" title=" " alt="" coords="293,49,139,92,137,87,291,44"/>
+<area shape="rect" id="Node000003" href="$matrix_8h.html" title="This header contains the Matrix class declaration and its methods." alt="" coords="167,168,233,193"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="261,122,224,158,221,155,257,118"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="293,241,350,267"/>
+<area shape="poly" id="edge7_Node000002_Node000006" title=" " alt="" coords="277,119,315,225,310,227,272,121"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="212,241,268,267"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="209,192,228,227,224,229,204,195"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="33,241,92,267"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="178,196,101,236,98,231,175,192"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="222,192,289,231,286,235,219,196"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="116,241,188,267"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="194,195,171,230,166,227,190,192"/>
+<area shape="poly" id="edge9_Node000008_Node000003" title=" " alt="" coords="412,123,249,168,247,163,411,118"/>
+<area shape="poly" id="edge10_Node000008_Node000006" title=" " alt="" coords="419,123,382,141,364,154,349,169,334,197,327,227,321,226,329,196,345,166,360,150,379,137,417,118"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="463,168,526,193"/>
+<area shape="poly" id="edge11_Node000008_Node000009" title=" " alt="" coords="464,119,483,153,478,155,459,121"/>
+<area shape="rect" id="Node000010" href="$mjday_8hpp.html" title="This header contains the Mjday function declaration." alt="" coords="359,168,438,193"/>
+<area shape="poly" id="edge12_Node000008_Node000010" title=" " alt="" coords="448,122,420,157,415,154,443,118"/>
+<area shape="poly" id="edge14_Node000008_Node000011" title=" " alt="" coords="479,118,554,158,552,162,476,123"/>
+<area shape="poly" id="edge13_Node000010_Node000006" title=" " alt="" coords="387,196,347,233,344,229,384,192"/>
+<area shape="poly" id="edge17_Node000012_Node000003" title=" " alt="" coords="102,118,168,157,165,162,99,123"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="55,168,105,193"/>
+<area shape="poly" id="edge18_Node000012_Node000013" title=" " alt="" coords="83,120,83,152,77,152,77,120"/>
+</map>

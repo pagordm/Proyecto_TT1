@@ -1,0 +1,24 @@
+<map id="/github/workspace/include/eqnequinox.hpp" name="/github/workspace/include/eqnequinox.hpp">
+<area shape="rect" id="Node000001" title="This header contains the EqnEquinox function declaration." alt="" coords="214,5,386,46"/>
+<area shape="rect" id="Node000002" href="$nutangles_8hpp.html" title="This header contains the NutAngles function declaration." alt="" coords="112,94,214,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="267,49,198,88,195,84,265,44"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="264,241,321,267"/>
+<area shape="poly" id="edge12_Node000001_Node000008" title=" " alt="" coords="334,45,358,66,377,93,380,106,377,120,373,159,358,195,342,216,324,233,320,230,338,212,354,192,368,158,372,119,374,107,372,95,354,69,331,49"/>
+<area shape="rect" id="Node000010" href="$meanobliquity_8hpp.html" title="This header contains the MeanObliquity function declaration." alt="" coords="238,94,362,120"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="303,46,303,78,298,78,298,46"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="53,168,102,193"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="150,122,105,160,102,156,147,118"/>
+<area shape="rect" id="Node000004" href="$const_8hpp.html" title="This function contains constants used throughout the project." alt="" coords="267,168,344,193"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="188,118,269,158,266,163,186,123"/>
+<area shape="rect" id="Node000005" href="$matrix_8h.html" title="This header contains the Matrix class declaration and its methods." alt="" coords="126,168,192,193"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="165,120,163,152,158,152,160,120"/>
+<area shape="poly" id="edge9_Node000002_Node000008" title=" " alt="" coords="175,118,274,228,270,232,171,122"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="5,241,62,267"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="139,196,69,236,67,231,136,192"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="85,241,144,267"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="154,195,133,229,128,226,149,192"/>
+<area shape="poly" id="edge7_Node000005_Node000008" title=" " alt="" coords="183,192,257,231,255,236,180,196"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="168,241,240,267"/>
+<area shape="poly" id="edge8_Node000005_Node000009" title=" " alt="" coords="169,192,191,227,186,230,164,195"/>
+<area shape="poly" id="edge11_Node000010_Node000004" title=" " alt="" coords="304,120,306,152,301,152,298,120"/>
+</map>

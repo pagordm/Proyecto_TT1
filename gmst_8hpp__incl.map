@@ -1,0 +1,9 @@
+<map id="/github/workspace/include/gmst.hpp" name="/github/workspace/include/gmst.hpp">
+<area shape="rect" id="Node000001" title="This header contains the gmst function declaration." alt="" coords="5,5,178,46"/>
+<area shape="rect" id="Node000002" href="$frac_8hpp.html" title="This header contains the Frac function declaration." alt="" coords="10,94,77,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="82,48,61,82,56,79,77,45"/>
+<area shape="rect" id="Node000004" href="$const_8hpp.html" title="This function contains constants used throughout the project." alt="" coords="101,94,178,120"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="106,45,127,79,122,82,101,48"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="15,168,72,193"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="46,120,46,152,41,152,41,120"/>
+</map>

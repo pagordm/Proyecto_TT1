@@ -1,0 +1,19 @@
+<map id="/github/workspace/include/DEInteg.hpp" name="/github/workspace/include/DEInteg.hpp">
+<area shape="rect" id="Node000001" title="This function contains the DEInteg integration function." alt="" coords="181,5,353,46"/>
+<area shape="rect" id="Node000002" href="$matrix_8h.html" title="This header contains the Matrix class declaration and its methods." alt="" coords="126,94,192,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="242,49,189,87,186,82,239,44"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="264,168,321,193"/>
+<area shape="poly" id="edge9_Node000001_Node000005" title=" " alt="" coords="262,47,255,81,254,100,257,119,275,154,271,157,252,120,249,101,250,81,257,46"/>
+<area shape="rect" id="Node000007" href="$const_8hpp.html" title="This function contains constants used throughout the project." alt="" coords="267,94,344,120"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="279,45,295,79,291,81,274,48"/>
+<area shape="rect" id="Node000008" href="$sign___8hpp.html" title="This header contains the sign_ function declaration." alt="" coords="369,94,445,120"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="303,44,374,84,371,88,300,49"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,168,62,193"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="139,123,69,162,67,157,136,118"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="85,168,144,193"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="154,121,133,156,128,153,149,118"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="183,118,257,158,255,162,180,123"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="168,168,240,193"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="169,118,191,153,186,156,164,121"/>
+<area shape="poly" id="edge8_Node000008_Node000005" title=" " alt="" coords="389,122,326,161,323,157,386,118"/>
+</map>

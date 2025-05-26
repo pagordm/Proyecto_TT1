@@ -1,0 +1,13 @@
+<map id="/github/workspace/include/eqnequinox.hpp" name="/github/workspace/include/eqnequinox.hpp">
+<area shape="rect" id="Node000001" title="This header contains the EqnEquinox function declaration." alt="" coords="201,5,374,46"/>
+<area shape="rect" id="Node000002" href="$gast_8hpp.html" title="This header contains the gast function declaration." alt="" coords="201,94,374,135"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="290,62,290,94,285,94,285,62"/>
+<area shape="rect" id="Node000003" href="$GHAMatrix_8hpp.html" title="This function contains the GHAMatrix function declaration." alt="" coords="201,183,374,223"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="290,150,290,182,285,182,285,150"/>
+<area shape="rect" id="Node000004" href="$accel_8hpp.html" title="Declarations for satellite acceleration computations." alt="" coords="5,271,178,312"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="230,232,137,273,135,268,228,227"/>
+<area shape="rect" id="Node000005" href="$anglesg_8hpp.html" title="Anglesg function for EKF." alt="" coords="201,271,374,312"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="290,239,290,271,285,271,285,239"/>
+<area shape="rect" id="Node000006" href="$vareqn_8hpp.html" title="This header contains the VarEqn function declaration." alt="" coords="397,271,570,312"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="347,227,440,268,438,273,345,232"/>
+</map>
