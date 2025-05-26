@@ -49,6 +49,7 @@
 #include "..\include\unit.hpp"
 #include "..\include\DEInteg.hpp"
 #include "..\include\anglesg.hpp"
+#include "..\include\rpoly.h"
 #include <tuple>
 #include <cstdio>
 #include <cmath>
@@ -1202,6 +1203,60 @@ int anglesg_01() {
 	return 0;
 }
 
+int rpoly_01() {
+	double coef[10], zeror[10], zeroi[10], zeror_exp[10], zeroi_exp[10];
+    int i, nr, degree;
+    
+    coef[0] = 1.0;
+    coef[1] = 0.0;
+    coef[2] = -44053245368650.9;
+    coef[3] = 0.0;
+    coef[4] = 0.0;
+    coef[5] = -4.09375103407101e+33;
+    coef[6] = 0.0;
+    coef[7] = 0.0;
+    coef[8] = -3.74405276970511e+53;
+    degree =8;
+
+	zeror_exp[0] = 3132246.66988771641626954079;
+	zeroi_exp[0] =  2957604.03006899729371070862;
+	zeror_exp[1] = 3132246.66988771641626954079;
+	zeroi_exp[1] =  -2957604.03006899729371070862;
+	zeror_exp[2] = -4575561.40643621794879436493;
+	zeroi_exp[2] =  2140709.27893836842849850655;
+	zeror_exp[3] = -4575561.40643621794879436493;
+	zeroi_exp[3] =  -2140709.27893836842849850655;
+	zeror_exp[4] = -5733472.09561357647180557251;
+	zeroi_exp[4] =  0.00000000000000000000;
+	zeror_exp[5] = 569511.23164128861390054226;
+	zeroi_exp[5] =  4255278.44802408292889595032;
+	zeror_exp[6] = 569511.23164128861390054226;
+	zeroi_exp[6] =  -4255278.44802408292889595032;
+	zeror_exp[7] = 7481079.10542800277471542358;
+	zeroi_exp[7] =  0.00000000000000000000;
+	
+    nr = real_poly_roots(coef, degree, zeror, zeroi);
+
+	_assert(fabs(zeror[0]-zeror_exp[0]) < 1e-10);
+	_assert(fabs(zeroi[0]-zeroi_exp[0]) < 1e-10);
+	_assert(fabs(zeror[1]-zeror_exp[1]) < 1e-10);
+	_assert(fabs(zeroi[1]-zeroi_exp[1]) < 1e-10);
+	_assert(fabs(zeror[2]-zeror_exp[2]) < 1e-10);
+	_assert(fabs(zeroi[2]-zeroi_exp[2]) < 1e-10);
+	_assert(fabs(zeror[3]-zeror_exp[3]) < 1e-10);
+	_assert(fabs(zeroi[3]-zeroi_exp[3]) < 1e-10);
+	_assert(fabs(zeror[4]-zeror_exp[4]) < 1e-10);
+	_assert(fabs(zeroi[4]-zeroi_exp[4]) < 1e-10);
+	_assert(fabs(zeror[5]-zeror_exp[5]) < 1e-10);
+	_assert(fabs(zeroi[5]-zeroi_exp[5]) < 1e-10);
+	_assert(fabs(zeror[6]-zeror_exp[6]) < 1e-10);
+	_assert(fabs(zeroi[6]-zeroi_exp[6]) < 1e-10);
+	_assert(fabs(zeror[7]-zeror_exp[7]) < 1e-10);
+	_assert(fabs(zeroi[7]-zeroi_exp[7]) < 1e-10);
+
+	return 0;
+}
+
 int all_tests()
 {
 	eop19620101(21413); // c = 21413
@@ -1272,6 +1327,7 @@ int all_tests()
 	_verify(deinteg_01);
 	_verify(hgibbs_01);
 	_verify(anglesg_01);
+	_verify(rpoly_01);
 
     return 0;
 }
