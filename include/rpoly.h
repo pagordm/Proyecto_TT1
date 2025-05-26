@@ -30,12 +30,19 @@ int real_poly_roots_compute(const double p[], int degree,
                             struct RPoly_State *state,
                             double zeror[], double zeroi[]);
 
-// Convenience function.
-// Find roots of a polynomial with real coefficients.
-// p[] holds coefficients of the polynomial:
-//   p(x) = p[0]*x^degree + ... + p[degree]
-//
-// Returns number of roots stored in zeror[], zeroi[]
+/**
+ * @brief Convenience function to find roots of a polynomial with real coefficients.
+ *
+ * This function computes the roots of a polynomial with real coefficients.
+ * The coefficients are provided in the array \p p, where:
+ *   p(x) = p[0]*x^degree + ... + p[degree]
+ *
+ * @param[in]  p       Array of polynomial coefficients.
+ * @param[in]  degree  Degree of the polynomial.
+ * @param[out] zeror   Array to store the real parts of the roots.
+ * @param[out] zeroi   Array to store the imaginary parts of the roots.
+ * @return Number of roots stored in \p zeror and \p zeroi.
+ */
 static inline int real_poly_roots(const double p[], int degree,
                                   double zeror[], double zeroi[])
 {
